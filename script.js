@@ -1,5 +1,5 @@
 /**
- * AKASH GAY'S SHOWCASE - INTERACTIVE JAVASCRIPT
+ * ASHU GAY'S SHOWCASE - INTERACTIVE JAVASCRIPT
  * Welcome Splash Screen, Particle Canvas, Themes, Affirmations, Confetti & Interactivity
  */
 
@@ -121,7 +121,7 @@ function initParticleCanvas() {
 const affirmations = [
   {
     quote: "Being gay is a natural part of who I am. Living with honesty, love, and self-respect is my everyday pride.",
-    author: "Akash Gay • Age 21"
+    author: "Ashu Gay • Age 21"
   },
   {
     quote: "Never be bullied into silence. Never allow yourself to be made a victim. Accept no one's definition of your life; define yourself.",
@@ -129,7 +129,7 @@ const affirmations = [
   },
   {
     quote: "Turn your magic on. To live authentically at 21 as a proud gay man with dignity is a triumph of freedom.",
-    author: "Akash Gay • Pride Manifesto"
+    author: "Ashu Gay • Pride Manifesto"
   },
   {
     quote: "Equality means more than passing laws. The struggle is really won in the hearts and minds of the community, where it counts.",
@@ -137,7 +137,7 @@ const affirmations = [
   },
   {
     quote: "Love is love, identity is truth, and confidence is the best thing you can ever wear.",
-    author: "Akash Gay • Daily Inspiration"
+    author: "Ashu Gay • Daily Inspiration"
   }
 ];
 

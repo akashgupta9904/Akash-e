@@ -1,6 +1,6 @@
-# Akash's Official Showcase & Portfolio Website 🏳️‍🌈
+# Ashu's Official Showcase & Portfolio Website 🏳️‍🌈
 
-Welcome to the official personal website of **Akash**. 
+Welcome to the official personal website of **Ashu**. 
 
 > **"21 Years Old • Living 100% Unapologetically Authentic • Proud Gay Individual 🏳️‍🌈"**
 
@@ -52,4 +52,4 @@ Double-click `run.bat` in the project directory.
 
 ---
 
-© 2026 Akash. Made with ❤️ and 🏳️‍🌈 Pride.
+© 2026 Ashu. Made with ❤️ and 🏳️‍🌈 Pride.
