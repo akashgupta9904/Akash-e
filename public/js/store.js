@@ -19,6 +19,16 @@ document.addEventListener('DOMContentLoaded', () => {
   const savedTheme = localStorage.getItem('akashxTheme') || '';
   document.documentElement.setAttribute('data-theme', savedTheme);
 
+  // Reveal Admin-only elements exclusively if authenticated as Admin
+  try {
+    const user = JSON.parse(localStorage.getItem('nexus_user') || 'null');
+    if (user && user.role === 'admin') {
+      document.querySelectorAll('.admin-only-link').forEach(el => {
+        el.classList.add('show-admin');
+      });
+    }
+  } catch (e) {}
+
   // Build Theme Picker options
   const list = document.getElementById('themePickerList');
   if (list) {
@@ -285,17 +295,23 @@ async function handlePaymentConfirm() {
     const orderNumber = `AXS-${Date.now().toString().slice(-6)}-${Math.floor(1000 + Math.random() * 9000)}`;
     const licenseKey = `AXS-VIP-${Math.random().toString(36).substring(2, 6).toUpperCase()}-${Math.random().toString(36).substring(2, 6).toUpperCase()}-${Math.random().toString(36).substring(2, 6).toUpperCase()}`;
 
-    // Record order in backend
+    // Record order in backend so it immediately shows up in Admin Dashboard
     await API.post('/orders/create', {
+      order_number: orderNumber,
       customer_name: 'VIP Gamer',
       customer_email: 'buyer@akashxstore.in',
       customer_phone: '+91 9135164069',
       shipping_address: {
         item: `${currentCheckoutPlan.panelName} — ${currentCheckoutPlan.title}`,
-        price: currentCheckoutPlan.price
+        price: Number(currentCheckoutPlan.price)
+      },
+      direct_item: {
+        name: `${currentCheckoutPlan.panelName} (${currentCheckoutPlan.title})`,
+        price: Number(currentCheckoutPlan.price),
+        quantity: 1
       },
       payment_method: 'upi_qr'
-    }).catch(() => {});
+    }).catch(err => console.error('Order record notice:', err));
 
     // Artificial delay for authentic payment verification feel (1.5 seconds)
     await new Promise(resolve => setTimeout(resolve, 1600));

@@ -253,6 +253,18 @@ img { max-width: 100%; display: block; }
   text-shadow: 0 0 8px rgba(126,200,227,0.5);
 }
 
+/* Hidden by default for public; shown ONLY when logged in as Admin */
+.admin-only-link {
+  display: none !important;
+}
+.admin-only-link.show-admin,
+li.admin-only-link.show-admin {
+  display: inline-block !important;
+}
+.drawer-link.admin-only-link.show-admin {
+  display: block !important;
+}
+
 .navbar-buy-btn {
   display: none;
   align-items: center;
