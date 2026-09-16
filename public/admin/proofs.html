@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Proofs & Screenshots | AKASH X ADMIN</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/admin.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <script src="/js/api.js"></script>
+  <script src="/js/admin.js"></script>
+  <style>
+    .proofs-grid-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+    .proof-admin-card {
+      background: #fff;
+      border-radius: var(--radius-lg);
+      border: 1px solid #e2e8f0;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .proof-admin-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+    .proof-img-wrap {
+      width: 100%;
+      height: 190px;
+      background: #0f172a;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .proof-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s;
+    }
+    .proof-admin-card:hover .proof-img-wrap img {
+      transform: scale(1.04);
+    }
+    .proof-tag-badge {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: rgba(15, 23, 42, 0.85);
+      color: #10b981;
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      padding: 4px 10px;
+      border-radius: 50px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      backdrop-filter: blur(4px);
+    }
+    .proof-card-body {
+      padding: 1.25rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .proof-card-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 0.5rem;
+      line-height: 1.4;
+    }
+    .proof-card-desc {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 1rem;
+      flex: 1;
+    }
+    .proof-card-meta {
+      font-size: 0.75rem;
+      color: #94a3b8;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid #f1f5f9;
+      padding-top: 0.75rem;
+      margin-top: auto;
+    }
+    .preview-box {
+      width: 100%;
+      height: 180px;
+      border: 2px dashed #cbd5e1;
+      border-radius: var(--radius-md);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      background: #f8fafc;
+      overflow: hidden;
+      position: relative;
+    }
+    .preview-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="admin-layout">
+    <!-- Sidebar -->
+    <aside class="admin-sidebar">
+      <div class="sidebar-header">
+        <img src="/favicon.svg" alt="Akash X Store" style="width: 28px; height: 28px;">
+        AKASH X <span>ADMIN</span>
+      </div>
+
+      <ul class="sidebar-nav">
+        <li class="nav-item" data-nav="dashboard">
+          <a href="/admin/index.html"><i class="fa-solid fa-chart-pie"></i> Dashboard</a>
+        </li>
+        <li class="nav-item active" data-nav="proofs">
+          <a href="/admin/proofs.html"><i class="fa-solid fa-camera-retro"></i> Customer Proofs</a>
+        </li>
+        <li class="nav-item" data-nav="settings">
+          <a href="/admin/settings.html"><i class="fa-solid fa-sliders"></i> Store Settings</a>
+        </li>
+        <li class="nav-item" data-nav="orders">
+          <a href="/admin/orders.html"><i class="fa-solid fa-cart-shopping"></i> Customer Orders</a>
+        </li>
+        <li class="nav-item" data-nav="products">
+          <a href="/admin/products.html"><i class="fa-solid fa-box-archive"></i> Products Inventory</a>
+        </li>
+        <li class="nav-item" data-nav="categories">
+          <a href="/admin/categories.html"><i class="fa-solid fa-layer-group"></i> Categories</a>
+        </li>
+        <li class="nav-item" data-nav="coupons">
+          <a href="/admin/coupons.html"><i class="fa-solid fa-ticket"></i> Coupons & Promos</a>
+        </li>
+        <li class="nav-item" data-nav="customers">
+          <a href="/admin/customers.html"><i class="fa-solid fa-users"></i> Customers</a>
+        </li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <a href="/proofs.html" target="_blank" style="display: flex; align-items: center; gap: 0.5rem; color: #94a3b8; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.75rem;">
+          <i class="fa-solid fa-arrow-up-right-from-square"></i> View Proofs Page
+        </a>
+        <a href="/" target="_blank" style="display: flex; align-items: center; gap: 0.5rem; color: #94a3b8; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.75rem;">
+          <i class="fa-solid fa-store"></i> View Storefront
+        </a>
+        <button onclick="API.logout()" style="width: 100%; display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem; background: none; border: none; color: var(--danger); font-size: 0.88rem; font-weight: 600; cursor: pointer;">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i> Sign Out
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="admin-main">
+      <!-- Topbar -->
+      <header class="admin-topbar">
+        <div style="display: flex; align-items: center; gap: 1rem;">
+          <button id="adminSidebarToggle" class="btn btn-secondary btn-sm" style="display: inline-flex;">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+          <h1 class="admin-page-title">Proofs & Screenshot Gallery</h1>
+        </div>
+
+        <div class="topbar-actions">
+          <button class="btn btn-primary btn-sm" onclick="openProofModal()">
+            <i class="fa-solid fa-plus"></i> Upload New Proof
+          </button>
+          <span style="font-size: 0.9rem; font-weight: 600;" id="adminUserName">Akash</span>
+          <div style="width: 36px; height: 36px; border-radius: 50%; background: #eef2ff; color: var(--primary); display: flex; align-items: center; justify-content: center; font-weight: 700;">
+            <i class="fa-solid fa-shield-halved"></i>
+          </div>
+        </div>
+      </header>
+
+      <!-- Body -->
+      <main class="admin-body">
+        
+        <!-- Metrics -->
+        <div class="stats-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); margin-bottom: 1.5rem;">
+          <div class="stat-card">
+            <div>
+              <div class="stat-label">Total Proofs</div>
+              <div class="stat-value" id="statTotalProofs">0</div>
+            </div>
+            <div class="stat-icon orders"><i class="fa-solid fa-images"></i></div>
+          </div>
+          <div class="stat-card">
+            <div>
+              <div class="stat-label">Anti-Ban Proofs</div>
+              <div class="stat-value" id="statAntiBanProofs" style="color:#10b981;">0</div>
+            </div>
+            <div class="stat-icon revenue"><i class="fa-solid fa-shield-check"></i></div>
+          </div>
+          <div class="stat-card">
+            <div>
+              <div class="stat-label">Delivery Proofs</div>
+              <div class="stat-value" id="statDeliveryProofs" style="color:#4f46e5;">0</div>
+            </div>
+            <div class="stat-icon products"><i class="fa-solid fa-bolt"></i></div>
+          </div>
+        </div>
+
+        <!-- Proofs Section -->
+        <div class="admin-card">
+          <div class="card-header-flex">
+            <div>
+              <h2 style="font-size: 1.15rem; font-weight: 700; margin-bottom: 0.25rem;">Live Customer Proofs</h2>
+              <p style="font-size: 0.85rem; color: var(--text-muted); margin: 0;">Screenshots and proofs shown to customers on the /proofs.html page.</p>
+            </div>
+            <div style="display: flex; gap: 0.75rem;">
+              <a href="/proofs.html" target="_blank" class="btn btn-secondary btn-sm">
+                <i class="fa-solid fa-external-link-alt"></i> Preview on Website
+              </a>
+              <button class="btn btn-primary btn-sm" onclick="openProofModal()">
+                <i class="fa-solid fa-cloud-arrow-up"></i> Upload Proof
+              </button>
+            </div>
+          </div>
+
+          <div style="padding: 1.5rem;">
+            <!-- Loading indicator -->
+            <div id="proofsLoading" style="text-align: center; padding: 3rem; color: var(--text-muted);">
+              <i class="fa-solid fa-spinner fa-spin fa-2x"></i>
+              <p style="margin-top: 0.75rem;">Loading proofs...</p>
+            </div>
+
+            <!-- Empty state -->
+            <div id="proofsEmpty" style="display: none; text-align: center; padding: 3.5rem 1.5rem;">
+              <div style="width: 70px; height: 70px; border-radius: 50%; background: #f1f5f9; display: inline-flex; align-items: center; justify-content: center; font-size: 1.8rem; color: #94a3b8; margin-bottom: 1rem;">
+                <i class="fa-solid fa-camera"></i>
+              </div>
+              <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem;">No Proofs Uploaded Yet</h3>
+              <p style="font-size: 0.88rem; color: var(--text-muted); max-width: 420px; margin: 0 auto 1.5rem;">
+                Upload your first customer winning screenshot, Grandmaster scorecard, or WhatsApp delivery proof!
+              </p>
+              <button class="btn btn-primary btn-sm" onclick="openProofModal()">
+                <i class="fa-solid fa-plus"></i> Upload Proof Now
+              </button>
+            </div>
+
+            <!-- Proofs Grid -->
+            <div id="proofsGrid" class="proofs-grid-cards" style="display: none;"></div>
+          </div>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- Upload Proof Modal -->
+  <div class="modal-overlay" id="proofModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 style="font-size: 1.15rem; font-weight: 700; margin: 0;">Upload Customer Proof</h3>
+        <button onclick="closeProofModal()" style="background: none; border: none; font-size: 1.25rem; cursor: pointer; color: #94a3b8;">&times;</button>
+      </div>
+      <form id="proofForm" onsubmit="handleSaveProof(event)">
+        <div class="modal-body">
+          
+          <!-- Image Upload Area -->
+          <div class="form-group">
+            <label>Screenshot Image *</label>
+            <div class="preview-box" id="dropZone" onclick="document.getElementById('proofFileInput').click()">
+              <div id="uploadPrompt" style="text-align: center; padding: 1rem;">
+                <i class="fa-solid fa-cloud-arrow-up fa-2x" style="color: #6366f1; margin-bottom: 0.5rem;"></i>
+                <div style="font-weight: 600; font-size: 0.9rem;">Click to select screenshot</div>
+                <div style="font-size: 0.75rem; color: #94a3b8; margin-top: 4px;">PNG, JPG, WEBP up to 5MB</div>
+              </div>
+              <img id="previewImg" alt="Proof preview">
+            </div>
+            <input type="file" id="proofFileInput" accept="image/*" style="display: none;" onchange="handleProofFileChange(event)">
+          </div>
+
+          <!-- Or Image URL -->
+          <div class="form-group">
+            <label>Or Paste Image URL (Optional)</label>
+            <input type="url" id="proofImageUrl" class="form-control" placeholder="https://example.com/screenshot.jpg" oninput="handleUrlInput(event)">
+          </div>
+
+          <!-- Proof Title -->
+          <div class="form-group">
+            <label>Title *</label>
+            <input type="text" id="proofTitle" class="form-control" placeholder="e.g. Grandmaster Rank Push With Anti-Ban v2.8" required>
+          </div>
+
+          <!-- Tag / Category -->
+          <div class="form-group">
+            <label>Proof Category / Tag</label>
+            <select id="proofTag" class="form-control">
+              <option value="Anti-Ban Verified">🛡️ Anti-Ban Verified</option>
+              <option value="99% Headshot Proof">🎯 99% Headshot Proof</option>
+              <option value="Instant Delivery">⚡ Instant Delivery</option>
+              <option value="Grandmaster Rank">🏆 Grandmaster Rank</option>
+              <option value="Customer Feedback">💬 Customer Feedback</option>
+              <option value="iOS Bypass Proof">🍏 iOS Bypass Proof</option>
+              <option value="Android Safe Lobby">🤖 Android Safe Lobby</option>
+            </select>
+          </div>
+
+          <!-- Description / Notes -->
+          <div class="form-group">
+            <label>Description / Match Notes (Optional)</label>
+            <textarea id="proofDescription" class="form-control" rows="3" placeholder="Customer achieved Grandmaster in 2 days with 0 ban warning. Smooth drag headshots."></textarea>
+          </div>
+
+        </div>
+        <div style="padding: 1.25rem 1.5rem; background: #f8fafc; border-top: 1px solid #e2e8f0; display: flex; justify-content: flex-end; gap: 0.75rem;">
+          <button type="button" class="btn btn-secondary btn-sm" onclick="closeProofModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary btn-sm" id="saveProofBtn">
+            <i class="fa-solid fa-check"></i> Upload Proof
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    let currentUploadedImageUrl = '';
+
+    document.addEventListener('DOMContentLoaded', () => {
+      AdminApp.initLayout('proofs');
+      loadProofs();
+    });
+
+    function openProofModal() {
+      document.getElementById('proofForm').reset();
+      currentUploadedImageUrl = '';
+      document.getElementById('previewImg').style.display = 'none';
+      document.getElementById('previewImg').src = '';
+      document.getElementById('uploadPrompt').style.display = 'block';
+      AdminApp.openModal('proofModal');
+    }
+
+    function closeProofModal() {
+      AdminApp.closeModal('proofModal');
+    }
+
+    function handleProofFileChange(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const preview = document.getElementById('previewImg');
+        preview.src = event.target.result;
+        preview.style.display = 'block';
+        document.getElementById('uploadPrompt').style.display = 'none';
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function handleUrlInput(e) {
+      const url = e.target.value.trim();
+      if (url) {
+        const preview = document.getElementById('previewImg');
+        preview.src = url;
+        preview.style.display = 'block';
+        document.getElementById('uploadPrompt').style.display = 'none';
+      }
+    }
+
+    async function loadProofs() {
+      const loading = document.getElementById('proofsLoading');
+      const empty = document.getElementById('proofsEmpty');
+      const grid = document.getElementById('proofsGrid');
+      
+      loading.style.display = 'block';
+      empty.style.display = 'none';
+      grid.style.display = 'none';
+
+      try {
+        const res = await API.get('/admin/proofs');
+        const proofs = res.proofs || [];
+
+        // Update stats
+        document.getElementById('statTotalProofs').textContent = proofs.length;
+        document.getElementById('statAntiBanProofs').textContent = proofs.filter(p => (p.tag || '').includes('Anti-Ban')).length;
+        document.getElementById('statDeliveryProofs').textContent = proofs.filter(p => (p.tag || '').includes('Delivery')).length;
+
+        loading.style.display = 'none';
+
+        if (proofs.length === 0) {
+          empty.style.display = 'block';
+          return;
+        }
+
+        grid.innerHTML = proofs.map(proof => `
+          <div class="proof-admin-card">
+            <div class="proof-img-wrap" onclick="window.open('${proof.image_url}', '_blank')">
+              <img src="${proof.image_url}" alt="${proof.title}" loading="lazy">
+              <span class="proof-tag-badge">${proof.tag || 'Verified'}</span>
+            </div>
+            <div class="proof-card-body">
+              <div class="proof-card-title">${proof.title}</div>
+              <div class="proof-card-desc">${proof.description || 'Verified customer proof on AKASH X STORE.'}</div>
+              <div class="proof-card-meta">
+                <span><i class="fa-regular fa-clock"></i> ${new Date(proof.created_at).toLocaleDateString()}</span>
+                <div style="display:flex; gap:6px;">
+                  <a href="${proof.image_url}" target="_blank" class="btn btn-secondary btn-sm" style="padding:4px 8px; font-size:0.75rem;" title="View Full Image">
+                    <i class="fa-solid fa-eye"></i>
+                  </a>
+                  <button onclick="deleteProof(${proof.id})" class="btn btn-danger btn-sm" style="padding:4px 8px; font-size:0.75rem;" title="Delete Proof">
+                    <i class="fa-solid fa-trash"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        `).join('');
+
+        grid.style.display = 'grid';
+
+      } catch (err) {
+        loading.innerHTML = `<p style="color:var(--danger);">Error loading proofs: ${err.message}</p>`;
+      }
+    }
+
+    async function handleSaveProof(e) {
+      e.preventDefault();
+      const saveBtn = document.getElementById('saveProofBtn');
+      const fileInput = document.getElementById('proofFileInput');
+      const urlInput = document.getElementById('proofImageUrl').value.trim();
+      const title = document.getElementById('proofTitle').value.trim();
+      const tag = document.getElementById('proofTag').value;
+      const description = document.getElementById('proofDescription').value.trim();
+
+      saveBtn.disabled = true;
+      saveBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Uploading...';
+
+      try {
+        let imageUrl = urlInput;
+
+        // If file selected, upload via multer first
+        if (fileInput.files && fileInput.files.length > 0) {
+          const uploadedUrl = await AdminApp.uploadImage(fileInput);
+          if (uploadedUrl) {
+            imageUrl = uploadedUrl;
+          }
+        }
+
+        if (!imageUrl) {
+          alert('Please select an image file or provide an image URL.');
+          saveBtn.disabled = false;
+          saveBtn.innerHTML = '<i class="fa-solid fa-check"></i> Upload Proof';
+          return;
+        }
+
+        await API.post('/admin/proofs', {
+          title,
+          image_url: imageUrl,
+          tag,
+          description
+        });
+
+        closeProofModal();
+        loadProofs();
+        alert('Proof added successfully and is now live on /proofs.html!');
+
+      } catch (err) {
+        alert('Failed to save proof: ' + err.message);
+      } finally {
+        saveBtn.disabled = false;
+        saveBtn.innerHTML = '<i class="fa-solid fa-check"></i> Upload Proof';
+      }
+    }
+
+    async function deleteProof(id) {
+      if (!confirm('Are you sure you want to delete this customer proof?')) return;
+      try {
+        await API.delete('/admin/proofs/' + id);
+        loadProofs();
+      } catch (err) {
+        alert('Failed to delete proof: ' + err.message);
+      }
+    }
+  </script>
+</body>
+</html>

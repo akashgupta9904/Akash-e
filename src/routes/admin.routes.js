@@ -402,4 +402,88 @@ router.get('/customers', (req, res) => {
   }
 });
 
+// 8. Proofs Management
+router.get('/proofs', (req, res) => {
+  try {
+    const proofs = query('SELECT * FROM proofs ORDER BY id DESC');
+    res.json({ success: true, proofs });
+  } catch (err) {
+    res.status(500).json({ success: false, message: 'Failed to fetch proofs.' });
+  }
+});
+
+router.post('/proofs', (req, res) => {
+  try {
+    const { title, description, image_url, tag } = req.body;
+    if (!image_url) {
+      return res.status(400).json({ success: false, message: 'Image is required for proof.' });
+    }
+    const cleanTitle = sanitizeString(title || 'Customer Match Win Proof');
+    const cleanDesc = sanitizeString(description || '');
+    const cleanTag = sanitizeString(tag || 'Anti-Ban Verified');
+
+    const result = execute(`
+      INSERT INTO proofs (title, description, image_url, tag)
+      VALUES (?, ?, ?, ?)
+    `, [cleanTitle, cleanDesc, image_url, cleanTag]);
+
+    res.status(201).json({ success: true, message: 'Proof added successfully!', proofId: result.lastInsertRowid });
+  } catch (err) {
+    console.error('Error adding proof:', err);
+    res.status(500).json({ success: false, message: 'Failed to add proof.' });
+  }
+});
+
+router.delete('/proofs/:id', (req, res) => {
+  try {
+    const { id } = req.params;
+    execute('DELETE FROM proofs WHERE id = ?', [id]);
+    res.json({ success: true, message: 'Proof deleted successfully.' });
+  } catch (err) {
+    res.status(500).json({ success: false, message: 'Failed to delete proof.' });
+  }
+});
+
+// 9. Store Settings Management
+router.get('/settings', (req, res) => {
+  try {
+    const rows = query('SELECT key, value FROM site_settings');
+    const settings = {};
+    rows.forEach(r => {
+      settings[r.key] = r.value;
+    });
+    res.json({ success: true, settings });
+  } catch (err) {
+    res.status(500).json({ success: false, message: 'Failed to fetch settings.' });
+  }
+});
+
+router.post('/settings', (req, res) => {
+  try {
+    const updates = req.body;
+    if (!updates || typeof updates !== 'object') {
+      return res.status(400).json({ success: false, message: 'Invalid settings payload.' });
+    }
+
+    // Upsert each setting
+    for (const [key, value] of Object.entries(updates)) {
+      if (typeof key === 'string' && value !== undefined) {
+        const valStr = String(value).trim();
+        const existing = getOne('SELECT key FROM site_settings WHERE key = ?', [key]);
+        if (existing) {
+          execute('UPDATE site_settings SET value = ? WHERE key = ?', [valStr, key]);
+        } else {
+          execute('INSERT INTO site_settings (key, value) VALUES (?, ?)', [key, valStr]);
+        }
+      }
+    }
+
+    res.json({ success: true, message: 'Store settings updated successfully!' });
+  } catch (err) {
+    console.error('Error updating settings:', err);
+    res.status(500).json({ success: false, message: 'Failed to update settings.' });
+  }
+});
+
 module.exports = router;
+

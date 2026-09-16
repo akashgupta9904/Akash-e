@@ -133,6 +133,20 @@ function initSchema() {
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     );
 
+    CREATE TABLE IF NOT EXISTS proofs (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      title TEXT NOT NULL,
+      description TEXT,
+      image_url TEXT NOT NULL,
+      tag TEXT DEFAULT 'Anti-Ban Verified',
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    );
+
+    CREATE TABLE IF NOT EXISTS site_settings (
+      key TEXT PRIMARY KEY,
+      value TEXT NOT NULL
+    );
+
     CREATE INDEX IF NOT EXISTS idx_products_category ON products(category_id);
     CREATE INDEX IF NOT EXISTS idx_products_featured ON products(is_featured);
     CREATE INDEX IF NOT EXISTS idx_orders_user ON orders(user_id);
@@ -140,6 +154,27 @@ function initSchema() {
     CREATE INDEX IF NOT EXISTS idx_cart_session ON cart_items(session_id);
     CREATE INDEX IF NOT EXISTS idx_cart_user ON cart_items(user_id);
   `);
+
+  // Populate default settings if not yet set
+  const defaultSettings = [
+    ['upi_id', 'igakash@fam'],
+    ['upi_name', 'AKASH X STORE'],
+    ['whatsapp', '+91 9135164069'],
+    ['telegram', 'https://t.me/akashxstore'],
+    ['site_title', 'AKASH X STORE'],
+    ['price_1day', '80'],
+    ['price_15days', '150'],
+    ['price_30days', '299'],
+    ['price_90days', '599'],
+    ['announcement', '🔥 Season 43 Anti-Ban v2.8 Updated! Direct UPI Payment & Instant Key Release.']
+  ];
+
+  for (const [key, value] of defaultSettings) {
+    const existing = db.prepare('SELECT key FROM site_settings WHERE key = ?').get(key);
+    if (!existing) {
+      db.prepare('INSERT INTO site_settings (key, value) VALUES (?, ?)').run(key, value);
+    }
+  }
 }
 
 initSchema();

@@ -56,6 +56,8 @@ app.use('/api/cart', require('./src/routes/cart.routes'));
 app.use('/api/coupons', require('./src/routes/coupon.routes'));
 app.use('/api/orders', require('./src/routes/order.routes'));
 app.use('/api/payments', require('./src/routes/payment.routes'));
+app.use('/api/proofs', require('./src/routes/proof.routes'));
+app.use('/api/settings', require('./src/routes/setting.routes'));
 app.use('/api/admin', require('./src/routes/admin.routes'));
 
 // Health Check Endpoint

@@ -14,7 +14,52 @@ const THEMES = [
   { id: 'mocha',  name: '🤎 Mocha Mono',           sw: ['#2A0800', '#C09891', '#F4D6D8'] }
 ];
 
+window.STORE_SETTINGS = {
+  upi_id: 'igakash@fam',
+  upi_name: 'AKASH X STORE',
+  whatsapp: '+91 9135164069',
+  telegram: 'https://t.me/akashxstore',
+  prices: { '1': 80, '15': 150, '30': 299, '90': 599 }
+};
+
+async function loadStoreSettings() {
+  try {
+    const res = await fetch('/api/settings').then(r => r.json());
+    if (res.success && res.settings) {
+      window.STORE_SETTINGS = res.settings;
+
+      const upiId = res.settings.upi_id || 'igakash@fam';
+      document.querySelectorAll('.display-upi-id').forEach(el => {
+        el.textContent = upiId;
+      });
+
+      if (res.settings.whatsapp) {
+        const cleanPhone = res.settings.whatsapp.replace(/\D/g, '');
+        document.querySelectorAll('a[href*="wa.me"]').forEach(a => {
+          try {
+            const url = new URL(a.href);
+            a.href = `https://wa.me/${cleanPhone}${url.search}`;
+          } catch(err) {}
+        });
+      }
+    }
+  } catch (e) {
+    console.warn('Settings load notice:', e);
+  }
+}
+
+function copyActiveUpi() {
+  const upi = (window.STORE_SETTINGS && window.STORE_SETTINGS.upi_id) || 'igakash@fam';
+  navigator.clipboard.writeText(upi).then(() => {
+    alert('UPI ID copied: ' + upi);
+  }).catch(() => {
+    prompt('Copy UPI ID:', upi);
+  });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
+  loadStoreSettings();
+
   // Apply saved theme
   const savedTheme = localStorage.getItem('akashxTheme') || '';
   document.documentElement.setAttribute('data-theme', savedTheme);
@@ -227,13 +272,18 @@ function openPaymentModal(planId, title, price, panelName) {
   document.getElementById('payPlanTitle').textContent = title;
   document.getElementById('payPanelName').textContent = `${panelName} (₹${price})`;
 
-  // Generate dynamic UPI QR Code for igakash@fam
-  const upiId = 'igakash@fam';
-  const upiUrl = `upi://pay?pa=${upiId}&pn=AKASH%20X%20STORE&am=${price}&cu=INR&tn=AKASH-X-PANEL-${planId}`;
+  // Generate dynamic UPI QR Code using active store settings
+  const upiId = (window.STORE_SETTINGS && window.STORE_SETTINGS.upi_id) ? window.STORE_SETTINGS.upi_id : 'igakash@fam';
+  const merchantName = encodeURIComponent((window.STORE_SETTINGS && window.STORE_SETTINGS.upi_name) ? window.STORE_SETTINGS.upi_name : 'AKASH X STORE');
+  const upiUrl = `upi://pay?pa=${upiId}&pn=${merchantName}&am=${price}&cu=INR&tn=AKASH-X-PANEL-${planId}`;
   const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=260x260&margin=10&data=${encodeURIComponent(upiUrl)}`;
 
   const qrImg = document.getElementById('payQrImg');
   if (qrImg) qrImg.src = qrUrl;
+
+  document.querySelectorAll('.display-upi-id').forEach(el => {
+    el.textContent = upiId;
+  });
 
   // Reset steps & file
   document.getElementById('payStep1').style.display = 'block';

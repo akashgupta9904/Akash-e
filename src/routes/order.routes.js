@@ -30,51 +30,66 @@ router.post('/create', optionalAuth, (req, res) => {
       return res.status(400).json({ success: false, message: 'Please provide a valid email address.' });
     }
 
-    // Get cart items
-    let cartFilter = '';
-    let cartParam = null;
-    if (req.user && req.user.id) {
-      cartFilter = 'c.user_id = ?';
-      cartParam = req.user.id;
-    } else {
-      const sessionId = req.headers['x-session-id'] || req.body.session_id || 'guest_default_session';
-      cartFilter = 'c.session_id = ?';
-      cartParam = sessionId;
-    }
-
-    const cartItems = query(`
-      SELECT 
-        c.id as cart_item_id,
-        c.quantity,
-        p.id as product_id,
-        p.name,
-        p.price,
-        p.discount_percent,
-        p.stock,
-        ROUND(p.price * (1 - p.discount_percent / 100.0), 2) as final_price
-      FROM cart_items c
-      JOIN products p ON p.id = c.product_id
-      WHERE ${cartFilter}
-    `, [cartParam]);
-
-    if (!cartItems || cartItems.length === 0) {
-      return res.status(400).json({ success: false, message: 'Your shopping cart is empty.' });
-    }
-
-    // Check stock for every item
-    for (const item of cartItems) {
-      if (item.quantity > item.stock) {
-        return res.status(400).json({
-          success: false,
-          message: `Cannot place order. Product "${item.name}" only has ${item.stock} in stock, but you requested ${item.quantity}.`
-        });
-      }
-    }
-
-    // Calculate subtotal
+    // Handle Direct Panel Buy or Cart Items
+    let itemsToOrder = [];
     let subtotal = 0;
-    for (const item of cartItems) {
-      subtotal += item.final_price * item.quantity;
+
+    if (req.body.direct_item) {
+      const { name, price, quantity = 1 } = req.body.direct_item;
+      const numPrice = Number(price) || 80;
+      subtotal = numPrice * quantity;
+      itemsToOrder.push({
+        product_id: null,
+        name: name || 'Gaming Panel Access',
+        final_price: numPrice,
+        quantity: quantity
+      });
+    } else {
+      // Get cart items
+      let cartFilter = '';
+      let cartParam = null;
+      if (req.user && req.user.id) {
+        cartFilter = 'c.user_id = ?';
+        cartParam = req.user.id;
+      } else {
+        const sessionId = req.headers['x-session-id'] || req.body.session_id || 'guest_default_session';
+        cartFilter = 'c.session_id = ?';
+        cartParam = sessionId;
+      }
+
+      const cartItems = query(`
+        SELECT 
+          c.id as cart_item_id,
+          c.quantity,
+          p.id as product_id,
+          p.name,
+          p.price,
+          p.discount_percent,
+          p.stock,
+          ROUND(p.price * (1 - p.discount_percent / 100.0), 2) as final_price
+        FROM cart_items c
+        JOIN products p ON p.id = c.product_id
+        WHERE ${cartFilter}
+      `, [cartParam]);
+
+      if (!cartItems || cartItems.length === 0) {
+        return res.status(400).json({ success: false, message: 'Your shopping cart is empty.' });
+      }
+
+      // Check stock for every item
+      for (const item of cartItems) {
+        if (item.quantity > item.stock) {
+          return res.status(400).json({
+            success: false,
+            message: `Cannot place order. Product "${item.name}" only has ${item.stock} in stock, but you requested ${item.quantity}.`
+          });
+        }
+      }
+
+      itemsToOrder = cartItems;
+      for (const item of cartItems) {
+        subtotal += item.final_price * item.quantity;
+      }
     }
 
     // Validate and calculate coupon if provided
@@ -104,15 +119,25 @@ router.post('/create', optionalAuth, (req, res) => {
     }
 
     discountAmount = Math.round(discountAmount * 100) / 100;
-    const shippingFee = (subtotal - discountAmount) >= 1000 ? 0 : 99;
+    const isDirect = !!req.body.direct_item;
+    const shippingFee = isDirect ? 0 : ((subtotal - discountAmount) >= 1000 ? 0 : 99);
     const totalAmount = Math.max(0, Math.round((subtotal - discountAmount + shippingFee) * 100) / 100);
 
-    const orderNumber = generateOrderNumber();
+    const orderNumber = req.body.order_number || generateOrderNumber();
     const userId = req.user ? req.user.id : null;
     const addressJson = typeof shipping_address === 'string' ? shipping_address : JSON.stringify(shipping_address);
 
     // Initial payment status
-    const paymentStatus = payment_method === 'cod' ? 'pending' : (payment_method === 'test_gateway' ? 'paid' : 'pending');
+    let paymentStatus = 'pending';
+    let orderStatus = 'pending';
+
+    if (payment_method === 'test_gateway' || payment_method === 'upi_qr') {
+      paymentStatus = 'paid';
+      orderStatus = 'processing';
+    } else if (payment_method === 'cod') {
+      paymentStatus = 'pending';
+      orderStatus = 'pending';
+    }
 
     // Create order
     const orderRes = execute(`
@@ -135,28 +160,32 @@ router.post('/create', optionalAuth, (req, res) => {
       totalAmount,
       payment_method,
       paymentStatus,
-      paymentStatus === 'paid' ? 'processing' : 'pending'
+      orderStatus
     ]);
 
     const orderId = orderRes.lastInsertRowid;
 
     // Insert order items and deduct stock
-    for (const item of cartItems) {
+    for (const item of itemsToOrder) {
       const itemSubtotal = Math.round(item.final_price * item.quantity * 100) / 100;
       execute(`
         INSERT INTO order_items (order_id, product_id, product_name, product_price, quantity, subtotal)
         VALUES (?, ?, ?, ?, ?, ?)
-      `, [orderId, item.product_id, item.name, item.final_price, item.quantity, itemSubtotal]);
+      `, [orderId, item.product_id || null, item.name, item.final_price, item.quantity, itemSubtotal]);
 
-      // Deduct stock
-      execute(`UPDATE products SET stock = MAX(0, stock - ?) WHERE id = ?`, [item.quantity, item.product_id]);
+      // Deduct stock if linked product exists
+      if (item.product_id) {
+        execute(`UPDATE products SET stock = MAX(0, stock - ?) WHERE id = ?`, [item.quantity, item.product_id]);
+      }
     }
 
-    // Clear cart
-    if (userId) {
-      execute('DELETE FROM cart_items WHERE user_id = ?', [userId]);
-    } else {
-      execute('DELETE FROM cart_items WHERE session_id = ?', [cartParam]);
+    // Clear cart if cart order
+    if (!isDirect) {
+      if (userId) {
+        execute('DELETE FROM cart_items WHERE user_id = ?', [userId]);
+      } else {
+        execute('DELETE FROM cart_items WHERE session_id = ?', [cartParam]);
+      }
     }
 
     // If test gateway was chosen and marked paid, log payment record

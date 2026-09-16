@@ -1,7 +1,7 @@
 @echo off
-title Nexus E-Commerce Server
+title Akash FF Panel Server
 echo ========================================================
-echo  Launching Nexus Full-Stack E-Commerce Platform...
+echo  Launching Akash FF Panel Gaming Store Platform...
 echo ========================================================
 echo.
 
