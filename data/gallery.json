@@ -1,0 +1,15 @@
+{
+  "items": [
+    { "id": "proof-1", "kind": "proof", "title": "FEEDBACK 💥✅", "media_url": "https://vipxstore.in/uploads/proofs/4cb2b9b7d9d72972_1784554001.mp4", "platform": "Android", "tag": "Customer Feedback" },
+    { "id": "proof-2", "kind": "proof", "title": "Customer proof 2", "media_url": "https://vipxstore.in/uploads/proofs/3f3d89e0f6bad067_1784554202.mp4", "platform": "iOS", "tag": "Verified" },
+    { "id": "proof-3", "kind": "proof", "title": "Customer proof 3", "media_url": "https://vipxstore.in/uploads/proofs/fd099fe901d1a448_1784554295.mp4", "platform": "Android", "tag": "Verified" },
+    { "id": "proof-4", "kind": "proof", "title": "Customer proof 4", "media_url": "https://vipxstore.in/uploads/proofs/575af7ae5b4b77d6_1784554345.mp4", "platform": "Android", "tag": "Verified" },
+    { "id": "proof-5", "kind": "proof", "title": "Customer proof 5", "media_url": "https://vipxstore.in/uploads/proofs/9cee3731ade30f78_1784554437.png", "platform": "Android", "tag": "Verified" },
+    { "id": "proof-6", "kind": "proof", "title": "Customer proof 6", "media_url": "https://vipxstore.in/uploads/proofs/5af4c5e26618d92e_1784554465.png", "platform": "iOS", "tag": "Verified" },
+    { "id": "proof-7", "kind": "proof", "title": "Customer proof 7", "media_url": "https://vipxstore.in/uploads/proofs/d19696f2e424056e_1784554781.mp4", "platform": "iOS", "tag": "Verified" },
+    { "id": "proof-8", "kind": "proof", "title": "Customer proof 8", "media_url": "https://vipxstore.in/uploads/proofs/54c890f646b7e5b7_1784554817.mp4", "platform": "Android", "tag": "Verified" },
+    { "id": "gameplay-1", "kind": "gameplay", "title": "HOW TO USE WEBSITE ✅", "media_url": "https://vipxstore.in/uploads/gameplay/b096815d3e696caf_1786711205.mp4", "thumbnail_url": "https://vipxstore.in/uploads/gameplay/6e118478dfaa3af3_1786711211.png", "platform": "Android", "description": "84k views" },
+    { "id": "gameplay-2", "kind": "gameplay", "title": "1 VS 4 EASY ☠️🎮", "media_url": "https://vipxstore.in/uploads/gameplay/01079a549c99f8d7_1786711412.mp4", "thumbnail_url": "https://vipxstore.in/uploads/gameplay/140477aab1c5f92e_1786711418.png", "platform": "Android", "description": "53.3k views" },
+    { "id": "gameplay-3", "kind": "gameplay", "title": "BR RANK 💥 ☠️ ONLY RED NUMBER", "media_url": "https://vipxstore.in/uploads/gameplay/edc643fe2dc6a64b_1786711558.mp4", "thumbnail_url": "https://vipxstore.in/uploads/gameplay/223f084a8c4c0233_1786711563.png", "platform": "Android", "description": "86.4k views" }
+  ]
+}

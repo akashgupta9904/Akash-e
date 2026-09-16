@@ -61,6 +61,29 @@ A production-ready, full-stack E-Commerce store built with **Node.js, Express, n
 
 ## 🗄️ 2. Creating & Resetting the Database
 
+### Live Proofs and Gameplay on Vercel
+
+The public Proofs and Gameplay pages and the admin gallery now share `data/gallery.json`.
+Existing media URLs are included there, so the 8 proofs and 3 gameplay videos appear
+in the admin gallery after deployment.
+
+For edits and deletes to persist on Vercel, add these **Production** environment
+variables to the Vercel project:
+
+- `GALLERY_GITHUB_REPO=akashgupta9904/Akash-e`
+- `GALLERY_GITHUB_BRANCH=main`
+- `GALLERY_GITHUB_TOKEN`: a fine-grained GitHub token with **Contents: Read and write**
+  access to this repository only
+- `GALLERY_EDIT_SECRET`: a long, random secret that you enter in the admin gallery
+  when saving or deleting media
+
+Redeploy after adding the variables. A gallery edit commits `data/gallery.json` to
+GitHub, and the Vercel Git integration deploys the updated version. Public gallery
+requests read the latest file from GitHub, so changes appear before the next build
+finishes. Use HTTPS media URLs; Vercel's local file storage is temporary, so the
+admin gallery accepts URLs instead of file uploads. Without the two secrets, the
+existing media is visible but live editing returns a setup error.
+
 The database is powered by **Node.js native SQLite** and is stored locally at `data/ecommerce.db`.
 
 - **Auto-Initialization**: When you start the server (`node server.js`), the database schema, foreign key constraints, indexes, sample categories, 8 premium sample products, and coupons are automatically created.

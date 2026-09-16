@@ -57,6 +57,9 @@ app.use(['/api/coupons', '/coupons'], require('./src/routes/coupon.routes'));
 app.use(['/api/orders', '/orders'], require('./src/routes/order.routes'));
 app.use(['/api/payments', '/payments'], require('./src/routes/payment.routes'));
 app.use(['/api/proofs', '/proofs'], require('./src/routes/proof.routes'));
+const galleryRoutes = require('./src/routes/gallery.routes');
+app.use(['/api/gallery', '/gallery'], galleryRoutes.publicRouter);
+app.use(['/api/admin/gallery', '/admin/gallery'], galleryRoutes.adminRouter);
 app.use(['/api/settings', '/settings'], require('./src/routes/setting.routes'));
 app.use(['/api/admin', '/admin'], require('./src/routes/admin.routes'));
 
@@ -146,4 +149,3 @@ if (require.main === module || !process.env.VERCEL) {
 }
 
 module.exports = app;
-
