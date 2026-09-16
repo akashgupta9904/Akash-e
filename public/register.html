@@ -2,106 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Create Account | Akash X Store</title>
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-  <link rel="stylesheet" href="/css/main.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <style>
-    .auth-page {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: radial-gradient(circle at 10% 20%, rgba(79, 70, 229, 0.08) 0%, rgba(248, 250, 252, 1) 90%);
-      padding: 1.5rem;
-    }
-    .auth-card {
-      width: 100%;
-      max-width: 460px;
-      background: #fff;
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 2.25rem;
-      box-shadow: var(--shadow-xl);
-    }
-  </style>
+  <title>AKASH X STORE</title>
+  <meta http-equiv="refresh" content="0; url=/">
+  <script>window.location.replace('/');</script>
 </head>
-<body class="auth-page">
-
-  <div class="auth-card">
-    <div style="text-align: center; margin-bottom: 1.75rem;">
-      <a href="/" class="brand-logo" style="justify-content: center; margin-bottom: 0.5rem;">
-        <img src="/favicon.svg" alt="Akash X Store" style="width: 34px; height: 34px;">
-        AKASH X <span>STORE</span>
-      </a>
-      <h1 style="font-size: 1.5rem; margin-top: 0.5rem;">Create Your Account</h1>
-      <p style="color: var(--text-muted); font-size: 0.88rem;">Join Akash X Store for faster checkout & exclusive member perks.</p>
-    </div>
-
-    <form id="registerForm">
-      <div class="form-group" style="margin-bottom: 1.1rem;">
-        <label style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.35rem;">Full Name *</label>
-        <input type="text" id="regName" class="form-control" placeholder="e.g. Rahul Sharma" required>
-      </div>
-
-      <div class="form-group" style="margin-bottom: 1.1rem;">
-        <label style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.35rem;">Email Address *</label>
-        <input type="email" id="regEmail" class="form-control" placeholder="name@example.com" required>
-      </div>
-
-      <div class="form-group" style="margin-bottom: 1.1rem;">
-        <label style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.35rem;">Phone Number</label>
-        <input type="tel" id="regPhone" class="form-control" placeholder="+91 9876543210">
-      </div>
-
-      <div class="form-group" style="margin-bottom: 1.5rem;">
-        <label style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.35rem;">Password (Min. 6 characters) *</label>
-        <input type="password" id="regPassword" class="form-control" placeholder="Create a strong password" minlength="6" required>
-      </div>
-
-      <button type="submit" class="btn btn-primary btn-block" id="regSubmitBtn">
-        Create Account <i class="fa-solid fa-arrow-right"></i>
-      </button>
-    </form>
-
-    <div style="text-align: center; margin-top: 1.75rem; font-size: 0.88rem; color: var(--text-muted);">
-      Already have an account? <a href="/login.html" style="color: var(--primary); font-weight: 600;">Sign In</a>
-    </div>
-  </div>
-
-  <script src="/js/api.js"></script>
-  <script>
-    document.getElementById('registerForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const name = document.getElementById('regName').value.trim();
-      const email = document.getElementById('regEmail').value.trim();
-      const phone = document.getElementById('regPhone').value.trim();
-      const password = document.getElementById('regPassword').value;
-      const btn = document.getElementById('regSubmitBtn');
-
-      btn.disabled = true;
-      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Creating Account...';
-
-      try {
-        const res = await API.post('/auth/register', { name, email, phone, password });
-        API.setToken(res.token);
-        API.setUser(res.user);
-
-        // Merge guest cart
-        const sid = API.getSessionId();
-        await API.post('/cart/merge', { sessionId: sid }).catch(() => {});
-
-        API.showToast('Account created successfully!', 'success');
-        setTimeout(() => {
-          window.location.href = '/shop.html';
-        }, 500);
-      } catch (err) {
-        API.showToast(err.message || 'Registration failed', 'error');
-        btn.disabled = false;
-        btn.innerHTML = 'Create Account <i class="fa-solid fa-arrow-right"></i>';
-      }
-    });
-  </script>
+<body style="background:#060d1a; color:#fff; font-family:sans-serif; text-align:center; padding:5rem;">
+  <h2>Redirecting to AKASH X STORE...</h2>
+  <p><a href="/" style="color:#7ec8e3;">Click here if not redirected automatically.</a></p>
 </body>
 </html>
