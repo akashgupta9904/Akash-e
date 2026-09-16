@@ -42,21 +42,26 @@ router.post('/login', validateLogin, (req, res) => {
 
     // Direct check for Akash Owner master credentials
     if (email === 'akash@4141' && password === '4141') {
-      let user = getOne('SELECT * FROM users WHERE email = ?', ['akash@4141']);
-      if (!user) {
-        const hash = bcrypt.hashSync('4141', 10);
-        const r = execute(
-          `INSERT INTO users (name, email, password_hash, role, phone) VALUES (?, ?, ?, 'admin', ?)`,
-          ['Akash Owner', 'akash@4141', hash, '+91 9135164069']
-        );
-        user = getOne('SELECT * FROM users WHERE id = ?', [r.lastInsertRowid]);
+      let user = null;
+      try {
+        user = getOne('SELECT * FROM users WHERE email = ?', ['akash@4141']);
+        if (!user) {
+          const hash = bcrypt.hashSync('4141', 10);
+          const r = execute(
+            `INSERT INTO users (name, email, password_hash, role, phone) VALUES (?, ?, ?, 'admin', ?)`,
+            ['Akash Owner', 'akash@4141', hash, '+91 9135164069']
+          );
+          user = getOne('SELECT * FROM users WHERE id = ?', [r.lastInsertRowid]);
+        }
+      } catch (dbErr) {
+        console.warn('DB notice during owner login:', dbErr.message);
       }
       const safeUser = {
-        id: user.id,
-        name: user.name || 'Akash Owner',
-        email: user.email,
+        id: (user && user.id) || 1,
+        name: (user && user.name) || 'Akash Owner',
+        email: 'akash@4141',
         role: 'admin',
-        phone: user.phone
+        phone: (user && user.phone) || '+91 9135164069'
       };
       const token = generateToken(safeUser);
       return res.json({

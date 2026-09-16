@@ -161,8 +161,10 @@ function initSchema() {
   const defaultSettings = [
     ['upi_id', 'igakash@fam'],
     ['upi_name', 'Akash X Store'],
+    ['upi_qr_url', ''],
     ['whatsapp', '+91 9135164069'],
     ['telegram', 'https://t.me/Real_Panel_100'],
+    ['telegram_id', '@Real_Panel_100'],
     ['site_title', 'Akash X Store'],
     ['logo_url', '/assets/img/logo.png'],
     ['price_1day', '35'],
@@ -177,7 +179,7 @@ function initSchema() {
     const existing = db.prepare('SELECT key FROM site_settings WHERE key = ?').get(key);
     if (!existing) {
       db.prepare('INSERT INTO site_settings (key, value) VALUES (?, ?)').run(key, value);
-    } else if (key === 'site_title' || key === 'upi_id' || key === 'logo_url' || key.startsWith('price_') || key === 'telegram' || key === 'universal_key') {
+    } else if (key === 'site_title' || key === 'upi_id' || key === 'logo_url' || key.startsWith('price_') || key === 'telegram' || key === 'telegram_id' || key === 'universal_key') {
       db.prepare('UPDATE site_settings SET value = ? WHERE key = ?').run(value, key);
     }
   }

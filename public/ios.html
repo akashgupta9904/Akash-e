@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="red">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>iPhone Panel — Akash X Store</title>
 <meta name="description" content="Akash X Store — Premium gaming panel store with clean setup, trusted support, proof gallery, and secure UPI checkout.">
-<meta name="theme-color" content="#7ec8e3">
+<meta name="theme-color" content="#ff4757">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="icon" href="/assets/img/logo.png" type="image/png">
 
@@ -338,11 +338,11 @@ function confirmPaymentAction() {
 
 (function(){
   const THEMES = [
-    { id: '',       name: '🔵 Steel Blue (Default)', sw: ['#060d1a', '#7ec8e3', '#f0f8ff'] },
+    { id: 'red',    name: '🔴 Cyber Red (Default)',  sw: ['#0e0505', '#ff4757', '#ffffff'] },
+    { id: 'blue',   name: '🔵 Steel Blue',          sw: ['#060d1a', '#7ec8e3', '#f0f8ff'] },
     { id: 'lime',   name: '🟢 Lime',                 sw: ['#05070d', '#9ae600', '#ffffff'] },
     { id: 'pastel', name: '🌸 Pastel',               sw: ['#5D6B6B', '#BDD7D8', '#F7CBCA'] },
     { id: 'purple', name: '🟣 Purple',               sw: ['#08050f', '#b06ee0', '#f0e8ff'] },
-    { id: 'red',    name: '🔴 Red',                  sw: ['#0f0505', '#e07070', '#ffe8e8'] },
     { id: 'royal',  name: '👑 Royal Mauve',          sw: ['#190019', '#854F6B', '#FBE4D8'] },
     { id: 'mocha',  name: '🤎 Mocha Mono',           sw: ['#2A0800', '#C09891', '#F4D6D8'] }
   ];
@@ -351,7 +351,7 @@ function confirmPaymentAction() {
   const list = document.getElementById('themePickerList');
   if (!picker || !list) return;
 
-  const saved = localStorage.getItem('akashxTheme') || localStorage.getItem('vipxsTheme') || '';
+  const saved = localStorage.getItem('akashxTheme') || 'red';
   document.documentElement.setAttribute('data-theme', saved);
 
   THEMES.forEach(function(t) {

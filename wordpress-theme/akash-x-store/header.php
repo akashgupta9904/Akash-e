@@ -2,16 +2,16 @@
 /**
  * The Header for VIP X STORE / AKASH X STORE WordPress Theme
  */
-$site_title = akash_get_opt('site_title', 'VIP X STORE');
+$site_title = akash_get_opt('site_title', 'AKASH X STORE');
 $theme_uri = get_stylesheet_directory_uri();
 ?>
 <!DOCTYPE html>
-<html <?php language_attributes(); ?>>
+<html <?php language_attributes(); ?> data-theme="red">
 <head>
 <meta charset="<?php bloginfo('charset'); ?>">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title><?php wp_title('—', true, 'right'); ?><?= htmlspecialchars($site_title) ?></title>
-<meta name="theme-color" content="#7ec8e3">
+<meta name="theme-color" content="#ff4757">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="icon" href="<?= $theme_uri ?>/assets/img/vipx_logo.png" type="image/png">
 

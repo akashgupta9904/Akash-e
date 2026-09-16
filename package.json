@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Akash FF Panel Store Platform with Admin Dashboard, Gaming Panel Deliveries, and UPI QR Checkout",
   "main": "server.js",
+  "engines": {
+    "node": ">=20.0.0"
+  },
   "scripts": {
     "start": "node server.js",
     "dev": "node --watch server.js"

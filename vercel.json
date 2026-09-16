@@ -5,6 +5,7 @@
   "trailingSlash": false,
   "rewrites": [
     { "source": "/api/(.*)", "destination": "/api/index.js" },
+    { "source": "/api", "destination": "/api/index.js" },
     { "source": "/android", "destination": "/public/android.html" },
     { "source": "/android.php", "destination": "/public/android.html" },
     { "source": "/ios", "destination": "/public/ios.html" },
@@ -18,6 +19,14 @@
     { "source": "/login", "destination": "/public/login.html" },
     { "source": "/admin", "destination": "/public/admin/index.html" },
     { "source": "/admin/(.*)", "destination": "/public/admin/$1" },
-    { "source": "/(.*)", "destination": "/public/$1" }
+    { "source": "/css/(.*)", "destination": "/public/css/$1" },
+    { "source": "/js/(.*)", "destination": "/public/js/$1" },
+    { "source": "/assets/(.*)", "destination": "/public/assets/$1" },
+    { "source": "/uploads/(.*)", "destination": "/public/uploads/$1" },
+    { "source": "/favicon.svg", "destination": "/public/favicon.svg" },
+    { "source": "/favicon.ico", "destination": "/public/favicon.ico" },
+    { "source": "/", "destination": "/public/index.html" },
+    { "source": "/index.html", "destination": "/public/index.html" },
+    { "source": "/((?!api/).*)", "destination": "/public/$1" }
   ]
 }

@@ -5,11 +5,11 @@
 
 // 1. Color Themes Configuration
 const THEMES = [
-  { id: '',       name: '🔵 Steel Blue (Default)', sw: ['#060d1a', '#7ec8e3', '#f0f8ff'] },
+  { id: 'red',    name: '🔴 Cyber Red (Default)',  sw: ['#0e0505', '#ff4757', '#ffffff'] },
+  { id: 'blue',   name: '🔵 Steel Blue',          sw: ['#060d1a', '#7ec8e3', '#f0f8ff'] },
   { id: 'lime',   name: '🟢 Lime',                 sw: ['#05070d', '#9ae600', '#ffffff'] },
   { id: 'pastel', name: '🌸 Pastel',               sw: ['#5D6B6B', '#BDD7D8', '#F7CBCA'] },
   { id: 'purple', name: '🟣 Purple',               sw: ['#08050f', '#b06ee0', '#f0e8ff'] },
-  { id: 'red',    name: '🔴 Red',                  sw: ['#0f0505', '#e07070', '#ffe8e8'] },
   { id: 'royal',  name: '👑 Royal Mauve',          sw: ['#190019', '#854F6B', '#FBE4D8'] },
   { id: 'mocha',  name: '🤎 Mocha Mono',           sw: ['#2A0800', '#C09891', '#F4D6D8'] }
 ];
@@ -17,8 +17,10 @@ const THEMES = [
 window.STORE_SETTINGS = {
   upi_id: 'igakash@fam',
   upi_name: 'Akash X Store',
+  upi_qr_url: '',
   whatsapp: '+91 9135164069',
   telegram: 'https://t.me/Real_Panel_100',
+  telegram_id: '@Real_Panel_100',
   prices: { '1': 35, '3': 45, '7': 55, '30': 150 }
 };
 
@@ -49,10 +51,15 @@ async function loadStoreSettings() {
         if (icon) icon.href = res.settings.logo_url;
       }
 
-      // Update Telegram
+      // Update Telegram Link & Username/ID
       if (res.settings.telegram) {
         document.querySelectorAll('a[href*="t.me"]').forEach(a => {
           a.href = res.settings.telegram;
+        });
+      }
+      if (res.settings.telegram_id) {
+        document.querySelectorAll('.display-telegram-id').forEach(el => {
+          el.textContent = res.settings.telegram_id;
         });
       }
 
@@ -83,8 +90,8 @@ function copyActiveUpi() {
 document.addEventListener('DOMContentLoaded', () => {
   loadStoreSettings();
 
-  // Apply saved theme
-  const savedTheme = localStorage.getItem('akashxTheme') || '';
+  // Apply saved theme (defaults to 'red')
+  const savedTheme = localStorage.getItem('akashxTheme') || 'red';
   document.documentElement.setAttribute('data-theme', savedTheme);
 
   // Reveal Admin-only elements exclusively if authenticated as Admin
@@ -318,14 +325,25 @@ function openPaymentModal(planId, title, price, panelName) {
   document.getElementById('payPlanTitle').textContent = title;
   document.getElementById('payPanelName').textContent = `${panelName} (₹${price})`;
 
-  // Generate dynamic UPI QR Code using active store settings
+  // Generate dynamic UPI QR Code or use custom uploaded QR from store settings
   const upiId = (window.STORE_SETTINGS && window.STORE_SETTINGS.upi_id) ? window.STORE_SETTINGS.upi_id : 'igakash@fam';
   const merchantName = encodeURIComponent((window.STORE_SETTINGS && window.STORE_SETTINGS.upi_name) ? window.STORE_SETTINGS.upi_name : 'AKASH X STORE');
   const upiUrl = `upi://pay?pa=${upiId}&pn=${merchantName}&am=${price}&cu=INR&tn=AKASH-X-PANEL-${planId}`;
-  const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=260x260&margin=10&data=${encodeURIComponent(upiUrl)}`;
-
+  
   const qrImg = document.getElementById('payQrImg');
-  if (qrImg) qrImg.src = qrUrl;
+  if (qrImg) {
+    if (window.STORE_SETTINGS && window.STORE_SETTINGS.upi_qr_url && window.STORE_SETTINGS.upi_qr_url.trim()) {
+      qrImg.src = window.STORE_SETTINGS.upi_qr_url.trim();
+    } else {
+      qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=260x260&margin=10&data=${encodeURIComponent(upiUrl)}`;
+    }
+  }
+
+  // Update direct UPI app pay button if present
+  const directPayBtn = document.getElementById('directUpiPayBtn');
+  if (directPayBtn) {
+    directPayBtn.href = upiUrl;
+  }
 
   document.querySelectorAll('.display-upi-id').forEach(el => {
     el.textContent = upiId;

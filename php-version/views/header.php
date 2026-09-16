@@ -14,13 +14,13 @@ if ($baseDir === '/' || $baseDir === '\\') {
 $currentPath = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH);
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="red">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title><?= htmlspecialchars($siteConfig['site_title'] ?? 'VIP X STORE') ?> — Premium Gaming Panels</title>
+<title><?= htmlspecialchars($siteConfig['site_title'] ?? 'AKASH X STORE') ?> — Premium Gaming Panels</title>
 <meta name="description" content="Premium gaming panel store with clean setup, trusted support, proof gallery, and secure UPI checkout.">
-<meta name="theme-color" content="#7ec8e3">
+<meta name="theme-color" content="#ff4757">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="icon" href="<?= $baseDir ?>/assets/img/vipx_logo.png" type="image/png">
 

@@ -202,22 +202,46 @@
                 <div class="form-row">
                   <div class="form-group">
                     <label>Your FamPay / UPI ID (VPA) *</label>
-                    <input type="text" id="setting_upi_id" class="form-control" placeholder="e.g. igakash@fam" required>
+                    <input type="text" id="setting_upi_id" class="form-control" placeholder="e.g. igakash@fam" required oninput="updateQrPreview()">
                     <small style="color: var(--text-muted); font-size: 0.78rem; display: block; margin-top: 4px;">
                       Currently active: <strong id="curUpiId" style="color: var(--primary);">igakash@fam</strong>
                     </small>
                   </div>
                   <div class="form-group">
                     <label>Payee Display Name *</label>
-                    <input type="text" id="setting_upi_name" class="form-control" placeholder="Akash X Store" required>
+                    <input type="text" id="setting_upi_name" class="form-control" placeholder="Akash X Store" required oninput="updateQrPreview()">
                     <small style="color: var(--text-muted); font-size: 0.78rem; display: block; margin-top: 4px;">
                       Name shown in Google Pay / PhonePe / Paytm / FamPay.
                     </small>
                   </div>
                 </div>
-                <div class="form-group" style="margin-top: 0.75rem;">
-                  <label>Custom FamPay QR Code Image URL (Optional)</label>
-                  <input type="text" id="setting_upi_qr_url" class="form-control" placeholder="Leave empty for dynamic auto-generated FamPay QR">
+
+                <div class="form-group" style="margin-top: 1.25rem;">
+                  <label>QR Code Management (Upload or Auto-Generate)</label>
+                  <div style="display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap; margin-bottom: 0.75rem;">
+                    <input type="text" id="setting_upi_qr_url" class="form-control" placeholder="Leave empty for dynamic auto-generated FamPay QR" style="flex: 1;" oninput="updateQrPreview()">
+                    <input type="file" id="qrFileInput" accept="image/*" style="display:none" onchange="uploadCustomQr(event)">
+                    <button type="button" class="btn btn-secondary btn-sm" onclick="document.getElementById('qrFileInput').click()">
+                      <i class="fa-solid fa-cloud-arrow-up"></i> Upload QR Image
+                    </button>
+                    <button type="button" class="btn btn-secondary btn-sm" onclick="clearCustomQr()">
+                      <i class="fa-solid fa-wand-magic-sparkles"></i> Use Dynamic QR
+                    </button>
+                  </div>
+
+                  <!-- QR Code Live Preview Card -->
+                  <div style="display: flex; align-items: center; gap: 1.25rem; background: #f8fafc; padding: 1rem; border-radius: 12px; border: 1px dashed #cbd5e1;">
+                    <div style="width: 110px; height: 110px; background: #fff; border-radius: 10px; border: 1px solid #e2e8f0; display: flex; align-items: center; justify-content: center; padding: 4px;">
+                      <img id="adminQrPreviewImg" src="" alt="QR Preview" style="width: 100%; height: 100%; object-fit: contain;">
+                    </div>
+                    <div>
+                      <div id="adminQrStatusText" style="font-size: 0.88rem; font-weight: 700; color: #1e293b;">Dynamic Auto UPI QR</div>
+                      <div style="font-size: 0.78rem; color: #64748b; margin-top: 2px;">This is the exact QR code customers will scan on Android & iOS checkout.</div>
+                      <div style="margin-top: 6px; font-size: 0.76rem; color: #10b981; font-weight: 600;">
+                        <i class="fa-solid fa-circle-check"></i> Scannable by PhonePe, GPay, Paytm, FamPay & BHIM
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -292,12 +316,19 @@
                     </small>
                   </div>
                   <div class="form-group">
-                    <label>Telegram Channel / Contact Link</label>
-                    <input type="text" id="setting_telegram" class="form-control" placeholder="https://t.me/Real_Panel_100">
+                    <label>Telegram Channel / Group Link *</label>
+                    <input type="text" id="setting_telegram" class="form-control" placeholder="https://t.me/Real_Panel_100" required>
                     <small style="color: var(--text-muted); font-size: 0.78rem; display: block; margin-top: 4px;">
-                      Link for telegram buttons & footer.
+                      Link for telegram buttons, order delivery, & footer.
                     </small>
                   </div>
+                </div>
+                <div class="form-group" style="margin-top: 0.75rem;">
+                  <label>Telegram Username / ID</label>
+                  <input type="text" id="setting_telegram_id" class="form-control" placeholder="@Real_Panel_100">
+                  <small style="color: var(--text-muted); font-size: 0.78rem; display: block; margin-top: 4px;">
+                    e.g. @Real_Panel_100 (Shown on support buttons and customer badges).
+                  </small>
                 </div>
               </div>
             </div>
@@ -338,6 +369,56 @@
       updateLogoPreview('/assets/img/logo.png');
     }
 
+    function updateQrPreview() {
+      const customUrl = (document.getElementById('setting_upi_qr_url') ? document.getElementById('setting_upi_qr_url').value.trim() : '');
+      const upiId = (document.getElementById('setting_upi_id') ? document.getElementById('setting_upi_id').value.trim() : '') || 'igakash@fam';
+      const upiName = encodeURIComponent((document.getElementById('setting_upi_name') ? document.getElementById('setting_upi_name').value.trim() : '') || 'Akash X Store');
+      const img = document.getElementById('adminQrPreviewImg');
+      const status = document.getElementById('adminQrStatusText');
+
+      if (!img) return;
+
+      if (customUrl) {
+        img.src = customUrl;
+        if (status) status.innerHTML = '<span style="color:#6366f1;"><i class="fa-solid fa-image"></i> Custom Uploaded QR Active</span>';
+      } else {
+        const upiUri = `upi://pay?pa=${upiId}&pn=${upiName}&cu=INR`;
+        img.src = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&margin=10&data=${encodeURIComponent(upiUri)}`;
+        if (status) status.innerHTML = '<span style="color:#10b981;"><i class="fa-solid fa-wand-magic-sparkles"></i> Dynamic Auto UPI QR</span>';
+      }
+    }
+
+    async function uploadCustomQr(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      const formData = new FormData();
+      formData.append('image', file);
+
+      try {
+        const token = API.getToken();
+        const res = await fetch('/api/admin/upload', {
+          method: 'POST',
+          headers: { 'Authorization': `Bearer ${token}` },
+          body: formData
+        }).then(r => r.json());
+
+        if (res.success && res.url) {
+          document.getElementById('setting_upi_qr_url').value = res.url;
+          updateQrPreview();
+          alert('✅ Custom QR Image uploaded successfully!');
+        } else {
+          alert('Upload failed: ' + (res.message || 'Unknown error'));
+        }
+      } catch (err) {
+        alert('Failed to upload QR image: ' + err.message);
+      }
+    }
+
+    function clearCustomQr() {
+      document.getElementById('setting_upi_qr_url').value = '';
+      updateQrPreview();
+    }
+
     async function loadSettings() {
       try {
         const res = await API.get('/admin/settings');
@@ -363,7 +444,9 @@
 
         document.getElementById('setting_whatsapp').value = s.whatsapp || '+91 9135164069';
         document.getElementById('setting_telegram').value = s.telegram || 'https://t.me/Real_Panel_100';
+        document.getElementById('setting_telegram_id').value = s.telegram_id || '@Real_Panel_100';
 
+        updateQrPreview();
       } catch (err) {
         alert('Failed to load store settings: ' + err.message);
       }
@@ -392,13 +475,15 @@
         universal_key: document.getElementById('setting_universal_key').value.trim(),
 
         whatsapp: document.getElementById('setting_whatsapp').value.trim(),
-        telegram: document.getElementById('setting_telegram').value.trim()
+        telegram: document.getElementById('setting_telegram').value.trim(),
+        telegram_id: document.getElementById('setting_telegram_id').value.trim()
       };
 
       try {
         await API.post('/admin/settings', payload);
         document.getElementById('curUpiId').textContent = payload.upi_id;
-        alert('✅ Settings saved successfully! Your Store Name, Red Logo, UPI ID, Prices (35, 45, 55, 150), and Universal Key are updated live.');
+        updateQrPreview();
+        alert('✅ Settings saved successfully! Your Store Name, Red Logo, UPI ID, QR Code, Telegram, Prices, and Universal Key are updated live.');
       } catch (err) {
         alert('Failed to save settings: ' + err.message);
       } finally {

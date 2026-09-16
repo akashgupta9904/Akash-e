@@ -48,25 +48,25 @@ app.use('/api/auth/register', authLimiter);
 // SEO Routes (Section 12)
 app.use('/', require('./src/routes/seo.routes'));
 
-// API Routes
-app.use('/api/auth', require('./src/routes/auth.routes'));
-app.use('/api/categories', require('./src/routes/category.routes'));
-app.use('/api/products', require('./src/routes/product.routes'));
-app.use('/api/cart', require('./src/routes/cart.routes'));
-app.use('/api/coupons', require('./src/routes/coupon.routes'));
-app.use('/api/orders', require('./src/routes/order.routes'));
-app.use('/api/payments', require('./src/routes/payment.routes'));
-app.use('/api/proofs', require('./src/routes/proof.routes'));
-app.use('/api/settings', require('./src/routes/setting.routes'));
-app.use('/api/admin', require('./src/routes/admin.routes'));
+// API Routes (mounted with and without /api/ for Vercel serverless compatibility)
+app.use(['/api/auth', '/auth'], require('./src/routes/auth.routes'));
+app.use(['/api/categories', '/categories'], require('./src/routes/category.routes'));
+app.use(['/api/products', '/products'], require('./src/routes/product.routes'));
+app.use(['/api/cart', '/cart'], require('./src/routes/cart.routes'));
+app.use(['/api/coupons', '/coupons'], require('./src/routes/coupon.routes'));
+app.use(['/api/orders', '/orders'], require('./src/routes/order.routes'));
+app.use(['/api/payments', '/payments'], require('./src/routes/payment.routes'));
+app.use(['/api/proofs', '/proofs'], require('./src/routes/proof.routes'));
+app.use(['/api/settings', '/settings'], require('./src/routes/setting.routes'));
+app.use(['/api/admin', '/admin'], require('./src/routes/admin.routes'));
 
 // Health Check Endpoint
-app.get('/api/health', (req, res) => {
+app.get(['/api/health', '/health'], (req, res) => {
   res.json({
     status: 'healthy',
     timestamp: new Date(),
     uptime: process.uptime(),
-    platform: 'Nexus E-Commerce Engine v1.0.0'
+    platform: 'Akash X Store Platform Engine v2.0.0'
   });
 });
 
@@ -130,8 +130,8 @@ if (require.main === module || !process.env.VERCEL) {
   =============================================================
   🌐 PC Storefront:     http://localhost:${PORT}
   📱 PHONE STOREFRONT:  http://${localIp}:${PORT}
-  👑 PHONE OWNER LOGIN: http://${localIp}:${PORT}/login.html
-  🔐 Owner ID / Pass:   akash@4141 / 4141
+  👑 PHONE OWNER LOGIN: http://${localIp}:${PORT}/login
+  🔐 Owner Access:      Configured Securely
   =============================================================
     `);
   });
