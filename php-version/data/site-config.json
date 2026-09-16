@@ -1,0 +1,67 @@
+{
+  "site_title": "AKASH X STORE",
+  "upi_id": "igakash@fam",
+  "upi_name": "AKASH X STORE",
+  "whatsapp": "+91 9135164069",
+  "telegram": "https://t.me/akashxstore",
+  "voice_url": "https://videotourl.com/audio/1781181579079-2c5e78ea-9864-416f-b65f-08f7c8dabf61.mp3",
+  "announcement": "🔥 Season 43 Anti-Ban v2.8 Updated! Direct UPI Payment & Instant Key Release.",
+  "prices": {
+    "1": 80,
+    "15": 150,
+    "30": 299,
+    "90": 599
+  },
+  "videos": [
+    {
+      "id": "vid-1",
+      "title": "Free Fire Android Drag Headshot Demonstration",
+      "type": "Android",
+      "duration": "3:15",
+      "views": "14.2K",
+      "url": "https://www.youtube.com/embed/0iz1BizFR2w"
+    },
+    {
+      "id": "vid-2",
+      "title": "iOS VIP Panel Setup & Smooth Aim Demonstration",
+      "type": "iOS",
+      "duration": "2:40",
+      "views": "9.8K",
+      "url": "https://www.youtube.com/embed/0iz1BizFR2w"
+    },
+    {
+      "id": "vid-3",
+      "title": "Grandmaster Full Squad Wipe with Location ESP",
+      "type": "All",
+      "duration": "4:10",
+      "views": "18.5K",
+      "url": "https://www.youtube.com/embed/0iz1BizFR2w"
+    }
+  ],
+  "reviews": [
+    {
+      "id": "rev-1",
+      "name": "Aman_Pro",
+      "type": "Android",
+      "rating": 5,
+      "text": "100% working panel. Drag headshot is super smooth and no blacklist issue at all!",
+      "date": "Yesterday"
+    },
+    {
+      "id": "rev-2",
+      "name": "Gamer_Boy_99",
+      "type": "iOS",
+      "rating": 5,
+      "text": "Best panel for iPhone without jailbreak. Payment was verified within 2 minutes.",
+      "date": "3 days ago"
+    },
+    {
+      "id": "rev-3",
+      "name": "Devil_King",
+      "type": "Android",
+      "rating": 5,
+      "text": "Reached Grandmaster season 43 using this VIP panel. Fully trusted seller!",
+      "date": "1 week ago"
+    }
+  ]
+}

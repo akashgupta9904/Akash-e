@@ -1,0 +1,18 @@
+/*
+Theme Name: AKASH X STORE VIP Gaming Panel
+Theme URI: https://akashxstore.com
+Author: Akash Kumar Gupta
+Author URI: https://akashxstore.com
+Description: High performance Cyber Dark Gaming VIP Panel theme with direct UPI instant checkout, live customer proof galleries, voice note player, and mobile-first owner controls.
+Version: 2.8.0
+Requires at least: 5.8
+Tested up to: 6.7
+Requires PHP: 7.4
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: akash-x-store
+Tags: e-commerce, dark-mode, custom-colors, full-width-template, responsive-layout
+*/
+
+/* Core imports & layout hooks are handled in assets/css/main.css */
+@import url('assets/css/main.css');

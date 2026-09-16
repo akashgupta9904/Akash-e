@@ -81,6 +81,14 @@ app.use(express.static(path.join(__dirname, 'public'), {
   }
 }));
 
+// Clean URL Routes
+app.get('/android', (req, res) => res.sendFile(path.join(__dirname, 'public/android.html')));
+app.get('/ios', (req, res) => res.sendFile(path.join(__dirname, 'public/ios.html')));
+app.get('/proofs', (req, res) => res.sendFile(path.join(__dirname, 'public/proofs.html')));
+app.get('/gameplay', (req, res) => res.sendFile(path.join(__dirname, 'public/gameplay.html')));
+app.get('/login', (req, res) => res.sendFile(path.join(__dirname, 'public/login.html')));
+app.get('/admin', (req, res) => res.sendFile(path.join(__dirname, 'public/admin/index.html')));
+
 // Fallback route for SPA or root
 app.get('*', (req, res, next) => {
   if (req.path.startsWith('/api/')) {
@@ -98,16 +106,31 @@ app.use((err, req, res, next) => {
   });
 });
 
-app.listen(PORT, () => {
+const os = require('os');
+
+function getLocalIp() {
+  const ifaces = os.networkInterfaces();
+  for (const list of Object.values(ifaces)) {
+    for (const info of list) {
+      if (info.family === 'IPv4' && !info.internal) {
+        return info.address;
+      }
+    }
+  }
+  return 'localhost';
+}
+
+const localIp = getLocalIp();
+
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`
   =============================================================
-  ⚡ AKASH X STORE PLATFORM ENGINE RUNNING
+  ⚡ AKASH X STORE PLATFORM ENGINE RUNNING ON WI-FI / HOTSPOT
   =============================================================
-  🌐 Storefront:       http://localhost:${PORT}
-  👑 Admin Dashboard:  http://localhost:${PORT}/admin/index.html
-  🔐 Admin Login:      akashkumagupta163@gmail.com / akash1245
-  👤 Demo Customer:    customer@store.com / Customer@12345
-  ⚡ Health Check:     http://localhost:${PORT}/api/health
+  🌐 PC Storefront:     http://localhost:${PORT}
+  📱 PHONE STOREFRONT:  http://${localIp}:${PORT}
+  👑 PHONE OWNER LOGIN: http://${localIp}:${PORT}/login.html
+  🔐 Owner Key:         akash1245
   =============================================================
   `);
 });

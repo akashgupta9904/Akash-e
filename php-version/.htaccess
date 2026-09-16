@@ -1,0 +1,36 @@
+# AKASH X STORE - Apache URL Rewrite Rules
+# Clean URL Routing for PHP hosting (cPanel, XAMPP, Apache, LiteSpeed)
+
+<IfModule mod_rewrite.c>
+RewriteEngine On
+
+# Ensure Authorization headers are passed to PHP
+RewriteCond %{HTTP:Authorization} .
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+# Do not rewrite existing files or directories
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# Route all other URLs to index.php
+RewriteRule ^(.*)$ index.php [QSA,L]
+</IfModule>
+
+# Security: Deny direct access to data JSON files
+<FilesMatch "\.(json|lock|bak)$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order deny,allow
+        Deny from all
+    </IfModule>
+</FilesMatch>
+
+# Allow access to uploaded images
+<FilesMatch "\.(jpg|jpeg|png|gif|webp|svg|mp3|mp4|apk|pdf)$">
+    <IfModule mod_authz_core.c>
+        Require all granted
+    </IfModule>
+</FilesMatch>
