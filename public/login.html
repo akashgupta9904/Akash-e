@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign In | Akash X Store</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    .auth-page {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at 10% 20%, rgba(79, 70, 229, 0.08) 0%, rgba(248, 250, 252, 1) 90%);
+      padding: 1.5rem;
+    }
+    .auth-card {
+      width: 100%;
+      max-width: 440px;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 2.25rem;
+      box-shadow: var(--shadow-xl);
+    }
+  </style>
+</head>
+<body class="auth-page">
+
+  <div class="auth-card">
+    <div style="text-align: center; margin-bottom: 2rem;">
+      <a href="/" class="brand-logo" style="justify-content: center; margin-bottom: 0.5rem;">
+        <img src="/favicon.svg" alt="Akash X Store" style="width: 34px; height: 34px;">
+        AKASH X <span>STORE</span>
+      </a>
+      <h1 style="font-size: 1.5rem; margin-top: 0.5rem;">Welcome Back</h1>
+      <p style="color: var(--text-muted); font-size: 0.88rem;">Sign in to access your orders and account.</p>
+    </div>
+
+    <!-- Quick Demo Credential Autofill Buttons (Testing convenience) -->
+    <div style="background: var(--bg-muted); border-radius: var(--radius-md); padding: 0.85rem; margin-bottom: 1.5rem; border: 1px dashed #cbd5e1;">
+      <span style="display: block; font-size: 0.75rem; font-weight: 700; color: var(--text-muted); margin-bottom: 0.5rem; text-transform: uppercase;">
+        ⚡ Instant Demo Logins (1-Click Fill):
+      </span>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;">
+        <button type="button" class="btn btn-secondary btn-sm" onclick="fillCustomer()" style="font-size: 0.8rem;">
+          <i class="fa-solid fa-user"></i> Demo Customer
+        </button>
+        <button type="button" class="btn btn-secondary btn-sm" onclick="fillAdmin()" style="font-size: 0.8rem; border-color: #6366f1; color: var(--primary);">
+          <i class="fa-solid fa-shield-halved"></i> Store Admin
+        </button>
+      </div>
+    </div>
+
+    <form id="loginForm">
+      <div class="form-group" style="margin-bottom: 1.25rem;">
+        <label style="display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.35rem;">Email Address</label>
+        <input type="email" id="loginEmail" class="form-control" placeholder="name@example.com" required>
+      </div>
+
+      <div class="form-group" style="margin-bottom: 1.5rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem;">
+          <label style="font-size: 0.85rem; font-weight: 600;">Password</label>
+        </div>
+        <input type="password" id="loginPassword" class="form-control" placeholder="••••••••" required>
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-block" id="loginSubmitBtn">
+        Sign In <i class="fa-solid fa-arrow-right"></i>
+      </button>
+    </form>
+
+    <div style="text-align: center; margin-top: 1.75rem; font-size: 0.88rem; color: var(--text-muted);">
+      Don't have an account? <a href="/register.html" style="color: var(--primary); font-weight: 600;">Create Account</a>
+    </div>
+  </div>
+
+  <script src="/js/api.js"></script>
+  <script>
+    function fillCustomer() {
+      document.getElementById('loginEmail').value = 'customer@store.com';
+      document.getElementById('loginPassword').value = 'Customer@12345';
+    }
+
+    function fillAdmin() {
+      document.getElementById('loginEmail').value = 'akashkumagupta163@gmail.com';
+      document.getElementById('loginPassword').value = 'akash1245';
+    }
+
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = document.getElementById('loginEmail').value.trim();
+      const password = document.getElementById('loginPassword').value;
+      const btn = document.getElementById('loginSubmitBtn');
+
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Signing In...';
+
+      try {
+        const res = await API.post('/auth/login', { email, password });
+        API.setToken(res.token);
+        API.setUser(res.user);
+
+        // Merge guest cart if any
+        const sid = API.getSessionId();
+        await API.post('/cart/merge', { sessionId: sid }).catch(() => {});
+
+        API.showToast('Login successful!', 'success');
+
+        setTimeout(() => {
+          if (res.user.role === 'admin') {
+            window.location.href = '/admin/index.html';
+          } else {
+            window.location.href = '/shop.html';
+          }
+        }, 500);
+      } catch (err) {
+        API.showToast(err.message || 'Login failed. Check your credentials.', 'error');
+        btn.disabled = false;
+        btn.innerHTML = 'Sign In <i class="fa-solid fa-arrow-right"></i>';
+      }
+    });
+  </script>
+</body>
+</html>

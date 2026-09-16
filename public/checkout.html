@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout | Akash X Store</title>
+  <meta name="description" content="Complete your purchase securely. Fast shipping and multiple payment options.">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    .checkout-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+    @media (min-width: 992px) {
+      .checkout-grid {
+        grid-template-columns: 1.5fr 1fr;
+        gap: 3.5rem;
+      }
+    }
+    .checkout-box {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem;
+      margin-bottom: 2rem;
+    }
+    .box-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .payment-option {
+      border: 2px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 1.15rem;
+      margin-bottom: 0.85rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      transition: all 0.2s;
+    }
+    .payment-option:hover, .payment-option.selected {
+      border-color: var(--primary);
+      background: #f5f7ff;
+    }
+    .payment-option input[type="radio"] {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--primary);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Minimal Checkout Header -->
+  <header style="background: #fff; border-bottom: 1px solid var(--border); padding: 1.25rem 0;">
+    <div class="container" style="display: flex; align-items: center; justify-content: space-between;">
+      <a href="/" class="brand-logo">
+        <img src="/favicon.svg" alt="Akash X Store" style="width: 32px; height: 32px;">
+        AKASH X <span>STORE</span>
+      </a>
+      <div style="display: flex; align-items: center; gap: 0.5rem; font-size: 0.88rem; color: var(--text-muted); font-weight: 600;">
+        <i class="fa-solid fa-lock" style="color: var(--success);"></i>
+        <span>256-Bit SSL Encrypted Checkout</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Checkout Main -->
+  <main style="padding: 3rem 0 5rem;">
+    <div class="container">
+      
+      <div class="checkout-grid">
+        
+        <!-- Left: Forms -->
+        <div>
+          <!-- Customer & Shipping Details -->
+          <div class="checkout-box">
+            <h2 class="box-title">
+              <i class="fa-solid fa-truck-fast" style="color: var(--primary);"></i>
+              Shipping Address
+            </h2>
+
+            <form id="shippingForm">
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Full Name *</label>
+                  <input type="text" id="custName" class="form-control" placeholder="e.g. Rahul Sharma" required>
+                </div>
+                <div class="form-group">
+                  <label>Phone Number *</label>
+                  <input type="tel" id="custPhone" class="form-control" placeholder="e.g. +91 9876543210" required>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>Email Address (for order tracking & receipt) *</label>
+                <input type="email" id="custEmail" class="form-control" placeholder="e.g. rahul@example.com" required>
+              </div>
+
+              <div class="form-group">
+                <label>Street Address / Flat / Building *</label>
+                <input type="text" id="custStreet" class="form-control" placeholder="e.g. Flat 402, Lotus Heights, Park Street" required>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label>City *</label>
+                  <input type="text" id="custCity" class="form-control" placeholder="e.g. Mumbai" required>
+                </div>
+                <div class="form-group">
+                  <label>State *</label>
+                  <input type="text" id="custState" class="form-control" placeholder="e.g. Maharashtra" required>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label>PIN / Postal Code *</label>
+                  <input type="text" id="custPostal" class="form-control" placeholder="e.g. 400001" required>
+                </div>
+                <div class="form-group">
+                  <label>Country</label>
+                  <input type="text" id="custCountry" class="form-control" value="India" readonly>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <!-- Payment Options -->
+          <div class="checkout-box">
+            <h2 class="box-title">
+              <i class="fa-solid fa-credit-card" style="color: var(--primary);"></i>
+              Select Payment Method
+            </h2>
+
+            <!-- Simulator Option -->
+            <label class="payment-option selected" id="optSimulator">
+              <input type="radio" name="paymentMethod" value="test_gateway" checked>
+              <div style="flex: 1;">
+                <div style="font-weight: 700; display: flex; align-items: center; gap: 0.5rem;">
+                  <span>Instant Test Simulator</span>
+                  <span class="badge badge-success" style="font-size: 0.7rem;">Recommended for Testing</span>
+                </div>
+                <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 0.2rem;">
+                  Simulate instantaneous approved payment without requiring live banking cards or credentials.
+                </p>
+              </div>
+              <i class="fa-solid fa-bolt" style="font-size: 1.5rem; color: var(--primary);"></i>
+            </label>
+
+            <!-- Razorpay Option -->
+            <label class="payment-option" id="optRazorpay">
+              <input type="radio" name="paymentMethod" value="razorpay">
+              <div style="flex: 1;">
+                <div style="font-weight: 700;">Razorpay Gateway</div>
+                <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 0.2rem;">
+                  UPI (GPay, PhonePe, Paytm), Credit/Debit Cards, NetBanking.
+                </p>
+              </div>
+              <i class="fa-solid fa-indian-rupee-sign" style="font-size: 1.5rem; color: #0c2340;"></i>
+            </label>
+
+            <!-- Stripe Option -->
+            <label class="payment-option" id="optStripe">
+              <input type="radio" name="paymentMethod" value="stripe">
+              <div style="flex: 1;">
+                <div style="font-weight: 700;">Stripe Gateway</div>
+                <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 0.2rem;">
+                  Global Visa, Mastercard, American Express credit & debit cards.
+                </p>
+              </div>
+              <i class="fa-brands fa-stripe" style="font-size: 1.7rem; color: #635bff;"></i>
+            </label>
+
+            <!-- COD Option -->
+            <label class="payment-option" id="optCod">
+              <input type="radio" name="paymentMethod" value="cod">
+              <div style="flex: 1;">
+                <div style="font-weight: 700;">Cash on Delivery (COD)</div>
+                <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 0.2rem;">
+                  Pay in cash or UPI directly when your package is delivered.
+                </p>
+              </div>
+              <i class="fa-solid fa-hand-holding-dollar" style="font-size: 1.5rem; color: var(--text-muted);"></i>
+            </label>
+          </div>
+        </div>
+
+        <!-- Right: Order Summary -->
+        <div>
+          <div class="checkout-box" style="position: sticky; top: 2rem;">
+            <h3 style="font-size: 1.3rem; margin-bottom: 1.25rem;">Order Items</h3>
+            
+            <div id="checkoutItemsList" style="max-height: 260px; overflow-y: auto; margin-bottom: 1.5rem;">
+              <!-- Items loaded via JS -->
+            </div>
+
+            <div style="border-top: 1px solid var(--border); padding-top: 1rem;">
+              <div class="summary-row">
+                <span>Subtotal</span>
+                <span id="ckSubtotal">₹0</span>
+              </div>
+              <div class="summary-row" id="ckCouponRow" style="color: var(--accent); display: none;">
+                <span>Coupon (<span id="ckCouponCode"></span>)</span>
+                <span id="ckCouponDiscount">-₹0</span>
+              </div>
+              <div class="summary-row">
+                <span>Shipping</span>
+                <span id="ckShipping">FREE</span>
+              </div>
+              <div class="summary-row total" style="margin-top: 0.75rem; border-top: 1px solid var(--border); padding-top: 0.75rem;">
+                <span>Total Due</span>
+                <span id="ckTotal" style="color: var(--primary);">₹0</span>
+              </div>
+            </div>
+
+            <button class="btn btn-primary btn-block" id="placeOrderBtn" style="margin-top: 1.5rem; font-size: 1.1rem;" onclick="handlePlaceOrder()">
+              Complete & Pay <i class="fa-solid fa-check"></i>
+            </button>
+
+            <div style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; font-size: 0.8rem; color: var(--text-muted); margin-top: 1rem;">
+              <i class="fa-solid fa-shield-check" style="color: var(--success);"></i>
+              Encrypted transaction protected by Akash X Store
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Scripts -->
+  <script src="/js/api.js"></script>
+  <script>
+    let cartData = null;
+    let savedCoupon = null;
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      // Setup payment radio styling
+      document.querySelectorAll('.payment-option').forEach(opt => {
+        opt.addEventListener('click', () => {
+          document.querySelectorAll('.payment-option').forEach(o => o.classList.remove('selected'));
+          opt.classList.add('selected');
+        });
+      });
+
+      // Prefill user profile if logged in
+      const user = API.getUser();
+      if (user) {
+        document.getElementById('custName').value = user.name || '';
+        document.getElementById('custEmail').value = user.email || '';
+        document.getElementById('custPhone').value = user.phone || '';
+
+        // Load saved address
+        try {
+          const addrRes = await API.get('/auth/addresses');
+          if (addrRes && addrRes.addresses && addrRes.addresses.length > 0) {
+            const defAddr = addrRes.addresses[0];
+            document.getElementById('custStreet').value = defAddr.street || '';
+            document.getElementById('custCity').value = defAddr.city || '';
+            document.getElementById('custState').value = defAddr.state || '';
+            document.getElementById('custPostal').value = defAddr.postal_code || '';
+          }
+        } catch (e) {}
+      }
+
+      // Read coupon from session storage if applied in cart
+      try {
+        const c = sessionStorage.getItem('nexus_coupon');
+        if (c) savedCoupon = JSON.parse(c);
+      } catch (e) {}
+
+      // Load cart items
+      try {
+        const res = await API.get('/cart');
+        if (!res.items || res.items.length === 0) {
+          alert('Your cart is empty! Redirecting to shop.');
+          window.location.href = '/shop.html';
+          return;
+        }
+
+        cartData = res;
+        renderCheckoutSummary();
+      } catch (err) {
+        alert('Failed to load cart contents');
+      }
+    });
+
+    function renderCheckoutSummary() {
+      const itemsList = document.getElementById('checkoutItemsList');
+      itemsList.innerHTML = cartData.items.map(item => `
+        <div style="display: flex; gap: 0.85rem; align-items: center; margin-bottom: 0.85rem;">
+          <img src="${item.image_url}" alt="${item.name}" style="width: 48px; height: 48px; border-radius: 8px; object-fit: cover;">
+          <div style="flex: 1; min-width: 0;">
+            <div style="font-weight: 600; font-size: 0.88rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${item.name}</div>
+            <div style="font-size: 0.8rem; color: var(--text-muted);">${item.quantity} × ${API.formatPrice(item.final_price)}</div>
+          </div>
+          <div style="font-weight: 700; font-size: 0.92rem; font-family: 'Outfit', sans-serif;">
+            ${API.formatPrice(item.final_price * item.quantity)}
+          </div>
+        </div>
+      `).join('');
+
+      const subtotal = cartData.summary.subtotal;
+      let couponDiscount = 0;
+
+      if (savedCoupon) {
+        couponDiscount = savedCoupon.discountAmount;
+        document.getElementById('ckCouponRow').style.display = 'flex';
+        document.getElementById('ckCouponCode').textContent = savedCoupon.code;
+        document.getElementById('ckCouponDiscount').textContent = `-${API.formatPrice(couponDiscount)}`;
+      }
+
+      const shipping = (subtotal - couponDiscount) >= 1000 ? 0 : 99;
+      const total = Math.max(0, subtotal - couponDiscount + shipping);
+
+      document.getElementById('ckSubtotal').textContent = API.formatPrice(subtotal);
+      document.getElementById('ckShipping').textContent = shipping === 0 ? 'FREE' : API.formatPrice(shipping);
+      document.getElementById('ckTotal').textContent = API.formatPrice(total);
+    }
+
+    async function handlePlaceOrder() {
+      const name = document.getElementById('custName').value.trim();
+      const phone = document.getElementById('custPhone').value.trim();
+      const email = document.getElementById('custEmail').value.trim();
+      const street = document.getElementById('custStreet').value.trim();
+      const city = document.getElementById('custCity').value.trim();
+      const state = document.getElementById('custState').value.trim();
+      const postal = document.getElementById('custPostal').value.trim();
+
+      if (!name || !phone || !email || !street || !city || !state || !postal) {
+        API.showToast('Please fill out all required shipping fields.', 'warning');
+        return;
+      }
+
+      const selectedPaymentRadio = document.querySelector('input[name="paymentMethod"]:checked');
+      const paymentMethod = selectedPaymentRadio ? selectedPaymentRadio.value : 'test_gateway';
+
+      const shippingAddress = {
+        name,
+        phone,
+        street,
+        city,
+        state,
+        postal_code: postal,
+        country: 'India'
+      };
+
+      const btn = document.getElementById('placeOrderBtn');
+      const orig = btn.innerHTML;
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Processing Order...';
+
+      try {
+        // 1. Create order in backend
+        const orderRes = await API.post('/orders/create', {
+          customer_name: name,
+          customer_email: email,
+          customer_phone: phone,
+          shipping_address: shippingAddress,
+          payment_method: paymentMethod,
+          coupon_code: savedCoupon ? savedCoupon.code : null
+        });
+
+        sessionStorage.removeItem('nexus_coupon');
+        API.updateCartBadge();
+
+        // 2. If Test Simulator or COD: Instant redirect to success!
+        if (paymentMethod === 'test_gateway' || paymentMethod === 'cod') {
+          API.showToast('Order confirmed successfully!', 'success');
+          setTimeout(() => {
+            window.location.href = `/order-success.html?orderNumber=${orderRes.orderNumber}`;
+          }, 800);
+          return;
+        }
+
+        // 3. If Razorpay / Stripe: Initiate Gateway Order
+        const gwRes = await API.post('/payments/create-gateway-order', {
+          orderNumber: orderRes.orderNumber,
+          gateway: paymentMethod
+        });
+
+        // Verify or simulate gateway payment
+        const verifyRes = await API.post('/payments/verify', {
+          orderNumber: orderRes.orderNumber,
+          gateway: paymentMethod,
+          status: 'success',
+          transaction_id: `GW_TX_${Date.now()}`
+        });
+
+        API.showToast('Payment verified successfully!', 'success');
+        setTimeout(() => {
+          window.location.href = `/order-success.html?orderNumber=${orderRes.orderNumber}`;
+        }, 800);
+
+      } catch (err) {
+        console.error(err);
+        API.showToast(err.message || 'Failed to complete order', 'error');
+        btn.disabled = false;
+        btn.innerHTML = orig;
+      }
+    }
+  </script>
+</body>
+</html>

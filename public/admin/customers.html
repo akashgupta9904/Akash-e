@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Customers Directory | Nexus Admin</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/admin.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <script src="/js/api.js"></script>
+  <script src="/js/admin.js"></script>
+</head>
+<body>
+
+  <div class="admin-layout">
+    <aside class="admin-sidebar">
+      <div class="sidebar-header">
+        <img src="/favicon.svg" alt="Akash X Store" style="width: 28px; height: 28px;">
+        AKASH X <span>ADMIN</span>
+      </div>
+      <ul class="sidebar-nav">
+        <li class="nav-item" data-nav="dashboard"><a href="/admin/index.html"><i class="fa-solid fa-chart-pie"></i> Dashboard</a></li>
+        <li class="nav-item" data-nav="products"><a href="/admin/products.html"><i class="fa-solid fa-box-archive"></i> Products Inventory</a></li>
+        <li class="nav-item" data-nav="orders"><a href="/admin/orders.html"><i class="fa-solid fa-cart-shopping"></i> Customer Orders</a></li>
+        <li class="nav-item" data-nav="categories"><a href="/admin/categories.html"><i class="fa-solid fa-layer-group"></i> Categories</a></li>
+        <li class="nav-item" data-nav="coupons"><a href="/admin/coupons.html"><i class="fa-solid fa-ticket"></i> Coupons & Promos</a></li>
+        <li class="nav-item" data-nav="customers"><a href="/admin/customers.html"><i class="fa-solid fa-users"></i> Customers</a></li>
+      </ul>
+      <div class="sidebar-footer">
+        <a href="/" target="_blank" style="display: flex; align-items: center; gap: 0.5rem; color: #94a3b8; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.75rem;">
+          <i class="fa-solid fa-arrow-up-right-from-square"></i> View Storefront
+        </a>
+        <button onclick="API.logout()" style="width: 100%; display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem; background: none; border: none; color: var(--danger); font-size: 0.88rem; font-weight: 600; cursor: pointer;">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i> Sign Out
+        </button>
+      </div>
+    </aside>
+
+    <div class="admin-main">
+      <header class="admin-topbar">
+        <div style="display: flex; align-items: center; gap: 1rem;">
+          <button id="adminSidebarToggle" class="btn btn-secondary btn-sm"><i class="fa-solid fa-bars"></i></button>
+          <h1 class="admin-page-title">Registered Customers Directory</h1>
+        </div>
+      </header>
+
+      <main class="admin-body">
+        <div class="admin-card">
+          <div class="card-header-flex">
+            <input type="text" id="customerSearch" class="form-control" placeholder="Search by customer name or email..." style="max-width: 360px;">
+            <span id="custCountBadge" style="font-size: 0.85rem; color: var(--text-muted); font-weight: 600;">0 registered accounts</span>
+          </div>
+
+          <div class="table-responsive">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Customer</th>
+                  <th>Contact</th>
+                  <th>Joined Date</th>
+                  <th>Orders Count</th>
+                  <th>Lifetime Spend</th>
+                </tr>
+              </thead>
+              <tbody id="customersTableBody">
+                <tr><td colspan="5" style="text-align: center; padding: 3rem;">Loading customer records...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    let allCustomers = [];
+
+    document.addEventListener('DOMContentLoaded', () => {
+      AdminApp.initLayout('customers');
+      loadCustomers();
+
+      document.getElementById('customerSearch').oninput = (e) => {
+        const q = e.target.value.toLowerCase().trim();
+        const filtered = allCustomers.filter(c => c.name.toLowerCase().includes(q) || c.email.toLowerCase().includes(q));
+        renderCustomers(filtered);
+      };
+    });
+
+    async function loadCustomers() {
+      try {
+        const res = await API.get('/admin/customers');
+        allCustomers = res.customers || [];
+        document.getElementById('custCountBadge').textContent = `${allCustomers.length} registered accounts`;
+        renderCustomers(allCustomers);
+      } catch (err) {
+        API.showToast(err.message, 'error');
+      }
+    }
+
+    function renderCustomers(customers) {
+      const tbody = document.getElementById('customersTableBody');
+      if (customers.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; padding: 2rem; color: var(--text-muted);">No customers found.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = customers.map(c => `
+        <tr>
+          <td>
+            <div style="display: flex; align-items: center; gap: 0.75rem;">
+              <div style="width: 36px; height: 36px; border-radius: 50%; background: #f1f5f9; color: var(--primary); display: flex; align-items: center; justify-content: center; font-weight: 700;">
+                ${c.name.charAt(0).toUpperCase()}
+              </div>
+              <div>
+                <strong style="font-size: 0.95rem; color: var(--text-main);">${c.name}</strong>
+                <div style="font-size: 0.8rem; color: var(--text-muted);">${c.email}</div>
+              </div>
+            </div>
+          </td>
+          <td>${c.phone || '—'}</td>
+          <td>${new Date(c.created_at).toLocaleDateString()}</td>
+          <td style="font-weight: 600;">${c.total_orders} orders</td>
+          <td style="font-weight: 800; font-family: 'Outfit'; color: var(--primary); font-size: 1.05rem;">
+            ${API.formatPrice(c.total_spent)}
+          </td>
+        </tr>
+      `).join('');
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coupons & Promotions | Nexus Admin</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/admin.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <script src="/js/api.js"></script>
+  <script src="/js/admin.js"></script>
+</head>
+<body>
+
+  <div class="admin-layout">
+    <aside class="admin-sidebar">
+      <div class="sidebar-header">
+        <img src="/favicon.svg" alt="Akash X Store" style="width: 28px; height: 28px;">
+        AKASH X <span>ADMIN</span>
+      </div>
+      <ul class="sidebar-nav">
+        <li class="nav-item" data-nav="dashboard"><a href="/admin/index.html"><i class="fa-solid fa-chart-pie"></i> Dashboard</a></li>
+        <li class="nav-item" data-nav="products"><a href="/admin/products.html"><i class="fa-solid fa-box-archive"></i> Products Inventory</a></li>
+        <li class="nav-item" data-nav="orders"><a href="/admin/orders.html"><i class="fa-solid fa-cart-shopping"></i> Customer Orders</a></li>
+        <li class="nav-item" data-nav="categories"><a href="/admin/categories.html"><i class="fa-solid fa-layer-group"></i> Categories</a></li>
+        <li class="nav-item" data-nav="coupons"><a href="/admin/coupons.html"><i class="fa-solid fa-ticket"></i> Coupons & Promos</a></li>
+        <li class="nav-item" data-nav="customers"><a href="/admin/customers.html"><i class="fa-solid fa-users"></i> Customers</a></li>
+      </ul>
+      <div class="sidebar-footer">
+        <a href="/" target="_blank" style="display: flex; align-items: center; gap: 0.5rem; color: #94a3b8; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.75rem;">
+          <i class="fa-solid fa-arrow-up-right-from-square"></i> View Storefront
+        </a>
+        <button onclick="API.logout()" style="width: 100%; display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem; background: none; border: none; color: var(--danger); font-size: 0.88rem; font-weight: 600; cursor: pointer;">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i> Sign Out
+        </button>
+      </div>
+    </aside>
+
+    <div class="admin-main">
+      <header class="admin-topbar">
+        <div style="display: flex; align-items: center; gap: 1rem;">
+          <button id="adminSidebarToggle" class="btn btn-secondary btn-sm"><i class="fa-solid fa-bars"></i></button>
+          <h1 class="admin-page-title">Discount Coupons & Promos</h1>
+        </div>
+        <button class="btn btn-primary btn-sm" onclick="AdminApp.openModal('couponModal')">
+          <i class="fa-solid fa-plus"></i> Create Coupon
+        </button>
+      </header>
+
+      <main class="admin-body">
+        <div class="admin-card">
+          <div class="table-responsive">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Coupon Code</th>
+                  <th>Discount</th>
+                  <th>Min Order</th>
+                  <th>Max Cap</th>
+                  <th>Usage (Used / Limit)</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="couponsTableBody">
+                <tr><td colspan="7" style="text-align: center; padding: 3rem;">Loading coupons...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Create Coupon Modal -->
+  <div class="modal-overlay" id="couponModal">
+    <div class="modal-card" style="max-width: 480px;">
+      <div class="modal-header">
+        <h3>Create Promotional Coupon</h3>
+        <button onclick="AdminApp.closeModal('couponModal')" style="background: none; border: none; font-size: 1.25rem; cursor: pointer;">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="couponForm">
+          <div class="form-group">
+            <label>Coupon Code *</label>
+            <input type="text" id="cpCode" class="form-control" placeholder="e.g. SUMMER25" style="text-transform: uppercase;" required>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Discount Type</label>
+              <select id="cpType" class="form-control">
+                <option value="percentage">Percentage (%)</option>
+                <option value="fixed">Fixed Amount (₹)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Discount Value *</label>
+              <input type="number" id="cpValue" class="form-control" placeholder="10 or 500" required min="1">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Min. Order Amount (₹)</label>
+              <input type="number" id="cpMinOrder" class="form-control" value="0" min="0">
+            </div>
+            <div class="form-group">
+              <label>Max. Discount Cap (₹)</label>
+              <input type="number" id="cpMaxDiscount" class="form-control" value="0" min="0" placeholder="0 for unlimited">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Usage Limit (Total times allowed)</label>
+            <input type="number" id="cpUsageLimit" class="form-control" value="500" min="1">
+          </div>
+
+          <div style="display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 1.5rem;">
+            <button type="button" class="btn btn-secondary" onclick="AdminApp.closeModal('couponModal')">Cancel</button>
+            <button type="submit" class="btn btn-primary">Create Coupon</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      AdminApp.initLayout('coupons');
+      loadCoupons();
+
+      document.getElementById('couponForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const code = document.getElementById('cpCode').value.trim();
+        const discount_type = document.getElementById('cpType').value;
+        const discount_value = document.getElementById('cpValue').value;
+        const min_order_amount = document.getElementById('cpMinOrder').value;
+        const max_discount = document.getElementById('cpMaxDiscount').value;
+        const usage_limit = document.getElementById('cpUsageLimit').value;
+
+        try {
+          await API.post('/admin/coupons', {
+            code,
+            discount_type,
+            discount_value,
+            min_order_amount,
+            max_discount,
+            usage_limit
+          });
+          API.showToast('Coupon created successfully!', 'success');
+          AdminApp.closeModal('couponModal');
+          document.getElementById('couponForm').reset();
+          loadCoupons();
+        } catch (err) {
+          API.showToast(err.message, 'error');
+        }
+      });
+    });
+
+    async function loadCoupons() {
+      try {
+        const res = await API.get('/admin/coupons');
+        const tbody = document.getElementById('couponsTableBody');
+        if (!res.coupons || res.coupons.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; padding: 2rem;">No coupons found.</td></tr>`;
+          return;
+        }
+
+        tbody.innerHTML = res.coupons.map(c => `
+          <tr>
+            <td>
+              <code style="font-weight: 800; font-size: 0.95rem; background: #eef2ff; color: var(--primary); padding: 0.25rem 0.65rem; border-radius: 6px;">
+                ${c.code}
+              </code>
+            </td>
+            <td style="font-weight: 700;">
+              ${c.discount_type === 'percentage' ? `${c.discount_value}% OFF` : `₹${c.discount_value} FLAT OFF`}
+            </td>
+            <td>${c.min_order_amount > 0 ? API.formatPrice(c.min_order_amount) : 'None'}</td>
+            <td>${c.max_discount > 0 ? API.formatPrice(c.max_discount) : 'Unlimited'}</td>
+            <td>${c.times_used} / ${c.usage_limit}</td>
+            <td><span class="badge ${c.is_active ? 'badge-success' : 'badge-danger'}">${c.is_active ? 'Active' : 'Inactive'}</span></td>
+            <td>
+              <button class="btn btn-secondary btn-sm" style="color: var(--danger);" onclick="deleteCoupon(${c.id}, '${c.code}')">
+                <i class="fa-solid fa-trash"></i>
+              </button>
+            </td>
+          </tr>
+        `).join('');
+      } catch (err) {
+        API.showToast(err.message, 'error');
+      }
+    }
+
+    async function deleteCoupon(id, code) {
+      if (!confirm(`Delete coupon "${code}"?`)) return;
+      try {
+        await API.delete(`/admin/coupons/${id}`);
+        API.showToast('Coupon deleted', 'success');
+        loadCoupons();
+      } catch (err) {
+        API.showToast(err.message, 'error');
+      }
+    }
+  </script>
+</body>
+</html>

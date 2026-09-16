@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Categories | Nexus Admin</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/css/admin.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <script src="/js/api.js"></script>
+  <script src="/js/admin.js"></script>
+</head>
+<body>
+
+  <div class="admin-layout">
+    <aside class="admin-sidebar">
+      <div class="sidebar-header">
+        <img src="/favicon.svg" alt="Akash X Store" style="width: 28px; height: 28px;">
+        AKASH X <span>ADMIN</span>
+      </div>
+      <ul class="sidebar-nav">
+        <li class="nav-item" data-nav="dashboard"><a href="/admin/index.html"><i class="fa-solid fa-chart-pie"></i> Dashboard</a></li>
+        <li class="nav-item" data-nav="products"><a href="/admin/products.html"><i class="fa-solid fa-box-archive"></i> Products Inventory</a></li>
+        <li class="nav-item" data-nav="orders"><a href="/admin/orders.html"><i class="fa-solid fa-cart-shopping"></i> Customer Orders</a></li>
+        <li class="nav-item" data-nav="categories"><a href="/admin/categories.html"><i class="fa-solid fa-layer-group"></i> Categories</a></li>
+        <li class="nav-item" data-nav="coupons"><a href="/admin/coupons.html"><i class="fa-solid fa-ticket"></i> Coupons & Promos</a></li>
+        <li class="nav-item" data-nav="customers"><a href="/admin/customers.html"><i class="fa-solid fa-users"></i> Customers</a></li>
+      </ul>
+      <div class="sidebar-footer">
+        <a href="/" target="_blank" style="display: flex; align-items: center; gap: 0.5rem; color: #94a3b8; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.75rem;">
+          <i class="fa-solid fa-arrow-up-right-from-square"></i> View Storefront
+        </a>
+        <button onclick="API.logout()" style="width: 100%; display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem; background: none; border: none; color: var(--danger); font-size: 0.88rem; font-weight: 600; cursor: pointer;">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i> Sign Out
+        </button>
+      </div>
+    </aside>
+
+    <div class="admin-main">
+      <header class="admin-topbar">
+        <div style="display: flex; align-items: center; gap: 1rem;">
+          <button id="adminSidebarToggle" class="btn btn-secondary btn-sm"><i class="fa-solid fa-bars"></i></button>
+          <h1 class="admin-page-title">Category Management</h1>
+        </div>
+        <button class="btn btn-primary btn-sm" onclick="AdminApp.openModal('categoryModal')">
+          <i class="fa-solid fa-plus"></i> Add New Category
+        </button>
+      </header>
+
+      <main class="admin-body">
+        <div class="admin-card">
+          <div class="table-responsive">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Category</th>
+                  <th>Slug</th>
+                  <th>Description</th>
+                  <th>Products Count</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="categoriesTableBody">
+                <tr><td colspan="5" style="text-align: center; padding: 3rem;">Loading categories...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Add Category Modal -->
+  <div class="modal-overlay" id="categoryModal">
+    <div class="modal-card" style="max-width: 480px;">
+      <div class="modal-header">
+        <h3>Add New Category</h3>
+        <button onclick="AdminApp.closeModal('categoryModal')" style="background: none; border: none; font-size: 1.25rem; cursor: pointer;">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form id="categoryForm">
+          <div class="form-group">
+            <label>Category Name *</label>
+            <input type="text" id="catName" class="form-control" required placeholder="e.g. Gaming & VR">
+          </div>
+          <div class="form-group">
+            <label>Image URL</label>
+            <input type="text" id="catImage" class="form-control" placeholder="https://images.unsplash.com/...">
+          </div>
+          <div class="form-group">
+            <label>Description</label>
+            <textarea id="catDesc" class="form-control" rows="3" placeholder="Brief summary..."></textarea>
+          </div>
+          <div style="display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 1.5rem;">
+            <button type="button" class="btn btn-secondary" onclick="AdminApp.closeModal('categoryModal')">Cancel</button>
+            <button type="submit" class="btn btn-primary">Create Category</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      AdminApp.initLayout('categories');
+      loadCategories();
+
+      document.getElementById('categoryForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const name = document.getElementById('catName').value.trim();
+        const image_url = document.getElementById('catImage').value.trim();
+        const description = document.getElementById('catDesc').value.trim();
+
+        try {
+          await API.post('/admin/categories', { name, image_url, description });
+          API.showToast('Category created!', 'success');
+          AdminApp.closeModal('categoryModal');
+          document.getElementById('categoryForm').reset();
+          loadCategories();
+        } catch (err) {
+          API.showToast(err.message, 'error');
+        }
+      });
+    });
+
+    async function loadCategories() {
+      try {
+        const res = await API.get('/admin/categories');
+        const tbody = document.getElementById('categoriesTableBody');
+        if (!res.categories || res.categories.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; padding: 2rem;">No categories found.</td></tr>`;
+          return;
+        }
+
+        tbody.innerHTML = res.categories.map(c => `
+          <tr>
+            <td>
+              <div style="display: flex; align-items: center; gap: 0.75rem;">
+                <img src="${c.image_url || 'https://images.unsplash.com/photo-1498049794561-7780e7231661?w=200'}" alt="${c.name}" style="width: 40px; height: 40px; border-radius: 6px; object-fit: cover;">
+                <span style="font-weight: 700;">${c.name}</span>
+              </div>
+            </td>
+            <td><code>${c.slug}</code></td>
+            <td style="color: var(--text-muted); font-size: 0.85rem; max-width: 250px;">${c.description || '—'}</td>
+            <td><span class="badge badge-primary">${c.product_count} products</span></td>
+            <td>
+              <button class="btn btn-secondary btn-sm" style="color: var(--danger);" onclick="deleteCategory(${c.id}, '${c.name.replace(/'/g, "\\'")}')">
+                <i class="fa-solid fa-trash"></i>
+              </button>
+            </td>
+          </tr>
+        `).join('');
+      } catch (err) {
+        API.showToast(err.message, 'error');
+      }
+    }
+
+    async function deleteCategory(id, name) {
+      if (!confirm(`Are you sure you want to delete category "${name}"?`)) return;
+      try {
+        await API.delete(`/admin/categories/${id}`);
+        API.showToast('Category deleted', 'success');
+        loadCategories();
+      } catch (err) {
+        API.showToast(err.message, 'error');
+      }
+    }
+  </script>
+</body>
+</html>

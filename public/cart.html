@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shopping Bag | Akash X Store</title>
+  <meta name="description" content="Review items in your shopping bag, apply promotional discount coupons, and proceed to checkout.">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    .cart-layout {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+    @media (min-width: 992px) {
+      .cart-layout {
+        grid-template-columns: 1.6fr 1fr;
+        gap: 3rem;
+      }
+    }
+    .cart-item-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.25rem;
+      display: flex;
+      gap: 1.25rem;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+    .cart-item-img {
+      width: 80px;
+      height: 80px;
+      border-radius: var(--radius-md);
+      object-fit: cover;
+      background: var(--bg-muted);
+      flex-shrink: 0;
+    }
+    .cart-item-info {
+      flex: 1;
+      min-width: 0;
+    }
+    .free-shipping-progress {
+      background: #eef2ff;
+      border-radius: var(--radius-full);
+      height: 8px;
+      overflow: hidden;
+      margin: 0.75rem 0;
+    }
+    .progress-fill {
+      background: linear-gradient(90deg, var(--primary), #ec4899);
+      height: 100%;
+      border-radius: var(--radius-full);
+      transition: width 0.3s ease;
+    }
+    .summary-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      position: sticky;
+      top: calc(var(--nav-height) + 1.5rem);
+    }
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.85rem;
+      font-size: 0.95rem;
+      color: var(--text-muted);
+    }
+    .summary-row.total {
+      border-top: 1px solid var(--border);
+      padding-top: 1rem;
+      margin-top: 1rem;
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--text-main);
+      font-family: 'Outfit', sans-serif;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <header class="navbar">
+    <div class="container nav-container">
+      <div style="display: flex; align-items: center; gap: 1rem;">
+        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Open Menu">
+          <i class="fa-solid fa-bars-staggered"></i>
+        </button>
+        <a href="/" class="brand-logo">
+          <img src="/favicon.svg" alt="Akash X Store" style="width: 32px; height: 32px;">
+          AKASH X <span>STORE</span>
+        </a>
+      </div>
+
+      <div class="nav-search">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" class="global-search-input" placeholder="Search products...">
+      </div>
+
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/shop.html">Shop Catalog</a></li>
+        <li><a href="/shop.html?category=electronics">Electronics</a></li>
+        <li><a href="/shop.html?category=audio">Audio</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <div class="auth-nav-slot">
+          <a href="/login.html" class="btn btn-secondary btn-sm" style="border-radius: var(--radius-full);">Sign In</a>
+        </div>
+        <a href="/cart.html" class="icon-btn" aria-label="Shopping Cart">
+          <i class="fa-solid fa-bag-shopping"></i>
+          <span class="cart-count" style="display: none;">0</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <div class="drawer-backdrop" id="drawerBackdrop"></div>
+  <aside class="mobile-drawer" id="mobileDrawer">
+    <div class="mobile-drawer-header">
+      <a href="/" class="brand-logo">
+        <img src="/favicon.svg" alt="Akash X Store" style="width: 28px; height: 28px;">
+        AKASH X <span>STORE</span>
+      </a>
+      <button id="closeDrawerBtn" style="background: none; border: none; font-size: 1.25rem; color: var(--text-muted); cursor: pointer;">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+    <ul class="mobile-drawer-links">
+      <li><a href="/"><i class="fa-solid fa-house"></i> Home</a></li>
+      <li><a href="/shop.html"><i class="fa-solid fa-store"></i> All Products</a></li>
+      <li><a href="/cart.html" class="active"><i class="fa-solid fa-bag-shopping"></i> My Cart</a></li>
+      <li><a href="/orders.html"><i class="fa-solid fa-box-open"></i> Track Orders</a></li>
+      <li><a href="/admin/index.html"><i class="fa-solid fa-shield-halved"></i> Admin Portal</a></li>
+    </ul>
+    <div style="margin-top: auto; padding-top: 1.5rem; border-top: 1px solid var(--border);" class="auth-nav-slot"></div>
+  </aside>
+
+  <!-- Cart Content -->
+  <main style="padding: 2.5rem 0 5rem;">
+    <div class="container">
+      <h1 style="font-size: 2.2rem; margin-bottom: 1.5rem;">Your Shopping Bag</h1>
+
+      <div id="cartLoading" style="text-align: center; padding: 4rem;">
+        <i class="fa-solid fa-spinner fa-spin fa-2x" style="color: var(--primary);"></i>
+        <p style="margin-top: 0.5rem; color: var(--text-muted);">Loading cart contents...</p>
+      </div>
+
+      <!-- Empty State -->
+      <div id="cartEmptyState" style="display: none; text-align: center; padding: 5rem 1rem;">
+        <div style="font-size: 3.5rem; color: var(--text-light); margin-bottom: 1rem;">
+          <i class="fa-solid fa-bag-shopping"></i>
+        </div>
+        <h2 style="font-size: 1.6rem; margin-bottom: 0.5rem;">Your bag is empty</h2>
+        <p style="color: var(--text-muted); margin-bottom: 1.75rem;">Looks like you haven't added any products to your cart yet.</p>
+        <a href="/shop.html" class="btn btn-primary" style="padding: 0.75rem 2rem;">Start Shopping</a>
+      </div>
+
+      <!-- Filled Cart Layout -->
+      <div class="cart-layout" id="cartFilledLayout" style="display: none;">
+        
+        <!-- Left: Cart Items List -->
+        <div>
+          <!-- Free shipping bar -->
+          <div style="background: #fff; border: 1px solid var(--border); border-radius: var(--radius-md); padding: 1rem 1.25rem; margin-bottom: 1.5rem;">
+            <div id="freeShippingText" style="font-size: 0.88rem; font-weight: 600; color: var(--text-main);">
+              <!-- dynamic text -->
+            </div>
+            <div class="free-shipping-progress">
+              <div class="progress-fill" id="shippingProgressFill" style="width: 0%;"></div>
+            </div>
+          </div>
+
+          <div id="cartItemsContainer">
+            <!-- Items rendered via JS -->
+          </div>
+
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem;">
+            <a href="/shop.html" style="font-weight: 600; color: var(--primary); font-size: 0.95rem;">
+              <i class="fa-solid fa-arrow-left"></i> Continue Shopping
+            </a>
+            <button class="btn btn-secondary btn-sm" onclick="clearAllCart()" style="color: var(--danger);">
+              <i class="fa-solid fa-trash-can"></i> Clear Cart
+            </button>
+          </div>
+        </div>
+
+        <!-- Right: Summary Card -->
+        <div>
+          <div class="summary-card">
+            <h3 style="font-size: 1.3rem; margin-bottom: 1.25rem;">Order Summary</h3>
+
+            <!-- Coupon Input -->
+            <div style="margin-bottom: 1.5rem;">
+              <label style="display: block; font-size: 0.82rem; font-weight: 600; margin-bottom: 0.4rem; color: var(--text-muted);">HAVE A PROMO CODE?</label>
+              <div style="display: flex; gap: 0.5rem;">
+                <input type="text" id="couponCodeInput" class="form-control" placeholder="e.g. WELCOME10" style="text-transform: uppercase;">
+                <button class="btn btn-secondary btn-sm" id="applyCouponBtn" onclick="applyCoupon()">Apply</button>
+              </div>
+              <div id="couponStatus" style="font-size: 0.82rem; margin-top: 0.4rem; display: none;"></div>
+            </div>
+
+            <!-- Price Breakdown -->
+            <div class="summary-row">
+              <span>Subtotal</span>
+              <span id="summarySubtotal">₹0</span>
+            </div>
+            <div class="summary-row" id="savingsRow" style="color: var(--success); display: none;">
+              <span>Product Savings</span>
+              <span id="summarySavings">-₹0</span>
+            </div>
+            <div class="summary-row" id="couponDiscountRow" style="color: var(--accent); display: none;">
+              <span>Coupon Discount (<span id="appliedCouponCode"></span>)</span>
+              <span id="summaryCouponDiscount">-₹0</span>
+            </div>
+            <div class="summary-row">
+              <span>Estimated Shipping</span>
+              <span id="summaryShipping">FREE</span>
+            </div>
+
+            <div class="summary-row total">
+              <span>Total</span>
+              <span id="summaryFinalTotal" style="color: var(--primary);">₹0</span>
+            </div>
+
+            <button class="btn btn-primary btn-block" style="margin-top: 1.5rem; font-size: 1.05rem;" onclick="goToCheckout()">
+              Proceed to Checkout <i class="fa-solid fa-arrow-right"></i>
+            </button>
+
+            <p style="text-align: center; font-size: 0.78rem; color: var(--text-light); margin-top: 1rem;">
+              <i class="fa-solid fa-lock"></i> 100% Encrypted & Safe Checkout
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Mobile Bottom Bar -->
+  <nav class="mobile-bottom-bar">
+    <a href="/" class="mobile-bar-item">
+      <i class="fa-solid fa-house"></i>
+      <span>Home</span>
+    </a>
+    <a href="/shop.html" class="mobile-bar-item">
+      <i class="fa-solid fa-store"></i>
+      <span>Shop</span>
+    </a>
+    <a href="/cart.html" class="mobile-bar-item active" style="position: relative;">
+      <i class="fa-solid fa-bag-shopping"></i>
+      <span class="cart-count" style="display: none; top: -4px; right: 8px;">0</span>
+      <span>Cart</span>
+    </a>
+    <a href="/orders.html" class="mobile-bar-item">
+      <i class="fa-solid fa-box-archive"></i>
+      <span>Orders</span>
+    </a>
+    <a href="/login.html" class="mobile-bar-item">
+      <i class="fa-solid fa-user"></i>
+      <span>Account</span>
+    </a>
+  </nav>
+
+  <!-- Scripts -->
+  <script src="/js/api.js"></script>
+  <script src="/js/main.js"></script>
+  <script>
+    let cartData = null;
+    let appliedCoupon = null;
+
+    document.addEventListener('DOMContentLoaded', () => {
+      loadCart();
+    });
+
+    async function loadCart() {
+      const loading = document.getElementById('cartLoading');
+      const empty = document.getElementById('cartEmptyState');
+      const filled = document.getElementById('cartFilledLayout');
+
+      try {
+        const res = await API.get('/cart');
+        loading.style.display = 'none';
+
+        if (!res.items || res.items.length === 0) {
+          empty.style.display = 'block';
+          filled.style.display = 'none';
+          API.updateCartBadge();
+          return;
+        }
+
+        cartData = res;
+        empty.style.display = 'none';
+        filled.style.display = 'grid';
+
+        // Render shipping progress
+        const remaining = res.summary.freeShippingRemaining;
+        const fillPercent = Math.min(100, Math.round((res.summary.subtotal / res.summary.freeShippingThreshold) * 100));
+        const shippingText = document.getElementById('freeShippingText');
+        const shippingFill = document.getElementById('shippingProgressFill');
+
+        if (remaining > 0) {
+          shippingText.innerHTML = `Add <strong>${API.formatPrice(remaining)}</strong> more to unlock <span style="color: var(--primary);">FREE Express Delivery!</span>`;
+        } else {
+          shippingText.innerHTML = `🎉 Congratulations! You have unlocked <strong>FREE Express Delivery!</strong>`;
+        }
+        shippingFill.style.width = `${fillPercent}%`;
+
+        // Render items
+        const container = document.getElementById('cartItemsContainer');
+        container.innerHTML = res.items.map(item => `
+          <div class="cart-item-card">
+            <img src="${item.image_url}" alt="${item.name}" class="cart-item-img">
+            <div class="cart-item-info">
+              <a href="/product.html?slug=${item.slug}" style="font-weight: 700; font-size: 1rem; color: var(--text-main);">${item.name}</a>
+              <div style="font-weight: 800; color: var(--primary); font-family: 'Outfit', sans-serif; margin: 0.25rem 0;">
+                ${API.formatPrice(item.final_price)}
+              </div>
+              <div style="display: flex; align-items: center; gap: 1rem; margin-top: 0.5rem; flex-wrap: wrap;">
+                <div style="display: flex; align-items: center; border: 1px solid var(--border); border-radius: var(--radius-sm); overflow: hidden;">
+                  <button onclick="updateItemQuantity(${item.cart_item_id}, ${item.quantity - 1})" style="width: 32px; height: 32px; background: none; border: none; cursor: pointer; font-weight: 700;">-</button>
+                  <span style="width: 36px; text-align: center; font-weight: 600; font-size: 0.9rem;">${item.quantity}</span>
+                  <button onclick="updateItemQuantity(${item.cart_item_id}, ${item.quantity + 1})" style="width: 32px; height: 32px; background: none; border: none; cursor: pointer; font-weight: 700;">+</button>
+                </div>
+                <button onclick="removeItem(${item.cart_item_id})" style="background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 0.85rem;" onmouseover="this.style.color='var(--danger)'" onmouseout="this.style.color='var(--text-muted)'">
+                  <i class="fa-solid fa-trash-can"></i> Remove
+                </button>
+              </div>
+            </div>
+            <div style="font-weight: 800; font-size: 1.15rem; font-family: 'Outfit', sans-serif;">
+              ${API.formatPrice(item.final_price * item.quantity)}
+            </div>
+          </div>
+        `).join('');
+
+        updateSummary();
+        API.updateCartBadge();
+      } catch (err) {
+        console.error(err);
+        loading.innerHTML = `<div style="color: var(--danger);">Error loading cart: ${err.message}</div>`;
+      }
+    }
+
+    function updateSummary() {
+      if (!cartData) return;
+      const subtotal = cartData.summary.subtotal;
+      const savings = cartData.summary.savings;
+      const shipping = cartData.summary.shippingFee;
+
+      document.getElementById('summarySubtotal').textContent = API.formatPrice(subtotal);
+
+      // Savings
+      if (savings > 0) {
+        document.getElementById('savingsRow').style.display = 'flex';
+        document.getElementById('summarySavings').textContent = `-${API.formatPrice(savings)}`;
+      } else {
+        document.getElementById('savingsRow').style.display = 'none';
+      }
+
+      // Shipping
+      document.getElementById('summaryShipping').textContent = shipping === 0 ? 'FREE' : API.formatPrice(shipping);
+
+      // Coupon
+      let couponDiscount = 0;
+      if (appliedCoupon) {
+        couponDiscount = appliedCoupon.discountAmount;
+        document.getElementById('couponDiscountRow').style.display = 'flex';
+        document.getElementById('appliedCouponCode').textContent = appliedCoupon.code;
+        document.getElementById('summaryCouponDiscount').textContent = `-${API.formatPrice(couponDiscount)}`;
+      } else {
+        document.getElementById('couponDiscountRow').style.display = 'none';
+      }
+
+      const finalTotal = Math.max(0, subtotal - couponDiscount + shipping);
+      document.getElementById('summaryFinalTotal').textContent = API.formatPrice(finalTotal);
+    }
+
+    async function updateItemQuantity(cartItemId, newQty) {
+      try {
+        await API.put('/cart/update', { cartItemId, quantity: newQty });
+        loadCart();
+      } catch (err) {
+        API.showToast(err.message || 'Cannot update quantity', 'error');
+      }
+    }
+
+    async function removeItem(cartItemId) {
+      try {
+        await API.delete(`/cart/remove/${cartItemId}`);
+        API.showToast('Item removed', 'success');
+        loadCart();
+      } catch (err) {
+        API.showToast(err.message, 'error');
+      }
+    }
+
+    async function clearAllCart() {
+      if (!confirm('Are you sure you want to clear your shopping cart?')) return;
+      try {
+        await API.delete('/cart/clear');
+        API.showToast('Cart cleared', 'success');
+        loadCart();
+      } catch (err) {
+        API.showToast(err.message, 'error');
+      }
+    }
+
+    async function applyCoupon() {
+      const input = document.getElementById('couponCodeInput');
+      const status = document.getElementById('couponStatus');
+      const code = input.value.trim();
+
+      if (!code) {
+        API.showToast('Please enter a coupon code', 'warning');
+        return;
+      }
+
+      try {
+        const res = await API.post('/coupons/validate', {
+          code,
+          cartTotal: cartData.summary.subtotal
+        });
+
+        appliedCoupon = res.coupon;
+        sessionStorage.setItem('nexus_coupon', JSON.stringify(res.coupon));
+
+        status.style.display = 'block';
+        status.style.color = 'var(--success)';
+        status.innerHTML = `<i class="fa-solid fa-check"></i> ${res.message}`;
+        API.showToast(res.message, 'success');
+        updateSummary();
+      } catch (err) {
+        appliedCoupon = null;
+        sessionStorage.removeItem('nexus_coupon');
+        status.style.display = 'block';
+        status.style.color = 'var(--danger)';
+        status.innerHTML = `<i class="fa-solid fa-circle-exclamation"></i> ${err.message}`;
+        API.showToast(err.message, 'error');
+        updateSummary();
+      }
+    }
+
+    function goToCheckout() {
+      window.location.href = '/checkout.html';
+    }
+  </script>
+</body>
+</html>
