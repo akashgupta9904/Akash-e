@@ -59,26 +59,37 @@ switch ($route) {
     case '':
     case 'index':
     case 'home':
+    case 'index.php':
         require __DIR__ . '/views/home.php';
         break;
 
     case 'android':
+    case 'android.php':
         require __DIR__ . '/views/android.php';
         break;
 
     case 'ios':
+    case 'ios.php':
         require __DIR__ . '/views/ios.php';
         break;
 
     case 'proofs':
+    case 'proofs.php':
         require __DIR__ . '/views/proofs.php';
         break;
 
     case 'gameplay':
+    case 'gameplay.php':
         require __DIR__ . '/views/gameplay.php';
         break;
 
+    case 'policy':
+    case 'policy.php':
+        require __DIR__ . '/views/policy.php';
+        break;
+
     case 'login':
+    case 'login.php':
         require __DIR__ . '/views/login.php';
         break;
 

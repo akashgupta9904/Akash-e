@@ -1,215 +1,405 @@
 <?php
 /**
- * The Footer for AKASH X STORE WordPress Theme
+ * The Footer for VIP X STORE / AKASH X STORE WordPress Theme
  */
-$site_title = akash_get_opt('site_title', get_bloginfo('name'));
-$upi_id = akash_get_opt('upi_id', 'igakash@fam');
-$upi_name = akash_get_opt('upi_name', 'AKASH X STORE');
-$whatsapp = akash_get_opt('whatsapp', '+91 9135164069');
-$clean_wa = preg_replace('/[^0-9]/', '', $whatsapp);
-$telegram = akash_get_opt('telegram', 'https://t.me/akashxstore');
-$voice_url = akash_get_opt('voice_url');
+$site_title = akash_get_opt('site_title', 'VIP X STORE');
+$telegram = akash_get_opt('telegram', 'Real_Panel_100');
+$theme_uri = get_stylesheet_directory_uri();
 ?>
 
-  <footer style="background: #040914; border-top: 1px solid var(--border-green); padding: 3rem 1.25rem 2rem; margin-top: 4rem; color: var(--text-secondary);">
-    <div style="max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 2rem; margin-bottom: 2.5rem;">
-      
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
       <div>
-        <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
-          <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/logo.png" alt="Logo" style="width: 36px; height: 36px; border-radius: 50%;">
-          <span style="font-weight: 800; font-size: 1.15rem; color: #fff;"><?php echo esc_html($site_title); ?></span>
+        <div class="footer-brand">
+          <img src="<?= $theme_uri ?>/assets/img/vipx_logo.png" alt="<?= esc_attr($site_title) ?>">
+          <span><?= esc_html($site_title) ?></span>
         </div>
-        <p style="font-size: 0.85rem; line-height: 1.6; color: #7e9bb5; margin-bottom: 1rem;">
-          Official high-performance VIP gaming panel for Android and iOS. 100% Anti-Ban protection with drag headshots and smooth aim assist.
-        </p>
-        <div style="display: flex; gap: 0.75rem;">
-          <a href="https://wa.me/<?php echo esc_attr($clean_wa); ?>" target="_blank" style="width: 36px; height: 36px; border-radius: 8px; background: rgba(37,211,102,0.15); color: #25D366; display: flex; align-items: center; justify-content: center; text-decoration: none;">
-            <i class="fa-brands fa-whatsapp"></i>
-          </a>
-          <a href="<?php echo esc_url($telegram); ?>" target="_blank" style="width: 36px; height: 36px; border-radius: 8px; background: rgba(41,182,246,0.15); color: #29B6F6; display: flex; align-items: center; justify-content: center; text-decoration: none;">
-            <i class="fa-brands fa-telegram"></i>
-          </a>
-        </div>
+        <p class="footer-about">Premium gaming panel store with clean setup, trusted support, proof gallery, and secure UPI checkout.</p>
       </div>
 
       <div>
-        <h4 style="color: #fff; font-size: 0.95rem; font-weight: 700; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.5px;">Navigation</h4>
-        <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.88rem;">
-          <li><a href="<?php echo esc_url(home_url('/')); ?>" style="color: var(--text-secondary); text-decoration: none;">Home Storefront</a></li>
-          <li><a href="<?php echo esc_url(home_url('/android/')); ?>" style="color: var(--text-secondary); text-decoration: none;">Android VIP APK</a></li>
-          <li><a href="<?php echo esc_url(home_url('/ios/')); ?>" style="color: var(--text-secondary); text-decoration: none;">iOS Panel Setup</a></li>
-          <li><a href="<?php echo esc_url(home_url('/proofs/')); ?>" style="color: var(--text-secondary); text-decoration: none;">Live Customer Proofs</a></li>
-          <li><a href="<?php echo esc_url(home_url('/gameplay/')); ?>" style="color: var(--text-secondary); text-decoration: none;">Gameplay Videos</a></li>
-        </ul>
-      </div>
-
-      <div>
-        <h4 style="color: #fff; font-size: 0.95rem; font-weight: 700; margin-bottom: 1rem; text-transform: uppercase; letter-spacing: 0.5px;">Direct Payments</h4>
-        <p style="font-size: 0.85rem; color: #7e9bb5; margin-bottom: 0.75rem;">Instant activation via UPI QR Code, GPay, PhonePe, Paytm or BHIM.</p>
-        <div style="background: rgba(13, 25, 48, 0.7); border: 1px solid var(--border-green); border-radius: 10px; padding: 0.75rem; font-size: 0.82rem;">
-          <div style="color: #94a3b8; font-size: 0.72rem; text-transform: uppercase;">Official UPI ID</div>
-          <div style="color: #fff; font-weight: 700; font-family: monospace; font-size: 0.95rem; margin-top: 2px;">
-            <?php echo esc_html($upi_id); ?>
-          </div>
+        <div class="footer-links-title">Useful Links</div>
+        <div class="footer-links">
+          <a href="<?= home_url('/') ?>">Home</a>
+          <a href="<?= home_url('/android') ?>">Android</a>
+          <a href="<?= home_url('/ios') ?>">iOS</a>
+          <a href="<?= home_url('/proofs') ?>">Proofs</a>
+          <a href="<?= home_url('/gameplay') ?>">Gameplay</a>
         </div>
       </div>
 
+      <div>
+        <div class="footer-links-title">Support</div>
+        <div class="footer-links">
+          <a href="https://t.me/<?= ltrim($telegram, '@https://t.me/') ?>" onclick="return showSupportLock();">Telegram Channel</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="footer-links-title">Legal</div>
+        <div class="footer-links">
+          <a href="<?= home_url('/policy?type=terms') ?>">Terms of Service</a>
+          <a href="<?= home_url('/policy?type=privacy') ?>">Privacy Policy</a>
+          <a href="<?= home_url('/policy?type=refund') ?>">Refund Policy</a>
+          <a href="<?= home_url('/policy?type=disclaimer') ?>">Disclaimer</a>
+        </div>
+      </div>
     </div>
 
-    <div style="max-width: 1200px; margin: 0 auto; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 1.5rem; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1rem; font-size: 0.78rem; color: #5a7a95;">
-      <div>&copy; <?php echo date('Y'); ?> <?php echo esc_html($site_title); ?>. All rights reserved. Powered by WordPress.</div>
-      <div style="display: flex; gap: 1rem;">
-        <span>Anti-Ban v2.8 Active</span>
-        <span>•</span>
-        <span>Instant UPI Delivery</span>
-      </div>
+    <div class="footer-bottom">
+      &copy; 2026 <?= esc_html($site_title) ?>. All rights reserved.
     </div>
-  </footer>
-
-  <!-- Floating WhatsApp & Telegram Badges -->
-  <div style="position: fixed; bottom: 20px; right: 20px; z-index: 999; display: flex; flex-direction: column; gap: 10px;">
-    <a href="<?php echo esc_url($telegram); ?>" target="_blank" aria-label="Join Telegram" style="width: 50px; height: 50px; border-radius: 50%; background: #229ED9; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; text-decoration: none; box-shadow: 0 4px 15px rgba(34, 158, 217, 0.5);">
-      <i class="fa-brands fa-telegram"></i>
-    </a>
-    <a href="https://wa.me/<?php echo esc_attr($clean_wa); ?>?text=Hello%20AKASH%20X%20STORE,%20I%20want%20to%20buy%20VIP%20Panel" target="_blank" aria-label="Chat on WhatsApp" style="width: 50px; height: 50px; border-radius: 50%; background: #25D366; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; text-decoration: none; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.5);">
-      <i class="fa-brands fa-whatsapp"></i>
-    </a>
   </div>
+</footer>
 
-  <!-- Shared Universal UPI Payment Checkout Modal -->
-  <div id="checkoutModal" class="cyber-modal-overlay">
-    <div class="cyber-modal">
-      <button class="cyber-modal-close" onclick="closeCheckoutModal()">&times;</button>
-      
-      <div style="text-align: center; margin-bottom: 1.25rem;">
-        <span style="font-size: 0.72rem; font-weight: 800; background: rgba(126,200,227,0.15); color: var(--neon-green-bright); padding: 3px 10px; border-radius: 20px; text-transform: uppercase; letter-spacing: 1px;">Instant Payment Checkout</span>
-        <h3 id="modalPlanTitle" style="color: #fff; font-size: 1.35rem; margin: 0.5rem 0 0.25rem;">Android VIP (30 Days)</h3>
-        <div id="modalPlanPrice" style="font-size: 1.8rem; font-weight: 900; color: var(--neon-green-bright);">₹299</div>
-      </div>
+<div class="lightbox" id="lightbox">
+  <button class="close-btn" onclick="closeLightbox()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+  </button>
+  <div id="lightboxContent"></div>
+</div>
 
-      <div style="background: #fff; border-radius: 14px; padding: 12px; width: 190px; height: 190px; margin: 0 auto 1.25rem; display: flex; align-items: center; justify-content: center;">
-        <img id="modalQrImg" src="" alt="Scan & Pay UPI QR" style="width: 100%; height: 100%; object-fit: contain;">
-      </div>
+<!-- Support Lock Popup -->
+<div class="modal-overlay" id="supportLockModal">
+  <div class="modal-sheet" style="max-width:340px;text-align:center;">
+    <div style="width:64px;height:64px;margin:4px auto 14px;border-radius:50%;background:rgba(126,200,227,0.12);border:1px solid var(--border-green);display:flex;align-items:center;justify-content:center;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="var(--neon-green-bright)" stroke-width="2" width="28" height="28"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+    </div>
+    <h3 style="font-family:var(--font-display);font-size:1.15rem;font-weight:800;color:var(--text-primary);margin:50px 0 8px;">Support Locked</h3>
+    <p style="font-size:0.9rem;color:var(--text-secondary);line-height:1.6;margin:0 0 18px;">Please buy any product first.<br>Support will be activated after your purchase.</p>
+    <a href="<?= home_url('/android') ?>" class="btn btn-primary w-full" style="margin-bottom:10px;">Buy Now</a>
+    <button onclick="closeSupportLock()" style="width:100%;padding:12px;border-radius:50px;background:transparent;border:1px solid var(--border-green);color:var(--text-secondary);font-weight:600;font-size:0.9rem;">Close</button>
+  </div>
+</div>
 
-      <div style="display: flex; align-items: center; justify-content: space-between; background: #060d1a; border: 1px solid var(--border-green); border-radius: 10px; padding: 8px 12px; margin-bottom: 1.25rem;">
-        <div style="text-align: left;">
-          <div style="font-size: 0.65rem; color: #94a3b8; text-transform: uppercase;">UPI ID</div>
-          <div id="modalUpiIdText" style="font-weight: 700; color: #fff; font-family: monospace; font-size: 0.88rem;"><?php echo esc_html($upi_id); ?></div>
-        </div>
-        <button onclick="copyModalUpi()" style="background: var(--neon-green-bright); color: #060d1a; border: none; border-radius: 6px; padding: 6px 12px; font-weight: 700; font-size: 0.75rem; cursor: pointer;">
-          <i class="fa-solid fa-copy"></i> Copy
-        </button>
-      </div>
-
-      <div style="text-align: center; margin-bottom: 1.25rem;">
-        <a id="modalUpiIntentBtn" href="#" class="btn-primary-cyber" style="display: block; width: 100%; padding: 11px; background: #25D366; color: #fff; font-weight: 800; border-radius: 10px; text-decoration: none; font-size: 0.9rem;">
-          <i class="fa-solid fa-mobile-screen"></i> Pay Directly via GPay / PhonePe / Paytm
-        </a>
-      </div>
-
-      <form id="utrForm" onsubmit="submitWpOrder(event)" style="background: rgba(13, 25, 48, 0.6); border: 1px solid rgba(126,200,227,0.15); border-radius: 12px; padding: 1rem;">
-        <div style="font-size: 0.78rem; font-weight: 700; color: #fff; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 5px;">
-          <i class="fa-solid fa-receipt" style="color: var(--neon-green-bright);"></i> Step 2: Submit Payment UTR (12-Digit)
-        </div>
-        <div style="margin-bottom: 0.75rem;">
-          <input type="text" id="utrInput" placeholder="Enter 12-Digit UTR / Ref Number" required style="width: 100%; background: #060d1a; border: 1px solid var(--border-green); color: #fff; padding: 10px 12px; border-radius: 8px; font-size: 0.88rem; outline: none;">
-        </div>
-        <div style="margin-bottom: 0.75rem;">
-          <input type="tel" id="phoneInput" placeholder="Your WhatsApp Mobile Number" required style="width: 100%; background: #060d1a; border: 1px solid var(--border-green); color: #fff; padding: 10px 12px; border-radius: 8px; font-size: 0.88rem; outline: none;">
-        </div>
-        <button type="submit" id="btnSubmitOrder" style="width: 100%; padding: 11px; background: var(--neon-green-bright); color: #060d1a; font-weight: 800; border: none; border-radius: 8px; font-size: 0.9rem; cursor: pointer;">
-          Submit & Receive VIP Key
-        </button>
-      </form>
-
+<div class="chat-widget" id="chatWidget">
+  <div class="chat-panel" id="chatPanel">
+    <div class="chat-panel-header">
+      <span>Need help?</span>
+      <button class="chat-close-btn" onclick="toggleChatPanel(false)" aria-label="Close chat">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <p class="chat-panel-sub">Chat with us directly for instant support.</p>
+    <div class="chat-options">
+      <a href="https://t.me/<?= ltrim($telegram, '@https://t.me/') ?>" target="_blank" rel="noopener" class="chat-option chat-telegram">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M22 4.01L2.5 11.5c-1.1.43-1.1 1.16-.2 1.46l4.94 1.54 1.92 6.16c.23.62.45.86.9.86.46 0 .67-.21 1-.55l2.4-2.34 4.99 3.68c.92.5 1.58.24 1.81-.85l3.27-15.4c.32-1.33-.5-1.93-1.53-1.55zM8.5 14.4l9.9-6.25c.49-.3.95-.14.58.2L9.96 16.1l-.34 3.7-1.12-5.4z"/></svg>
+        <span>Telegram</span>
+      </a>
     </div>
   </div>
 
-  <audio id="vipVoiceAudio" src="<?php echo esc_url($voice_url); ?>" preload="none"></audio>
+  <button class="chat-fab" id="chatFab" onclick="toggleChatPanel()" aria-label="Open chat support">
+    <svg class="chat-fab-icon-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+    <svg class="chat-fab-icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+  </button>
+</div>
 
-  <script>
-    const voiceAudio = document.getElementById('vipVoiceAudio');
-    let isPlaying = false;
+<style>
+[data-theme="blue"] {
+  --bg-primary: #050d18;
+  --bg-secondary: #071424;
+  --bg-card: rgba(20, 44, 70, 0.55);
+  --neon-green: #5e86a9;
+  --neon-green-bright: #8fc1ec;
+  --neon-green-dim: #2a4f6e;
+  --neon-orange: #5e86a9;
+  --neon-orange-bright: #8fc1ec;
+  --border-green: rgba(143, 193, 236, 0.3);
+  --border-orange: rgba(143, 193, 236, 0.3);
+}
+[data-theme="purple"] {
+  --bg-primary: #08050f;
+  --bg-secondary: #100820;
+  --bg-card: rgba(40, 20, 70, 0.55);
+  --neon-green: #8a3fc9;
+  --neon-green-bright: #b06ee0;
+  --neon-green-dim: #5a2490;
+  --neon-orange: #8a3fc9;
+  --neon-orange-bright: #b06ee0;
+  --border-green: rgba(176, 110, 224, 0.3);
+  --border-orange: rgba(176, 110, 224, 0.3);
+}
+[data-theme="red"] {
+  --bg-primary: #0f0505;
+  --bg-secondary: #1a0808;
+  --bg-card: rgba(50, 15, 15, 0.55);
+  --neon-green: #c93f3f;
+  --neon-green-bright: #e07070;
+  --neon-green-dim: #902424;
+  --neon-orange: #c93f3f;
+  --neon-orange-bright: #e07070;
+  --border-green: rgba(224, 112, 112, 0.3);
+  --border-orange: rgba(224, 112, 112, 0.3);
+}
+[data-theme="lime"] {
+  --bg-primary: #05070d;
+  --bg-secondary: #0a0e18;
+  --bg-card: rgba(11, 18, 32, 0.7);
+  --neon-green: #7ac400;
+  --neon-green-bright: #9ae600;
+  --neon-green-dim: #4d7c00;
+  --neon-orange: #7ac400;
+  --neon-orange-bright: #9ae600;
+  --border-green: rgba(154, 230, 0, 0.3);
+  --border-orange: rgba(154, 230, 0, 0.25);
+  --text-primary: #ffffff;
+  --text-secondary: #c8d8b0;
+  --text-muted: #6b7a55;
+}
+[data-theme="pastel"] {
+  --bg-primary: #2a3535;
+  --bg-secondary: #344040;
+  --bg-card: rgba(93, 107, 107, 0.45);
+  --neon-green: #98acad;
+  --neon-green-bright: #BDD7D8;
+  --neon-green-dim: #5D6B6B;
+  --neon-orange: #F7CBCA;
+  --neon-orange-bright: #F7CBCA;
+  --border-green: rgba(189, 215, 216, 0.35);
+  --border-orange: rgba(247, 203, 202, 0.35);
+  --text-primary: #F1F7F7;
+  --text-secondary: #D5E5E5;
+  --text-muted: #98acad;
+}
+[data-theme="royal"] {
+  --bg-primary: #190019;
+  --bg-secondary: #2B124C;
+  --bg-card: rgba(82, 43, 91, 0.45);
+  --neon-green: #854F6B;
+  --neon-green-bright: #DFB6B2;
+  --neon-green-dim: #522B5B;
+  --neon-orange: #854F6B;
+  --neon-orange-bright: #FBE4D8;
+  --border-green: rgba(223, 182, 178, 0.32);
+  --border-orange: rgba(251, 228, 216, 0.28);
+  --text-primary: #FBE4D8;
+  --text-secondary: #DFB6B2;
+  --text-muted: #a37287;
+}
+[data-theme="mocha"] {
+  --bg-primary: #2A0800;
+  --bg-secondary: #3b1e12;
+  --bg-card: rgba(119, 81, 68, 0.4);
+  --neon-green: #C09891;
+  --neon-green-bright: #F4D6D8;
+  --neon-green-dim: #775144;
+  --neon-orange: #C09891;
+  --neon-orange-bright: #F4D6D8;
+  --border-green: rgba(192, 152, 145, 0.35);
+  --border-orange: rgba(190, 168, 167, 0.30);
+  --text-primary: #F4D6D8;
+  --text-secondary: #BEA8A7;
+  --text-muted: #9c7a6d;
+}
 
-    function toggleVoicePlayer(buttonEl) {
-      if (!voiceAudio || !voiceAudio.src) return;
-      if (voiceAudio.paused) {
-        voiceAudio.play();
-        isPlaying = true;
-        if (buttonEl) buttonEl.innerHTML = '<i class="fa-solid fa-pause"></i>';
-      } else {
-        voiceAudio.pause();
-        isPlaying = false;
-        if (buttonEl) buttonEl.innerHTML = '<i class="fa-solid fa-play"></i>';
-      }
+.theme-picker {
+  position: fixed;
+  top: 74px;
+  right: 16px;
+  z-index: 10060;
+  min-width: 230px;
+  padding: 12px;
+  border-radius: 16px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-green);
+  box-shadow: 0 18px 50px rgba(0,0,0,0.55);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px) scale(0.97);
+  transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s;
+}
+.theme-picker.open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+}
+.theme-picker-title {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  padding: 2px 8px 10px;
+}
+.theme-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  padding: 9px 10px;
+  border-radius: 10px;
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+.theme-option:hover { background: rgba(255,255,255,0.06); }
+.theme-option.active {
+  border-color: var(--border-green);
+  background: rgba(255,255,255,0.05);
+  color: var(--text-primary);
+}
+.theme-swatches { display: flex; gap: 5px; flex-shrink: 0; }
+.theme-swatches span {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.25);
+  display: block;
+}
+</style>
+
+<div class="theme-picker" id="themePicker">
+  <div class="theme-picker-title">Choose Colour Theme</div>
+  <div id="themePickerList"></div>
+</div>
+
+<script>
+window.addEventListener('load', function() {
+  document.body.classList.add('page-loaded');
+});
+
+function toggleDrawer(open) {
+  document.getElementById('mobileDrawer')?.classList.toggle('open', open);
+  document.getElementById('mobileDrawerOverlay')?.classList.toggle('open', open);
+  document.body.style.overflow = open ? 'hidden' : '';
+}
+
+var vxsLightboxStatePushed = false;
+function openLightbox(html) {
+  document.getElementById('lightboxContent').innerHTML = html;
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  try {
+    history.pushState({ vxsLightbox: true }, '');
+    vxsLightboxStatePushed = true;
+  } catch (e) { vxsLightboxStatePushed = false; }
+}
+function closeLightbox(fromPopstate) {
+  var lb = document.getElementById('lightbox');
+  if (!lb || !lb.classList.contains('open')) return;
+  lb.classList.remove('open');
+  document.getElementById('lightboxContent').innerHTML = '';
+  document.body.style.overflow = '';
+  if (!fromPopstate && vxsLightboxStatePushed) {
+    vxsLightboxStatePushed = false;
+    try { history.back(); } catch (e) {}
+  } else {
+    vxsLightboxStatePushed = false;
+  }
+}
+window.addEventListener('popstate', function() {
+  var lb = document.getElementById('lightbox');
+  if (lb && lb.classList.contains('open')) {
+    closeLightbox(true);
+  }
+});
+document.getElementById('lightbox')?.addEventListener('click', function(e) {
+  if (e.target === this) closeLightbox();
+});
+
+window.VXS_SUPPORT_UNLOCKED = false;
+function showSupportLock() {
+  if (window.VXS_SUPPORT_UNLOCKED) return true;
+  document.getElementById('supportLockModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  return false;
+}
+function closeSupportLock() {
+  document.getElementById('supportLockModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.getElementById('supportLockModal')?.addEventListener('click', function(e) {
+  if (e.target === this) closeSupportLock();
+});
+
+function toggleChatPanel(force) {
+  const panel = document.getElementById('chatPanel');
+  const fab = document.getElementById('chatFab');
+  const isOpen = panel.classList.contains('open');
+  const next = force !== undefined ? force : !isOpen;
+  panel.classList.toggle('open', next);
+  fab.classList.toggle('open', next);
+}
+document.addEventListener('click', function(e) {
+  const widget = document.getElementById('chatWidget');
+  if (widget && !widget.contains(e.target)) {
+    toggleChatPanel(false);
+  }
+});
+
+// Theme switcher
+(function(){
+  const THEMES = [
+    { id: '',       name: '🔵 Steel Blue (Default)', sw: ['#060d1a', '#7ec8e3', '#f0f8ff'] },
+    { id: 'lime',   name: '🟢 Lime',                 sw: ['#05070d', '#9ae600', '#ffffff'] },
+    { id: 'pastel', name: '🌸 Pastel',               sw: ['#5D6B6B', '#BDD7D8', '#F7CBCA'] },
+    { id: 'purple', name: '🟣 Purple',               sw: ['#08050f', '#b06ee0', '#f0e8ff'] },
+    { id: 'red',    name: '🔴 Red',                  sw: ['#0f0505', '#e07070', '#ffe8e8'] },
+    { id: 'royal',  name: '👑 Royal Mauve',          sw: ['#190019', '#854F6B', '#FBE4D8'] },
+    { id: 'mocha',  name: '🤎 Mocha Mono',           sw: ['#2A0800', '#C09891', '#F4D6D8'] }
+  ];
+
+  const picker = document.getElementById('themePicker');
+  const list = document.getElementById('themePickerList');
+  if (!picker || !list) return;
+
+  const saved = localStorage.getItem('vipxsTheme') || '';
+  document.documentElement.setAttribute('data-theme', saved);
+
+  THEMES.forEach(function(t) {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'theme-option' + (t.id === saved ? ' active' : '');
+    btn.setAttribute('data-theme-id', t.id);
+    btn.innerHTML = '<span>' + t.name + '</span>' +
+      '<span class="theme-swatches">' +
+      t.sw.map(function(c) { return '<span style="background:' + c + ';"></span>'; }).join('') +
+      '</span>';
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      applyTheme(t.id);
+    });
+    list.appendChild(btn);
+  });
+
+  function applyTheme(id) {
+    localStorage.setItem('vipxsTheme', id);
+    document.documentElement.setAttribute('data-theme', id);
+    list.querySelectorAll('.theme-option').forEach(function(o) {
+      o.classList.toggle('active', o.getAttribute('data-theme-id') === id);
+    });
+  }
+
+  window.toggleThemePicker = function() {
+    var sun = document.querySelector('#themeToggleBtn .theme-sun-img');
+    if (sun) {
+      sun.classList.remove('sun-spin');
+      void sun.offsetWidth;
+      sun.classList.add('sun-spin');
     }
-
-    if (voiceAudio) {
-      voiceAudio.addEventListener('timeupdate', () => {
-        const pEls = document.querySelectorAll('.voice-progress');
-        if (voiceAudio.duration) {
-          const pct = (voiceAudio.currentTime / voiceAudio.duration) * 100;
-          pEls.forEach(el => el.style.width = pct + '%');
-        }
-      });
-      voiceAudio.addEventListener('ended', () => {
-        isPlaying = false;
-        document.querySelectorAll('.voice-play-btn').forEach(b => b.innerHTML = '<i class="fa-solid fa-play"></i>');
-        document.querySelectorAll('.voice-progress').forEach(el => el.style.width = '0%');
-      });
+    if (typeof toggleDrawer === 'function') {
+      try { toggleDrawer(false); } catch (e) {}
     }
+    picker.classList.toggle('open');
+  };
 
-    function copyKey(keyText) {
-      navigator.clipboard.writeText(keyText).then(() => {
-        alert('Key copied: ' + keyText);
-      }).catch(() => {
-        prompt('Copy key:', keyText);
-      });
-    }
+  document.addEventListener('click', function(e) {
+    if (!picker.classList.contains('open')) return;
+    if (picker.contains(e.target)) return;
+    if (e.target.closest('#themeToggleBtn')) return;
+    picker.classList.remove('open');
+  });
+})();
+</script>
 
-    let currentCheckout = { device: 'Android', duration: '30', price: 299 };
-
-    function openCheckoutModal(device, duration, price) {
-      currentCheckout = { device, duration, price };
-      document.getElementById('modalPlanTitle').textContent = `${device} VIP (${duration} Days)`;
-      document.getElementById('modalPlanPrice').textContent = `₹${price}`;
-
-      const upiId = '<?php echo esc_js($upi_id); ?>';
-      const upiName = encodeURIComponent('<?php echo esc_js($upi_name); ?>');
-      const note = encodeURIComponent(`AKASH VIP ${device} ${duration}D`);
-      const upiLink = `upi://pay?pa=${upiId}&pn=${upiName}&am=${price}&cu=INR&tn=${note}`;
-
-      const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(upiLink)}`;
-      document.getElementById('modalQrImg').src = qrUrl;
-      document.getElementById('modalUpiIntentBtn').href = upiLink;
-
-      document.getElementById('checkoutModal').classList.add('active');
-    }
-
-    function closeCheckoutModal() {
-      document.getElementById('checkoutModal').classList.remove('active');
-    }
-
-    function copyModalUpi() {
-      const upi = document.getElementById('modalUpiIdText').textContent.trim();
-      navigator.clipboard.writeText(upi).then(() => {
-        alert('UPI ID copied: ' + upi);
-      });
-    }
-
-    function submitWpOrder(e) {
-      e.preventDefault();
-      const utr = document.getElementById('utrInput').value.trim();
-      const phone = document.getElementById('phoneInput').value.trim();
-      if (!utr || !phone) return;
-
-      const waMsg = encodeURIComponent(`Hello AKASH X STORE, I have completed payment of ₹${currentCheckout.price} for ${currentCheckout.device} VIP (${currentCheckout.duration} Days).\nMy UTR is: ${utr}\nMy Phone: ${phone}`);
-      window.open(`https://wa.me/<?php echo esc_js($clean_wa); ?>?text=${waMsg}`, '_blank');
-      closeCheckoutModal();
-      document.getElementById('utrForm').reset();
-    }
-  </script>
-
-  <?php wp_footer(); ?>
+<?php wp_footer(); ?>
 </body>
 </html>

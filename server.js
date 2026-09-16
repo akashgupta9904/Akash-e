@@ -81,11 +81,12 @@ app.use(express.static(path.join(__dirname, 'public'), {
   }
 }));
 
-// Clean URL Routes
-app.get('/android', (req, res) => res.sendFile(path.join(__dirname, 'public/android.html')));
-app.get('/ios', (req, res) => res.sendFile(path.join(__dirname, 'public/ios.html')));
-app.get('/proofs', (req, res) => res.sendFile(path.join(__dirname, 'public/proofs.html')));
-app.get('/gameplay', (req, res) => res.sendFile(path.join(__dirname, 'public/gameplay.html')));
+// Clean URL Routes & .php aliases
+app.get(['/android', '/android.php'], (req, res) => res.sendFile(path.join(__dirname, 'public/android.html')));
+app.get(['/ios', '/ios.php'], (req, res) => res.sendFile(path.join(__dirname, 'public/ios.html')));
+app.get(['/proofs', '/proofs.php'], (req, res) => res.sendFile(path.join(__dirname, 'public/proofs.html')));
+app.get(['/gameplay', '/gameplay.php'], (req, res) => res.sendFile(path.join(__dirname, 'public/gameplay.html')));
+app.get(['/policy', '/policy.php'], (req, res) => res.sendFile(path.join(__dirname, 'public/policy.html')));
 app.get('/login', (req, res) => res.sendFile(path.join(__dirname, 'public/login.html')));
 app.get('/admin', (req, res) => res.sendFile(path.join(__dirname, 'public/admin/index.html')));
 

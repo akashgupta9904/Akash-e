@@ -1,416 +1,486 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-  <title>Official Gaming Panel Store — AKASH X STORE</title>
-  <meta name="description" content="Premium gaming panel store with clean setup, trusted support, proof gallery, and secure UPI checkout.">
-  <meta name="theme-color" content="#7ec8e3">
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Official Gaming Panel Store — VIP X STORE</title>
+<meta name="description" content="Premium gaming panel store with clean setup, trusted support, proof gallery, and secure UPI checkout.">
+<meta name="theme-color" content="#7ec8e3">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="icon" href="/assets/img/vipx_logo.png" type="image/png">
 
-  <!-- Typography -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="/css/main.css">
+<link rel="stylesheet" href="/css/main.css?v=43">
 </head>
 <body>
 
-  <!-- Ambient Glowing Background Orbs -->
-  <div class="bg-orb bg-orb-1"></div>
-  <div class="bg-orb bg-orb-2"></div>
-  <div class="bg-orb bg-orb-3"></div>
+<div class="bg-grid"></div>
+<div class="bg-orb bg-orb-1"></div>
+<div class="bg-orb bg-orb-2"></div>
+<div class="bg-orb bg-orb-3"></div>
 
-  <!-- Navigation Bar -->
-  <nav class="navbar">
+<nav class="navbar">
+  <a href="/" class="brand">
+    <img src="/assets/img/vipx_logo.png" alt="VIP X STORE">
+    <span>VIP X STORE</span>
+  </a>
+
+  <ul class="desktop-nav">
+    <li><a href="/" class="active">Home</a></li>
+    <li><a href="/android" class="">Android</a></li>
+    <li><a href="/ios" class="">iOS</a></li>
+    <li><a href="/proofs" class="">Proofs</a></li>
+    <li><a href="/gameplay" class="">Gameplay</a></li>
+  </ul>
+
+  <button id="themeToggleBtn" onclick="toggleThemePicker()" class="theme-toggle-btn" title="Change Colour Theme" aria-label="Change Colour Theme">
+    <img src="/assets/img/sun.png" alt="Change Colour Theme" class="theme-sun-img">
+  </button>
+  <a href="/android" class="navbar-buy-btn">
+    Buy Now <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+  </a>
+
+  <button class="menu-btn mobile-menu-btn" onclick="toggleDrawer(true)" aria-label="Open menu">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+  </button>
+</nav>
+
+<div class="mobile-drawer-overlay" id="mobileDrawerOverlay" onclick="toggleDrawer(false)"></div>
+<div class="mobile-drawer" id="mobileDrawer">
+  <div class="drawer-header">
     <a href="/" class="brand">
-      <img src="/assets/img/logo.svg" alt="AKASH X STORE">
-      <span>AKASH X STORE</span>
+      <img src="/assets/img/vipx_logo.png" alt="VIP X STORE" style="height:30px;width:30px;">
+      <span>VIP X STORE</span>
+    </a>
+    <button onclick="toggleDrawer(false)" aria-label="Close menu" style="width:36px;height:36px;border-radius:50%;background:rgba(154,230,0,0.12);border:1px solid var(--border-green);display:flex;align-items:center;justify-content:center;color:var(--neon-green-bright);cursor:pointer;flex-shrink:0;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <a href="/" class="drawer-link active">Home</a>
+  <a href="/android" class="drawer-link ">Android</a>
+  <a href="/ios" class="drawer-link ">iOS</a>
+  <a href="/proofs" class="drawer-link ">Proofs</a>
+  <a href="/gameplay" class="drawer-link ">Gameplay</a>
+</div>
+
+<main class="container">
+
+  <!-- Hero -->
+  <section class="hero">
+    <img src="/assets/img/vipx_logo.png" alt="VIP X STORE" class="hero-logo">
+    <h1 class="orbitron">VIP X STORE</h1>
+    <p class="subtitle">OFFICIAL VIP X STORE SHOP</p>
+  </section>
+
+  <!-- Voice Note -->
+  <section class="voice-note glass-card reveal" id="voiceNoteSection">
+    <div class="voice-note-header">
+      <div class="voice-note-label">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 010 14.14M15.54 8.46a5 5 0 010 7.07"/></svg>
+        VOICE NOTE GUIDE
+      </div>
+      <div class="voice-note-time"><span id="voiceCurrent">00:00</span> / <span id="voiceDuration">00:00</span></div>
+    </div>
+    <div class="voice-note-body">
+      <button class="voice-play-btn" id="voicePlayBtn">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+      </button>
+      <div class="waveform" id="waveform">
+        <div class="bar" style="height:12px;"></div>
+        <div class="bar" style="height:16px;"></div>
+        <div class="bar" style="height:10px;"></div>
+        <div class="bar" style="height:21px;"></div>
+        <div class="bar" style="height:11px;"></div>
+        <div class="bar" style="height:16px;"></div>
+        <div class="bar" style="height:9px;"></div>
+        <div class="bar" style="height:13px;"></div>
+        <div class="bar" style="height:17px;"></div>
+        <div class="bar" style="height:16px;"></div>
+        <div class="bar" style="height:26px;"></div>
+        <div class="bar" style="height:24px;"></div>
+        <div class="bar" style="height:10px;"></div>
+        <div class="bar" style="height:14px;"></div>
+        <div class="bar" style="height:28px;"></div>
+        <div class="bar" style="height:17px;"></div>
+        <div class="bar" style="height:26px;"></div>
+        <div class="bar" style="height:19px;"></div>
+        <div class="bar" style="height:10px;"></div>
+        <div class="bar" style="height:17px;"></div>
+        <div class="bar" style="height:14px;"></div>
+        <div class="bar" style="height:11px;"></div>
+        <div class="bar" style="height:8px;"></div>
+        <div class="bar" style="height:16px;"></div>
+        <div class="bar" style="height:16px;"></div>
+        <div class="bar" style="height:25px;"></div>
+        <div class="bar" style="height:10px;"></div>
+        <div class="bar" style="height:17px;"></div>
+        <div class="bar" style="height:10px;"></div>
+        <div class="bar" style="height:18px;"></div>
+        <div class="bar" style="height:9px;"></div>
+        <div class="bar" style="height:26px;"></div>
+        <div class="bar" style="height:28px;"></div>
+        <div class="bar" style="height:15px;"></div>
+        <div class="bar" style="height:15px;"></div>
+        <div class="bar" style="height:17px;"></div>
+        <div class="bar" style="height:11px;"></div>
+        <div class="bar" style="height:13px;"></div>
+        <div class="bar" style="height:19px;"></div>
+        <div class="bar" style="height:10px;"></div>
+        <div class="bar" style="height:14px;"></div>
+        <div class="bar" style="height:27px;"></div>
+        <div class="bar" style="height:16px;"></div>
+        <div class="bar" style="height:26px;"></div>
+        <div class="bar" style="height:9px;"></div>
+        <div class="bar" style="height:22px;"></div>
+        <div class="bar" style="height:27px;"></div>
+        <div class="bar" style="height:21px;"></div>
+      </div>
+    </div>
+  </section>
+
+  <audio id="voiceAudio" src="/uploads/voice_guide.mp3" preload="metadata"></audio>
+
+  <!-- 4 Main Floating Cards -->
+  <section class="cards-grid">
+    <a href="/android" class="feature-card theme-green">
+      <span class="badge">POPULAR</span>
+      <div class="icon-wrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="12" x2="10" y2="12"/><line x1="8" y1="10" x2="8" y2="14"/><circle cx="15" cy="13" r="1"/><circle cx="18" cy="11" r="1"/><rect x="2" y="6" width="20" height="12" rx="4"/></svg>
+      </div>
+      <h3>Android Panel</h3>
+      <p>Rs 35 / 7 days - Rs 55/ Weeks</p>
+      <span class="card-cta">Get Access <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
     </a>
 
-    <ul class="desktop-nav">
-      <li><a href="/" class="active">Home</a></li>
-      <li><a href="/android.html">Android</a></li>
-      <li><a href="/ios.html">iOS</a></li>
-      <li><a href="/proofs.html">Proofs (Coming Soon)</a></li>
-      <li><a href="/gameplay.html">Gameplay (Coming Soon)</a></li>
-      <li class="admin-only-link"><a href="/admin/index.html" style="color:var(--neon-green-bright); font-weight:700;">👑 Dashboard</a></li>
-    </ul>
-
-    <!-- Theme Color Toggle Button -->
-    <button id="themeToggleBtn" onclick="toggleThemePicker()" class="theme-toggle-btn" title="Change Colour Theme" aria-label="Change Colour Theme">
-      <img src="/assets/img/sun.svg" alt="Change Colour Theme" class="theme-sun-img">
-    </button>
-
-    <a href="/android.html" class="navbar-buy-btn">
-      Buy Now 
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-        <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
-      </svg>
+    <a href="/ios" class="feature-card theme-green">
+      <span class="badge">POPULAR</span>
+      <div class="icon-wrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2" width="10" height="20" rx="2"/><line x1="11" y1="18" x2="13" y2="18"/></svg>
+      </div>
+      <h3>iphone Panel</h3>
+      <p>Rs 35 / 7 days - Rs 55/ Weeks</p>
+      <span class="card-cta">Get Access <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
     </a>
 
-    <button class="mobile-menu-btn" onclick="toggleDrawer(true)" aria-label="Open menu">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
-      </svg>
-    </button>
-  </nav>
+    <a href="/proofs" class="feature-card theme-orange">
+      <span class="badge">VERIFIED</span>
+      <div class="icon-wrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4z"/><path d="M9 12l2 2 4-4"/></svg>
+      </div>
+      <h3>All Proofs</h3>
+      <p>100+ Happy Customers</p>
+      <span class="card-cta">View Proofs <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+    </a>
 
-  <!-- Mobile Drawer Menu -->
-  <div class="mobile-drawer-overlay" id="mobileDrawerOverlay" onclick="toggleDrawer(false)"></div>
-  <div class="mobile-drawer" id="mobileDrawer">
-    <div class="drawer-header">
-      <a href="/" class="brand">
-        <img src="/assets/img/logo.svg" alt="AKASH X STORE" style="height:32px; width:32px;">
-        <span>AKASH X STORE</span>
-      </a>
-      <button onclick="toggleDrawer(false)" aria-label="Close menu" style="width:36px; height:36px; border-radius:50%; background:rgba(126,200,227,0.12); border:1px solid var(--border-green); display:flex; align-items:center; justify-content:center; color:var(--neon-green-bright); cursor:pointer;">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22">
-          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
-        </svg>
+    <a href="/gameplay" class="feature-card theme-orange">
+      <span class="badge">LIVE</span>
+      <div class="icon-wrap">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+      </div>
+      <h3>Panel Gameplay</h3>
+      <p>Watch Live Demos</p>
+      <span class="card-cta">Watch Now <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+    </a>
+  </section>
+
+  <!-- Stats Row -->
+  <section class="stats-row">
+    <div class="stat-badge">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></svg>
+      <span><span class="counter-num" data-target="2627">0</span>+ Panels Sold</span>
+    </div>
+    <div class="stat-badge">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      <span>24/7 Support</span>
+    </div>
+    <div class="stat-badge">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="6" width="15" height="11"/><polygon points="16 9 20 9 23 13 23 17 16 17"/><circle cx="5.5" cy="18.5" r="1.5"/><circle cx="18.5" cy="18.5" r="1.5"/></svg>
+      <span>Instant Delivery</span>
+    </div>
+    <div class="stat-badge">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/></svg>
+      <span>100% Working</span>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">
+          <img src="/assets/img/vipx_logo.png" alt="VIP X STORE">
+          <span>VIP X STORE</span>
+        </div>
+        <p class="footer-about">Premium gaming panel store with clean setup, trusted support, proof gallery, and secure UPI checkout.</p>
+      </div>
+
+      <div>
+        <div class="footer-links-title">Useful Links</div>
+        <div class="footer-links">
+          <a href="/">Home</a>
+          <a href="/android">Android</a>
+          <a href="/ios">iOS</a>
+          <a href="/proofs">Proofs</a>
+          <a href="/gameplay">Gameplay</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="footer-links-title">Support</div>
+        <div class="footer-links">
+          <a href="https://t.me/Real_Panel_100" onclick="return showSupportLock();">Telegram Channel</a>          
+        </div>
+      </div>
+      <div>
+        <div class="footer-links-title">Legal</div>
+        <div class="footer-links">
+          <a href="/policy.html?type=terms">Terms of Service</a>
+          <a href="/policy.html?type=privacy">Privacy Policy</a>
+          <a href="/policy.html?type=refund">Refund Policy</a>
+          <a href="/policy.html?type=disclaimer">Disclaimer</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      &copy; 2026 VIP X STORE. All rights reserved.
+    </div>
+  </div>
+</footer>
+
+<div class="lightbox" id="lightbox">
+  <button class="close-btn" onclick="closeLightbox()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+  </button>
+  <div id="lightboxContent"></div>
+</div>
+
+<!-- Support Lock Popup -->
+<div class="modal-overlay" id="supportLockModal">
+  <div class="modal-sheet" style="max-width:340px;text-align:center;">
+    <div style="width:64px;height:64px;margin:4px auto 14px;border-radius:50%;background:rgba(126,200,227,0.12);border:1px solid var(--border-green);display:flex;align-items:center;justify-content:center;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="var(--neon-green-bright)" stroke-width="2" width="28" height="28"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+    </div>
+    <h3 style="font-family:var(--font-display);font-size:1.15rem;font-weight:800;color:var(--text-primary);margin:50px 0 8px;">Support Locked</h3>
+    <p style="font-size:0.9rem;color:var(--text-secondary);line-height:1.6;margin:0 0 18px;">Please buy any product first.<br>Support will be activated after your purchase.</p>
+    <a href="/android" class="btn btn-primary w-full" style="margin-bottom:10px;">Buy Now</a>
+    <button onclick="closeSupportLock()" style="width:100%;padding:12px;border-radius:50px;background:transparent;border:1px solid var(--border-green);color:var(--text-secondary);font-weight:600;font-size:0.9rem;">Close</button>
+  </div>
+</div>
+
+<div class="theme-picker" id="themePicker">
+  <div class="theme-picker-title">Choose Colour Theme</div>
+  <div id="themePickerList"></div>
+</div>
+
+<div class="chat-widget" id="chatWidget">
+  <div class="chat-panel" id="chatPanel">
+    <div class="chat-panel-header">
+      <span>Need help?</span>
+      <button class="chat-close-btn" onclick="toggleChatPanel(false)" aria-label="Close chat">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
     </div>
-    <a href="/" class="drawer-link active">Home</a>
-    <a href="/android.html" class="drawer-link">Android Panel</a>
-    <a href="/ios.html" class="drawer-link">iOS Panel</a>
-    <a href="/proofs.html" class="drawer-link">Proofs (Coming Soon)</a>
-    <a href="/gameplay.html" class="drawer-link">Gameplay (Coming Soon)</a>
-    <a href="/admin/index.html" class="drawer-link admin-only-link" style="color: var(--neon-green-bright); font-weight: 700; margin-top: auto; border-top: 1px solid var(--border-green); padding-top: 1rem;">👑 Admin Dashboard</a>
-  </div>
-
-  <!-- Main Container -->
-  <main class="container">
-
-    <!-- Hero -->
-    <section class="hero">
-      <img src="/assets/img/logo.svg" alt="AKASH X STORE" class="hero-logo">
-      <h1 class="orbitron">AKASH X STORE</h1>
-      <p class="subtitle">OFFICIAL AKASH X STORE SHOP</p>
-    </section>
-
-    <!-- Voice Note Guide -->
-    <section class="voice-note glass-card" id="voiceNoteSection">
-      <div class="voice-note-header">
-        <div class="voice-note-label">
-          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 010 14.14M15.54 8.46a5 5 0 010 7.07"/>
-          </svg>
-          VOICE NOTE GUIDE (COMING SOON)
-        </div>
-        <div class="voice-note-time">
-          <span id="voiceCurrent">00:00</span> / <span id="voiceDuration">00:42</span>
-        </div>
-      </div>
-      <div class="voice-note-body">
-        <button class="voice-play-btn" id="voicePlayBtn" aria-label="Play Voice Note">
-          <svg viewBox="0 0 24 24" fill="currentColor">
-            <path d="M8 5v14l11-7z"/>
-          </svg>
-        </button>
-        <div class="waveform" id="waveform">
-          <!-- 48 Dynamic Bars rendered by JS -->
-        </div>
-      </div>
-    </section>
-
-    <!-- 4 Main Floating Feature Cards -->
-    <section class="cards-grid">
-      <!-- Android Card -->
-      <a href="/android.html" class="feature-card">
-        <span class="badge">POPULAR</span>
-        <div class="icon-wrap">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="6" y1="12" x2="10" y2="12"/><line x1="8" y1="10" x2="8" y2="14"/><circle cx="15" cy="13" r="1"/><circle cx="18" cy="11" r="1"/><rect x="2" y="6" width="20" height="12" rx="4"/>
-          </svg>
-        </div>
-        <h3>Android Panel</h3>
-        <p>Rs 80 / 1 Day — Rs 150 / 15 Days — Rs 299 / 1 Month</p>
-        <span class="card-cta">
-          Get Access 
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
-          </svg>
-        </span>
+    <p class="chat-panel-sub">Chat with us directly for instant support.</p>
+    <div class="chat-options">
+      <a href="https://t.me/Real_Panel_100" target="_blank" rel="noopener" class="chat-option chat-telegram">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M22 4.01L2.5 11.5c-1.1.43-1.1 1.16-.2 1.46l4.94 1.54 1.92 6.16c.23.62.45.86.9.86.46 0 .67-.21 1-.55l2.4-2.34 4.99 3.68c.92.5 1.58.24 1.81-.85l3.27-15.4c.32-1.33-.5-1.93-1.53-1.55zM8.5 14.4l9.9-6.25c.49-.3.95-.14.58.2L9.96 16.1l-.34 3.7-1.12-5.4z"/></svg>
+        <span>Telegram</span>
       </a>
-
-      <!-- iOS Card -->
-      <a href="/ios.html" class="feature-card">
-        <span class="badge">POPULAR</span>
-        <div class="icon-wrap">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="7" y="2" width="10" height="20" rx="2"/><line x1="11" y1="18" x2="13" y2="18"/>
-          </svg>
-        </div>
-        <h3>iPhone Panel</h3>
-        <p>Rs 80 / 1 Day — Rs 150 / 15 Days — Rs 299 / 1 Month</p>
-        <span class="card-cta">
-          Get Access 
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
-          </svg>
-        </span>
-      </a>
-
-      <!-- Proofs Card -->
-      <a href="/proofs.html" class="feature-card">
-        <span class="badge" style="color: #f59e0b; border-color: rgba(245,158,11,0.3); background: rgba(245,158,11,0.15);">COMING SOON</span>
-        <div class="icon-wrap">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4z"/><path d="M9 12l2 2 4-4"/>
-          </svg>
-        </div>
-        <h3>Proofs (Coming Soon)</h3>
-        <p>Verified Feedback & Scores Updating Soon</p>
-        <span class="card-cta">
-          View Details 
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
-          </svg>
-        </span>
-      </a>
-
-      <!-- Gameplay Card -->
-      <a href="/gameplay.html" class="feature-card">
-        <span class="badge" style="color: #f59e0b; border-color: rgba(245,158,11,0.3); background: rgba(245,158,11,0.15);">COMING SOON</span>
-        <div class="icon-wrap" style="color: #f59e0b; background: rgba(245,158,11,0.1);">
-          <svg viewBox="0 0 24 24" fill="currentColor">
-            <path d="M8 5v14l11-7z"/>
-          </svg>
-        </div>
-        <h3>Gameplay (Coming Soon)</h3>
-        <p>Live Demo Clips & Guides Updating Soon</p>
-        <span class="card-cta">
-          View Details 
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
-          </svg>
-        </span>
-      </a>
-    </section>
-
-    <!-- Stats Row with Animated Counter -->
-    <section class="stats-row">
-      <div class="stat-badge">
-        <svg viewBox="0 0 24 24" fill="currentColor">
-          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/>
-        </svg>
-        <span><span class="counter-num" data-target="2574">0</span>+ Panels Sold</span>
-      </div>
-
-      <div class="stat-badge">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
-        </svg>
-        <span>24/7 Support</span>
-      </div>
-
-      <div class="stat-badge">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="1" y="6" width="15" height="11"/><polygon points="16 9 20 9 23 13 23 17 16 17"/><circle cx="5.5" cy="18.5" r="1.5"/><circle cx="18.5" cy="18.5" r="1.5"/>
-        </svg>
-        <span>Instant Delivery</span>
-      </div>
-
-      <div class="stat-badge">
-        <svg viewBox="0 0 24 24" fill="currentColor">
-          <path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/>
-        </svg>
-        <span>100% Working</span>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- Footer -->
-  <footer class="site-footer">
-    <div class="container">
-      <div class="footer-grid">
-        <div>
-          <div class="footer-brand">
-            <img src="/assets/img/logo.svg" alt="AKASH X STORE">
-            <span>AKASH X STORE</span>
-          </div>
-          <p class="footer-about">
-            Premium gaming panel store with clean setup, trusted support, proof gallery, and secure UPI checkout.
-          </p>
-        </div>
-
-        <div>
-          <div class="footer-links-title">Useful Links</div>
-          <div class="footer-links">
-            <a href="/">Home</a>
-            <a href="/android.html">Android</a>
-            <a href="/ios.html">iOS</a>
-            <a href="/proofs.html">Proofs (Coming Soon)</a>
-            <a href="/gameplay.html">Gameplay (Coming Soon)</a>
-          </div>
-        </div>
-
-        <div>
-          <div class="footer-links-title">Support</div>
-          <div class="footer-links">
-            <a href="https://wa.me/919135164069?text=Hello%20Akash%20X%20Store%2C%20I%20need%20support" target="_blank" onclick="return showSupportLock();">WhatsApp Support</a>
-            <a href="#" onclick="alert('Telegram Channel is Coming Soon! Please contact via WhatsApp: 9135164069'); return false;">Telegram (Coming Soon)</a>
-          </div>
-        </div>
-
-        <div>
-          <div class="footer-links-title">Legal & Security</div>
-          <div class="footer-links">
-            <a href="#" onclick="alert('Terms of Service: All panel access keys are delivered instantly post payment verification.'); return false;">Terms of Service</a>
-            <a href="#" onclick="alert('Privacy Policy: No personal sensitive credentials or banking data stored on our server.'); return false;">Privacy Policy</a>
-            <a href="#" onclick="alert('Refund Policy: Instant key replacement warranty provided on any technical issue.'); return false;">Refund Policy</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="footer-bottom">
-        &copy; 2026 AKASH X STORE. All rights reserved.
-      </div>
-    </div>
-  </footer>
-
-  <!-- Theme Picker Dropdown -->
-  <div class="theme-picker" id="themePicker">
-    <div class="theme-picker-title">Choose Colour Theme</div>
-    <div id="themePickerList"></div>
-  </div>
-
-  <!-- Support Lock Popup -->
-  <div class="modal-overlay" id="supportLockModal">
-    <div class="modal-sheet" style="max-width:340px; text-align:center;">
-      <div style="width:64px; height:64px; margin:4px auto 14px; border-radius:50%; background:rgba(126,200,227,0.12); border:1px solid var(--border-green); display:flex; align-items:center; justify-content:center;">
-        <svg viewBox="0 0 24 24" fill="none" stroke="var(--neon-green-bright)" stroke-width="2" width="28" height="28">
-          <rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-        </svg>
-      </div>
-      <h3 style="font-family:var(--font-display); font-size:1.15rem; font-weight:800; color:var(--text-primary); margin:12px 0 8px;">Support Locked</h3>
-      <p style="font-size:0.88rem; color:var(--text-secondary); line-height:1.6; margin:0 0 18px;">
-        Please buy any panel first.<br>Support channel will be automatically unlocked after your purchase.
-      </p>
-      <a href="/android.html" class="btn btn-primary btn-block" style="margin-bottom:10px;" onclick="closeSupportLock()">Buy Now</a>
-      <button onclick="closeSupportLock()" style="width:100%; padding:12px; border-radius:50px; background:transparent; border:1px solid var(--border-green); color:var(--text-secondary); font-weight:600; font-size:0.9rem;">Close</button>
     </div>
   </div>
 
-  <!-- Payment Modal (Auto QR + Screenshot) -->
-  <div class="modal-overlay" id="paymentModal">
-    <div class="modal-sheet">
-      <!-- Step 1 -->
-      <div id="payStep1">
-        <div style="text-align:center; margin-bottom:14px;">
-          <h3 style="font-family:var(--font-display); font-size:1.18rem; font-weight:800; color:var(--text-primary); margin:0 0 4px;">Complete Payment</h3>
-          <p style="font-size:0.85rem; color:var(--text-muted); margin:0;">
-            <span id="payPlanTitle">15 Days Access</span> — <span id="payPanelName" style="color:var(--neon-green-bright); font-weight:700;">Android Panel</span>
-          </p>
-        </div>
+  <button class="chat-fab" id="chatFab" onclick="toggleChatPanel()" aria-label="Open chat support">
+    <svg class="chat-fab-icon-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+    <svg class="chat-fab-icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+  </button>
+</div>
 
-        <!-- Dynamic QR -->
-        <div style="text-align:center; margin-bottom:16px;">
-          <img id="payQrImg" src="" alt="UPI Payment QR" style="width:230px; max-width:100%; height:auto; border-radius:14px; background:#fff; padding:10px; margin:0 auto; display:block;">
-          <div style="font-size:0.75rem; color:var(--text-muted); margin-top:8px;">Scan & pay with any UPI App (GPay, PhonePe, Paytm)</div>
-          <div style="margin-top:10px; display:inline-flex; align-items:center; gap:8px; background:rgba(126,200,227,0.1); border:1px dashed var(--border-green); padding:6px 14px; border-radius:50px; font-size:0.82rem;">
-            <span>UPI ID: <strong class="display-upi-id" style="color:var(--neon-green-bright); font-family:monospace; font-size:0.92rem;">igakash@fam</strong></span>
-            <button type="button" onclick="copyActiveUpi()" style="background:rgba(126,200,227,0.2); border:1px solid var(--border-green); color:#fff; border-radius:20px; padding:2px 8px; cursor:pointer; font-weight:700; font-size:0.72rem;">Copy</button>
-          </div>
-        </div>
+<script>
+window.addEventListener('load', function() {
+  document.body.classList.add('page-loaded');
+});
 
-        <!-- Screenshot Upload -->
-        <div style="margin-bottom:14px;">
-          <input type="file" id="payScreenshotInput" accept="image/*" style="display:none;">
-          <button type="button" id="payPickFileBtn" style="width:100%; padding:12px; border-radius:12px; background:rgba(126,200,227,0.06); border:1px dashed var(--border-green); color:var(--text-secondary); font-weight:600; font-size:0.88rem; cursor:pointer;">
-            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle; margin-right:4px;"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-            Upload Payment Screenshot
-          </button>
-          <div id="payFileName" style="display:none; margin-top:8px; font-size:0.82rem; color:var(--neon-green-bright); text-align:center;"></div>
-          <img id="payFilePreview" style="display:none; margin:10px auto 0; max-width:120px; max-height:120px; border-radius:8px; border:1px solid var(--border-green);">
-        </div>
+function toggleDrawer(open) {
+  document.getElementById('mobileDrawer').classList.toggle('open', open);
+  document.getElementById('mobileDrawerOverlay')?.classList.toggle('open', open);
+  document.body.style.overflow = open ? 'hidden' : '';
+}
 
-        <button type="button" id="paySubmitBtn" class="btn btn-primary btn-block" style="margin-bottom:8px;">
-          Confirm Payment & Get Key
-        </button>
-        <button type="button" onclick="closePaymentModal()" style="width:100%; padding:11px; border-radius:50px; background:transparent; border:1px solid var(--border-green); color:var(--text-secondary); font-weight:600; font-size:0.88rem;">Cancel</button>
-      </div>
+function openLightbox(html) {
+  document.getElementById('lightboxContent').innerHTML = html;
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+  var lb = document.getElementById('lightbox');
+  if (!lb) return;
+  lb.classList.remove('open');
+  document.getElementById('lightboxContent').innerHTML = '';
+  document.body.style.overflow = '';
+}
+document.getElementById('lightbox')?.addEventListener('click', function(e) {
+  if (e.target === this) closeLightbox();
+});
 
-      <!-- Step 3: Loading -->
-      <div id="payStep3" style="display:none; text-align:center; padding:30px 10px;">
-        <div style="width:56px; height:56px; margin:0 auto 18px; border:4px solid var(--border-green); border-top-color:var(--neon-green-bright); border-radius:50%; animation:payspin 0.8s linear infinite;"></div>
-        <h3 style="font-family:var(--font-display); font-size:1.15rem; font-weight:800; color:var(--text-primary); margin:0 0 6px;">Verifying Payment...</h3>
-        <p style="font-size:0.85rem; color:var(--text-muted); margin:0;">Please wait while your license key is being generated.<br>Do not close this window.</p>
-      </div>
-    </div>
-  </div>
+function showSupportLock() {
+  if (window.VXS_SUPPORT_UNLOCKED) return true;
+  document.getElementById('supportLockModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  return false;
+}
+function closeSupportLock() {
+  document.getElementById('supportLockModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.getElementById('supportLockModal')?.addEventListener('click', function(e) {
+  if (e.target === this) closeSupportLock();
+});
 
-  <!-- Delivery Modal (Instant Access post payment) -->
-  <div class="modal-overlay" id="deliveryModal">
-    <div class="modal-sheet" style="max-width:420px;">
-      <div style="text-align:center; margin-bottom:16px;">
-        <div style="width:64px; height:64px; margin:4px auto 12px; border-radius:50%; background:rgba(126,200,227,0.15); border:1px solid var(--border-green); display:flex; align-items:center; justify-content:center; color:var(--neon-green-bright);">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="32" height="32"><polyline points="20 6 9 17 4 12"/></svg>
-        </div>
-        <h3 style="font-family:var(--font-display); font-size:1.25rem; font-weight:800; color:var(--text-primary); margin:0 0 4px;">Payment Successful!</h3>
-        <p style="font-size:0.82rem; color:var(--text-muted); margin:0;">Order Number: <span id="dlvOrderNo" style="color:var(--neon-green-bright); font-family:monospace; font-weight:700;"></span></p>
-      </div>
+// Voice note player
+(function() {
+  const audio = document.getElementById('voiceAudio');
+  const btn = document.getElementById('voicePlayBtn');
+  const bars = document.querySelectorAll('#waveform .bar');
+  const curEl = document.getElementById('voiceCurrent');
+  const durEl = document.getElementById('voiceDuration');
+  if (!audio || !btn) return;
 
-      <!-- License Key Box -->
-      <div id="dlvLicenseWrap" style="margin-bottom:14px; padding:14px; border-radius:12px; background:rgba(126,200,227,0.08); border:1px dashed var(--border-green); text-align:center;">
-        <div style="font-size:0.72rem; letter-spacing:1.5px; color:var(--text-muted); margin-bottom:4px; font-weight:700;">YOUR VIP LICENSE KEY</div>
-        <div id="dlvLicense" style="font-family:monospace; font-size:1.05rem; font-weight:700; color:var(--neon-green-bright); word-break:break-all; margin-bottom:8px;"></div>
-        <button onclick="copyLicenseKey()" style="padding:6px 14px; border-radius:50px; background:rgba(126,200,227,0.2); border:1px solid var(--border-green); color:#fff; font-size:0.75rem; font-weight:700; cursor:pointer;">
-          <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle; margin-right:3px;"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-          Copy Key
-        </button>
-      </div>
+  function fmt(t) {
+    var m = Math.floor(t / 60);
+    var s = Math.floor(t % 60);
+    return (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s;
+  }
 
-      <!-- Downloads -->
-      <div id="dlvZipSection" style="margin-bottom:12px;">
-        <div id="dlvZipList"></div>
-      </div>
+  audio.addEventListener('loadedmetadata', function() {
+    durEl.textContent = fmt(audio.duration);
+  });
 
-      <!-- Setup Guide -->
-      <div id="dlvGuideSection" style="margin-bottom:14px;">
-        <div id="dlvGuideList"></div>
-      </div>
+  audio.addEventListener('timeupdate', function() {
+    curEl.textContent = fmt(audio.currentTime);
+    var pct = audio.duration ? audio.currentTime / audio.duration : 0;
+    var activeCount = Math.floor(pct * bars.length);
+    bars.forEach((bar, idx) => {
+      if (idx <= activeCount) {
+        bar.style.background = 'var(--neon-green-bright)';
+      } else {
+        bar.style.background = 'rgba(126, 200, 227, 0.25)';
+      }
+    });
+  });
 
-      <!-- Support Unlocked -->
-      <div id="dlvSupportSection" style="margin-bottom:14px;"></div>
+  audio.addEventListener('ended', function() {
+    btn.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
+    curEl.textContent = '00:00';
+  });
 
-      <button type="button" onclick="closeDeliveryModal()" style="width:100%; padding:11px; border-radius:50px; background:transparent; border:1px solid var(--border-green); color:var(--text-secondary); font-weight:600; font-size:0.88rem;">Done</button>
-    </div>
-  </div>
+  btn.onclick = function() {
+    if (audio.paused) {
+      audio.play().then(function() {
+        btn.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
+      }).catch(function(err){ console.log(err); });
+    } else {
+      audio.pause();
+      btn.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
+    }
+  };
+})();
 
-  <!-- Floating Telegram & WhatsApp Support Chat Widget -->
-  <div class="chat-widget" id="chatWidget">
-    <div class="chat-panel" id="chatPanel">
-      <div class="chat-panel-header">
-        <span>Need help?</span>
-        <button class="chat-close-btn" onclick="toggleChatPanel(false)" aria-label="Close chat" style="color:var(--text-muted);">✕</button>
-      </div>
-      <p class="chat-panel-sub">Chat with Akash for instant setup help & query.</p>
-      <div class="chat-options">
-        <a href="https://wa.me/919135164069?text=Hello%20Akash%20X%20Store%2C%20I%20want%20to%20buy%20gaming%20panel" target="_blank" rel="noopener" class="chat-option" style="background: rgba(37,211,102,0.12); border: 1px solid rgba(37,211,102,0.35);">
-          <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20" style="color:#25d366;"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 0 1 2.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.196 8.196 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m-3.53 3.96c-.19 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.49s1.07 2.89 1.21 3.08c.15.2 2.09 3.19 5.07 4.48.71.31 1.26.49 1.69.63.71.23 1.36.2 1.87.12.57-.09 1.75-.71 2-1.4.25-.69.25-1.28.17-1.4-.07-.12-.27-.2-.56-.34-.3-.15-1.75-.86-2.02-.96-.27-.1-.47-.15-.67.15-.2.3-.77.96-.94 1.16-.18.2-.35.22-.64.08-.3-.15-1.25-.46-2.39-1.47-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.61.13-.13.3-.34.45-.51.15-.17.2-.3.3-.49.1-.2.05-.37-.02-.52-.08-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51-.17-.01-.37-.01-.56-.01z"/></svg>
-          <span style="color:#fff;">WhatsApp (+91 9135164069)</span>
-        </a>
-        <a href="#" onclick="alert('Telegram Channel is Coming Soon! Please connect via WhatsApp: 9135164069'); return false;" class="chat-option">
-          <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20" style="color:#229ed9;"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69.01-.03.01-.14-.07-.19-.08-.05-.19-.02-.27 0-.12.03-1.99 1.27-5.62 3.72-.53.36-1.01.54-1.44.53-.47-.01-1.38-.27-2.05-.49-.83-.27-1.49-.42-1.43-.88.03-.24.37-.49 1.02-.75 3.98-1.73 6.64-2.87 7.97-3.44 3.79-1.58 4.58-1.86 5.1-1.87.11 0 .37.03.54.17.14.12.18.28.2.45-.02.07-.02.13-.04.22z"/></svg>
-          <span>Telegram (Coming Soon)</span>
-        </a>
-      </div>
-    </div>
+// Animated counter
+document.querySelectorAll('.counter-num[data-target]').forEach(el => {
+  const target = parseInt(el.getAttribute('data-target'), 10);
+  const duration = 1200;
+  const startTime = performance.now();
+  function step(now) {
+    const progress = Math.min((now - startTime) / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    el.textContent = Math.floor(target * eased);
+    if (progress < 1) requestAnimationFrame(step);
+    else el.textContent = target;
+  }
+  requestAnimationFrame(step);
+});
 
-    <button class="chat-fab" id="chatFab" onclick="toggleChatPanel()" aria-label="Open chat support">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
-      </svg>
-    </button>
-  </div>
+// Theme Switcher Logic (7 Themes)
+(function(){
+  const THEMES = [
+    { id: '',       name: '🔵 Steel Blue (Default)', sw: ['#060d1a', '#7ec8e3', '#f0f8ff'] },
+    { id: 'lime',   name: '🟢 Lime',                 sw: ['#05070d', '#9ae600', '#ffffff'] },
+    { id: 'pastel', name: '🌸 Pastel',               sw: ['#5D6B6B', '#BDD7D8', '#F7CBCA'] },
+    { id: 'purple', name: '🟣 Purple',               sw: ['#08050f', '#b06ee0', '#f0e8ff'] },
+    { id: 'red',    name: '🔴 Red',                  sw: ['#0f0505', '#e07070', '#ffe8e8'] },
+    { id: 'royal',  name: '👑 Royal Mauve',          sw: ['#190019', '#854F6B', '#FBE4D8'] },
+    { id: 'mocha',  name: '🤎 Mocha Mono',           sw: ['#2A0800', '#C09891', '#F4D6D8'] }
+  ];
 
-  <style>@keyframes payspin{to{transform:rotate(360deg);}}</style>
+  const picker = document.getElementById('themePicker');
+  const list = document.getElementById('themePickerList');
+  if (!picker || !list) return;
 
-  <!-- Scripts -->
-  <script src="/js/api.js"></script>
-  <script src="/js/store.js"></script>
+  const saved = localStorage.getItem('vipxsTheme') || '';
+  document.documentElement.setAttribute('data-theme', saved);
+
+  THEMES.forEach(function(t) {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'theme-option' + (t.id === saved ? ' active' : '');
+    btn.setAttribute('data-theme-id', t.id);
+    btn.innerHTML = '<span>' + t.name + '</span>' +
+      '<span class="theme-swatches">' +
+      t.sw.map(function(c) { return '<span style="background:' + c + ';"></span>'; }).join('') +
+      '</span>';
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      applyTheme(t.id);
+    });
+    list.appendChild(btn);
+  });
+
+  function applyTheme(id) {
+    localStorage.setItem('vipxsTheme', id);
+    document.documentElement.setAttribute('data-theme', id);
+    list.querySelectorAll('.theme-option').forEach(function(o) {
+      o.classList.toggle('active', o.getAttribute('data-theme-id') === id);
+    });
+  }
+
+  window.toggleThemePicker = function() {
+    var sun = document.querySelector('#themeToggleBtn .theme-sun-img');
+    if (sun) {
+      sun.classList.remove('sun-spin');
+      void sun.offsetWidth;
+      sun.classList.add('sun-spin');
+    }
+    picker.classList.toggle('open');
+  };
+
+  document.addEventListener('click', function(e) {
+    if (!picker.classList.contains('open')) return;
+    if (picker.contains(e.target) || e.target.closest('#themeToggleBtn')) return;
+    picker.classList.remove('open');
+  });
+})();
+
+function toggleChatPanel(force) {
+  const panel = document.getElementById('chatPanel');
+  const fab = document.getElementById('chatFab');
+  const isOpen = panel.classList.contains('open');
+  const next = force !== undefined ? force : !isOpen;
+  panel.classList.toggle('open', next);
+  fab.classList.toggle('open', next);
+}
+document.addEventListener('click', function(e) {
+  const widget = document.getElementById('chatWidget');
+  if (widget && !widget.contains(e.target)) {
+    toggleChatPanel(false);
+  }
+});
+</script>
+
 </body>
 </html>

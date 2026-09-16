@@ -1,36 +1,55 @@
 <?php
 /**
- * Template Name: Gameplay Videos
+ * Template Name: Gameplay Showcase
  */
 get_header();
-$p30 = akash_get_opt('price_30', '299');
 ?>
 
-<main class="gameplay-page" style="max-width: 1200px; margin: 0 auto; padding: 2rem 1.25rem;">
-  <div style="text-align: center; margin-bottom: 2.5rem;">
-    <div style="display: inline-flex; align-items: center; gap: 8px; background: rgba(255,0,80,0.15); border: 1px solid rgba(255,0,80,0.4); padding: 5px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: 800; color: #ff3366; margin-bottom: 1rem;">
-      <i class="fa-solid fa-play"></i> OFFICIAL GAMEPLAY DEMOS &amp; HEADSHOT HIGHLIGHTS
-    </div>
-    <h1 style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 900; color: #fff; margin-bottom: 0.75rem;">
-      Live Gameplay Showcase
-    </h1>
-    <p style="font-size: 1rem; color: var(--text-secondary); max-width: 650px; margin: 0 auto 1.5rem; line-height: 1.6;">
-      Watch real matches recorded directly on Android and iOS devices showing instant auto-aim lock, 99% drag headshots, and safe anti-ban bypass.
-    </p>
+<main class="container">
+
+  <div class="page-header reveal">
+    <h1 class="orbitron">Panel Gameplay</h1>
+    <p>Watch live demos of our panels in action.</p>
   </div>
 
-  <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem; margin-bottom: 3rem;">
-    <div style="background: rgba(13, 25, 48, 0.85); border: 1px solid var(--border-green); border-radius: 16px; overflow: hidden; display: flex; flex-direction: column;">
-      <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; background: #000;">
-        <iframe src="https://www.youtube.com/embed/0iz1BizFR2w" style="position: absolute; top:0; left:0; width:100%; height:100%; border:0;" allowfullscreen></iframe>
+  <section class="gameplay-list">
+    <div class="gameplay-card glass-card reveal">
+      <div class="gameplay-thumb" onclick="openLightbox('<video src=&quot;https://vipxstore.in/uploads/gameplay/b096815d3e696caf_1786711205.mp4&quot; controls autoplay style=&quot;max-width:100%;max-height:85vh;border-radius:12px;&quot;></video>')">
+        <img src="https://vipxstore.in/uploads/gameplay/6e118478dfaa3af3_1786711211.png" alt="HOW TO USE WEBSITE ✅" loading="lazy">
+        <div class="play-circle"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
+        <span class="platform-pill">Android</span>
       </div>
-      <div style="padding: 1.25rem; flex: 1; display: flex; flex-direction: column;">
-        <span style="font-size: 0.72rem; font-weight: 800; background: rgba(126,200,227,0.15); color: var(--neon-green-bright); padding: 2px 8px; border-radius: 6px; width: fit-content; margin-bottom: 6px;">Android Demo</span>
-        <h3 style="font-size: 1rem; font-weight: 800; color: #fff; margin-bottom: 1rem;">Free Fire Android Drag Headshot Demonstration</h3>
-        <button onclick="openCheckoutModal('Android', '30', '<?php echo esc_js($p30); ?>')" style="margin-top: auto; width: 100%; padding: 10px; background: rgba(126,200,227,0.15); border: 1px solid var(--border-green); color: #fff; font-weight: 800; border-radius: 8px; cursor: pointer;">Get VIP Key for this Panel</button>
+      <div class="gameplay-info">
+        <h4>HOW TO USE WEBSITE ✅</h4>
+        <p>84k views</p>
       </div>
     </div>
-  </div>
+
+    <div class="gameplay-card glass-card reveal">
+      <div class="gameplay-thumb" onclick="openLightbox('<video src=&quot;https://vipxstore.in/uploads/gameplay/01079a549c99f8d7_1786711412.mp4&quot; controls autoplay style=&quot;max-width:100%;max-height:85vh;border-radius:12px;&quot;></video>')">
+        <img src="https://vipxstore.in/uploads/gameplay/140477aab1c5f92e_1786711418.png" alt="1 VS 4 EASY ☠️🎮" loading="lazy">
+        <div class="play-circle"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
+        <span class="platform-pill">Android</span>
+      </div>
+      <div class="gameplay-info">
+        <h4>1 VS 4 EASY ☠️🎮</h4>
+        <p>53.3k views</p>
+      </div>
+    </div>
+
+    <div class="gameplay-card glass-card reveal">
+      <div class="gameplay-thumb" onclick="openLightbox('<video src=&quot;https://vipxstore.in/uploads/gameplay/edc643fe2dc6a64b_1786711558.mp4&quot; controls autoplay style=&quot;max-width:100%;max-height:85vh;border-radius:12px;&quot;></video>')">
+        <img src="https://vipxstore.in/uploads/gameplay/223f084a8c4c0233_1786711563.png" alt="BR RANK 💥 ☠️ ONLY RED NUMBER" loading="lazy">
+        <div class="play-circle"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
+        <span class="platform-pill">Android</span>
+      </div>
+      <div class="gameplay-info">
+        <h4>BR RANK 💥 ☠️ ONLY RED NUMBER</h4>
+        <p>86.4k views</p>
+      </div>
+    </div>
+  </section>
+
 </main>
 
 <?php get_footer(); ?>

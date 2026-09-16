@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Store Policy — VIP X STORE</title>
+<meta name="description" content="Premium gaming panel store with clean setup, trusted support, proof gallery, and secure UPI checkout.">
+<meta name="theme-color" content="#7ec8e3">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="icon" href="/assets/img/vipx_logo.png" type="image/png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+
+<div class="bg-grid"></div>
+<div class="bg-orb bg-orb-1"></div>
+<div class="bg-orb bg-orb-2"></div>
+<div class="bg-orb bg-orb-3"></div>
+
+<nav class="navbar">
+  <a href="/" class="brand">
+    <img src="/assets/img/vipx_logo.png" alt="VIP X STORE">
+    <span>VIP X STORE</span>
+  </a>
+
+  <ul class="desktop-nav">
+    <li><a href="/" class="">Home</a></li>
+    <li><a href="/android" class="">Android</a></li>
+    <li><a href="/ios" class="">iOS</a></li>
+    <li><a href="/proofs" class="">Proofs</a></li>
+    <li><a href="/gameplay" class="">Gameplay</a></li>
+  </ul>
+
+  <button id="themeToggleBtn" onclick="toggleThemePicker()" class="theme-toggle-btn" title="Change Colour Theme" aria-label="Change Colour Theme">
+    <img src="/assets/img/sun.png" alt="Change Colour Theme" class="theme-sun-img">
+  </button>
+  <a href="/android" class="navbar-buy-btn">
+    Buy Now <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+  </a>
+
+  <button class="menu-btn mobile-menu-btn" onclick="toggleDrawer(true)" aria-label="Open menu">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+  </button>
+</nav>
+
+<div class="mobile-drawer-overlay" id="mobileDrawerOverlay" onclick="toggleDrawer(false)"></div>
+<div class="mobile-drawer" id="mobileDrawer">
+  <div class="drawer-header">
+    <a href="/" class="brand">
+      <img src="/assets/img/vipx_logo.png" alt="VIP X STORE" style="height:30px;width:30px;">
+      <span>VIP X STORE</span>
+    </a>
+    <button onclick="toggleDrawer(false)" aria-label="Close menu" style="width:36px;height:36px;border-radius:50%;background:rgba(154,230,0,0.12);border:1px solid var(--border-green);display:flex;align-items:center;justify-content:center;color:var(--neon-green-bright);cursor:pointer;flex-shrink:0;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <a href="/" class="drawer-link ">Home</a>
+  <a href="/android" class="drawer-link ">Android</a>
+  <a href="/ios" class="drawer-link ">iOS</a>
+  <a href="/proofs" class="drawer-link ">Proofs</a>
+  <a href="/gameplay" class="drawer-link ">Gameplay</a>
+</div>
+
+<main class="container" style="max-width:800px;margin:40px auto;padding-bottom:80px;">
+  <div class="glass-card" style="padding:36px 32px;">
+
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px;">
+      <a href="?type=terms" id="tab-terms"
+         style="font-size:0.8rem;font-weight:600;padding:6px 14px;border-radius:20px;background:var(--neon-green);color:#0a1400;border:1px solid var(--border-green);text-decoration:none;">
+        Terms of Service
+      </a>
+      <a href="?type=privacy" id="tab-privacy"
+         style="font-size:0.8rem;font-weight:600;padding:6px 14px;border-radius:20px;background:rgba(154,230,0,0.1);color:var(--neon-green-bright);border:1px solid var(--border-green);text-decoration:none;">
+        Privacy Policy
+      </a>
+      <a href="?type=refund" id="tab-refund"
+         style="font-size:0.8rem;font-weight:600;padding:6px 14px;border-radius:20px;background:rgba(154,230,0,0.1);color:var(--neon-green-bright);border:1px solid var(--border-green);text-decoration:none;">
+        Refund Policy
+      </a>
+      <a href="?type=disclaimer" id="tab-disclaimer"
+         style="font-size:0.8rem;font-weight:600;padding:6px 14px;border-radius:20px;background:rgba(154,230,0,0.1);color:var(--neon-green-bright);border:1px solid var(--border-green);text-decoration:none;">
+        Disclaimer
+      </a>
+    </div>
+
+    <h1 id="policyTitle" style="font-family:var(--font-display);font-size:1.6rem;font-weight:800;color:#ffffff;margin:0 0 6px;">Terms of Service</h1>
+    <p style="color:var(--text-muted);font-size:0.82rem;margin-bottom:24px;">Last updated: September 2026</p>
+
+    <div id="policyBody" class="policy-content" style="color:var(--text-secondary);line-height:1.8;font-size:0.92rem;">
+      <p>By purchasing from VIP X STORE, you agree to these terms. All sales are final. Digital products are delivered after payment verification. We reserve the right to modify these terms at any time.</p>
+      <h3>Usage Policy</h3>
+      <p>Products are for personal use only. Sharing or reselling access is strictly prohibited and will result in immediate termination without refund.</p>
+    </div>
+  </div>
+
+  <div style="text-align:center;margin-top:20px;">
+    <a href="/" style="color:var(--text-muted);font-size:0.85rem;">← Back to Home</a>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">
+          <img src="/assets/img/vipx_logo.png" alt="VIP X STORE">
+          <span>VIP X STORE</span>
+        </div>
+        <p class="footer-about">Premium gaming panel store with clean setup, trusted support, proof gallery, and secure UPI checkout.</p>
+      </div>
+
+      <div>
+        <div class="footer-links-title">Useful Links</div>
+        <div class="footer-links">
+          <a href="/">Home</a>
+          <a href="/android">Android</a>
+          <a href="/ios">iOS</a>
+          <a href="/proofs">Proofs</a>
+          <a href="/gameplay">Gameplay</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="footer-links-title">Support</div>
+        <div class="footer-links">
+          <a href="https://t.me/Real_Panel_100" onclick="return showSupportLock();">Telegram Channel</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="footer-links-title">Legal</div>
+        <div class="footer-links">
+          <a href="/policy?type=terms">Terms of Service</a>
+          <a href="/policy?type=privacy">Privacy Policy</a>
+          <a href="/policy?type=refund">Refund Policy</a>
+          <a href="/policy?type=disclaimer">Disclaimer</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      &copy; 2026 VIP X STORE. All rights reserved.
+    </div>
+  </div>
+</footer>
+
+<script>
+const POLICIES = {
+  terms: {
+    title: "Terms of Service",
+    html: "<p>By purchasing from VIP X STORE, you agree to these terms. All sales are final. Digital products are delivered after payment verification. We reserve the right to modify these terms at any time.</p><h3>Usage Policy</h3><p>Products are for personal use only. Sharing or reselling access is strictly prohibited and will result in immediate termination without refund.</p>"
+  },
+  privacy: {
+    title: "Privacy Policy",
+    html: "<p>We respect your privacy. We collect minimal information required to deliver and verify orders (such as Transaction UTR and chosen platform). We do not store financial payment credentials.</p><h3>Data Security</h3><p>All transaction verification is processed via secure SSL protocols and no personal identifiable info is sold to third parties.</p>"
+  },
+  refund: {
+    title: "Refund Policy",
+    html: "<p>Due to the nature of digital license keys and instant software activation, all sales are considered final. If you encounter setup difficulty, our 24/7 support channel is available to assist your activation.</p>"
+  },
+  disclaimer: {
+    title: "Disclaimer",
+    html: "<p>VIP X STORE is an independent provider. All trademarks and brand names belong to their respective copyright holders. Panels and digital utilities are provided as-is for enthusiast entertainment purposes.</p>"
+  }
+};
+
+const params = new URLSearchParams(window.location.search);
+const type = params.get('type') || 'terms';
+if (POLICIES[type]) {
+  document.getElementById('policyTitle').innerText = POLICIES[type].title;
+  document.getElementById('policyBody').innerHTML = POLICIES[type].html;
+  ['terms', 'privacy', 'refund', 'disclaimer'].forEach(k => {
+    const el = document.getElementById('tab-' + k);
+    if (!el) return;
+    if (k === type) {
+      el.style.background = "var(--neon-green)";
+      el.style.color = "#0a1400";
+    } else {
+      el.style.background = "rgba(154,230,0,0.1)";
+      el.style.color = "var(--neon-green-bright)";
+    }
+  });
+}
+
+function toggleDrawer(open) {
+  document.getElementById('mobileDrawer')?.classList.toggle('open', open);
+  document.getElementById('mobileDrawerOverlay')?.classList.toggle('open', open);
+  document.body.style.overflow = open ? 'hidden' : '';
+}
+</script>
+
+</body>
+</html>
