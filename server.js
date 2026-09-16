@@ -61,6 +61,14 @@ app.use(['/api/settings', '/settings'], require('./src/routes/setting.routes'));
 app.use(['/api/admin', '/admin'], require('./src/routes/admin.routes'));
 
 // Health Check Endpoint
+app.get(['/api', '/api/'], (req, res) => {
+  res.json({
+    status: 'online',
+    store: 'Akash X Store',
+    version: '2.0.0'
+  });
+});
+
 app.get(['/api/health', '/health'], (req, res) => {
   res.json({
     status: 'healthy',
