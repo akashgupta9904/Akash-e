@@ -5,6 +5,19 @@ function seedDatabase() {
   console.log('🔄 Checking database seed data...');
 
   // 1. Seed Users (Admin & Customer)
+  const akash4141 = getOne('SELECT id FROM users WHERE email = ?', ['akash@4141']);
+  const hash4141 = bcrypt.hashSync('4141', 10);
+  if (!akash4141) {
+    execute(
+      `INSERT INTO users (name, email, password_hash, role, phone) VALUES (?, ?, ?, ?, ?)`,
+      ['Akash Owner', 'akash@4141', hash4141, 'admin', '+91 9135164069']
+    );
+    console.log('✅ Admin user created: akash@4141 / 4141');
+  } else {
+    execute('UPDATE users SET password_hash = ?, role = ? WHERE email = ?', [hash4141, 'admin', 'akash@4141']);
+    console.log('✅ Admin user updated: akash@4141 / 4141');
+  }
+
   const akashAdmin = getOne('SELECT id FROM users WHERE email = ?', ['akashkumagupta163@gmail.com']);
   if (!akashAdmin) {
     const akashPassHash = bcrypt.hashSync('akash1245', 10);
@@ -12,7 +25,6 @@ function seedDatabase() {
       `INSERT INTO users (name, email, password_hash, role, phone) VALUES (?, ?, ?, ?, ?)`,
       ['Akash Gupta', 'akashkumagupta163@gmail.com', akashPassHash, 'admin', '+91 9135164069']
     );
-    console.log('✅ Akash Admin created: akashkumagupta163@gmail.com / akash1245');
   }
 
   const existingAdmin = getOne('SELECT id FROM users WHERE email = ?', ['admin@store.com']);

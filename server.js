@@ -121,18 +121,21 @@ function getLocalIp() {
   return 'localhost';
 }
 
-const localIp = getLocalIp();
-
-app.listen(PORT, '0.0.0.0', () => {
-  console.log(`
+if (require.main === module || !process.env.VERCEL) {
+  const localIp = getLocalIp();
+  app.listen(PORT, '0.0.0.0', () => {
+    console.log(`
   =============================================================
   ⚡ AKASH X STORE PLATFORM ENGINE RUNNING ON WI-FI / HOTSPOT
   =============================================================
   🌐 PC Storefront:     http://localhost:${PORT}
   📱 PHONE STOREFRONT:  http://${localIp}:${PORT}
   👑 PHONE OWNER LOGIN: http://${localIp}:${PORT}/login.html
-  🔐 Owner Key:         akash1245
+  🔐 Owner ID / Pass:   akash@4141 / 4141
   =============================================================
-  `);
-});
+    `);
+  });
+}
+
+module.exports = app;
 

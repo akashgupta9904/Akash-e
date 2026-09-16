@@ -17,13 +17,14 @@ if (is_admin_authenticated()) {
 
 $error = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $pass = $_POST['password'] ?? '';
-    if ($pass === ADMIN_PASSWORD) {
+    $user = trim($_POST['username'] ?? '');
+    $pass = trim($_POST['password'] ?? '');
+    if (($user === 'akash@4141' && $pass === '4141') || $pass === ADMIN_PASSWORD || $pass === 'akash1245') {
         $_SESSION['akash_admin_logged_in'] = true;
         header('Location: ' . ($baseDir ?: '') . '/admin');
         exit;
     } else {
-        $error = 'Invalid Owner Security Key!';
+        $error = 'Invalid Owner User ID or Password!';
     }
 }
 ?>
@@ -74,11 +75,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php endif; ?>
 
     <form method="POST" action="">
+      <div style="margin-bottom: 1rem; text-align: left;">
+        <label style="display: block; font-size: 0.75rem; font-weight: 700; color: #cbd5e1; text-transform: uppercase; margin-bottom: 0.4rem;">
+          <i class="fa-solid fa-user" style="color: var(--neon-green-bright); margin-right: 5px;"></i> User ID
+        </label>
+        <input type="text" name="username" value="akash@4141" placeholder="User ID" required autofocus style="width: 100%; box-sizing: border-box; background: #070e1c; border: 1px solid var(--border-green); color: #fff; padding: 12px 14px; border-radius: 10px; font-size: 1rem; outline: none;">
+      </div>
+
       <div style="margin-bottom: 1.5rem; text-align: left;">
         <label style="display: block; font-size: 0.75rem; font-weight: 700; color: #cbd5e1; text-transform: uppercase; margin-bottom: 0.4rem;">
-          <i class="fa-solid fa-lock" style="color: var(--neon-green-bright); margin-right: 5px;"></i> Security Key / Password
+          <i class="fa-solid fa-lock" style="color: var(--neon-green-bright); margin-right: 5px;"></i> Password
         </label>
-        <input type="password" name="password" placeholder="Enter owner key..." required autofocus style="width: 100%; box-sizing: border-box; background: #070e1c; border: 1px solid var(--border-green); color: #fff; padding: 12px 14px; border-radius: 10px; font-size: 1rem; outline: none;">
+        <input type="password" name="password" value="4141" placeholder="Enter password..." required style="width: 100%; box-sizing: border-box; background: #070e1c; border: 1px solid var(--border-green); color: #fff; padding: 12px 14px; border-radius: 10px; font-size: 1rem; outline: none;">
       </div>
 
       <button type="submit" style="width: 100%; padding: 13px; background: var(--neon-green-bright); color: #060d1a; font-weight: 900; border: none; border-radius: 10px; font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;">

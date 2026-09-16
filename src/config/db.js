@@ -2,17 +2,19 @@ const { DatabaseSync } = require('node:sqlite');
 const path = require('path');
 const fs = require('fs');
 
-const dataDir = path.join(__dirname, '../../data');
+const dataDir = process.env.VERCEL ? '/tmp' : path.join(__dirname, '../../data');
 if (!fs.existsSync(dataDir)) {
-  fs.mkdirSync(dataDir, { recursive: true });
+  try { fs.mkdirSync(dataDir, { recursive: true }); } catch (e) {}
 }
 
 const dbPath = path.join(dataDir, 'ecommerce.db');
 const db = new DatabaseSync(dbPath);
 
 // Enable WAL mode and foreign key constraints
-db.exec('PRAGMA journal_mode = WAL;');
-db.exec('PRAGMA foreign_keys = ON;');
+try {
+  db.exec('PRAGMA journal_mode = WAL;');
+  db.exec('PRAGMA foreign_keys = ON;');
+} catch (e) {}
 
 // Initialize tables
 function initSchema() {
@@ -158,14 +160,16 @@ function initSchema() {
   // Populate default settings if not yet set
   const defaultSettings = [
     ['upi_id', 'igakash@fam'],
-    ['upi_name', 'AKASH X STORE'],
+    ['upi_name', 'Akash X Store'],
     ['whatsapp', '+91 9135164069'],
-    ['telegram', 'https://t.me/akashxstore'],
-    ['site_title', 'AKASH X STORE'],
-    ['price_1day', '80'],
-    ['price_15days', '150'],
-    ['price_30days', '299'],
-    ['price_90days', '599'],
+    ['telegram', 'https://t.me/Real_Panel_100'],
+    ['site_title', 'Akash X Store'],
+    ['logo_url', '/assets/img/logo.png'],
+    ['price_1day', '35'],
+    ['price_3days', '45'],
+    ['price_7days', '55'],
+    ['price_monthly', '150'],
+    ['universal_key', '7744'],
     ['announcement', '🔥 Season 43 Anti-Ban v2.8 Updated! Direct UPI Payment & Instant Key Release.']
   ];
 
@@ -173,6 +177,8 @@ function initSchema() {
     const existing = db.prepare('SELECT key FROM site_settings WHERE key = ?').get(key);
     if (!existing) {
       db.prepare('INSERT INTO site_settings (key, value) VALUES (?, ?)').run(key, value);
+    } else if (key === 'site_title' || key === 'upi_id' || key === 'logo_url' || key.startsWith('price_') || key === 'telegram' || key === 'universal_key') {
+      db.prepare('UPDATE site_settings SET value = ? WHERE key = ?').run(value, key);
     }
   }
 }

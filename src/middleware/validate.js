@@ -27,8 +27,8 @@ function validateRegister(req, res, next) {
 
 function validateLogin(req, res, next) {
   const { email, password } = req.body;
-  if (!email || !isValidEmail(email)) {
-    return res.status(400).json({ success: false, message: 'Please provide a valid email address.' });
+  if (!email || typeof email !== 'string' || email.trim().length === 0) {
+    return res.status(400).json({ success: false, message: 'Please provide a valid username or email address.' });
   }
   if (!password) {
     return res.status(400).json({ success: false, message: 'Password is required.' });

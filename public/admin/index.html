@@ -341,21 +341,35 @@
             </button>
           </div>
 
-          <!-- 2. Change UPI ID Directly -->
+          <!-- 2. Change Brand Name & Red Logo Directly -->
+          <div class="quick-box">
+            <div class="quick-box-header">
+              <i class="fa-solid fa-palette" style="color:#6366f1;"></i>
+              <span>Store Name & Red Logo</span>
+            </div>
+            <p style="font-size: 0.78rem; color: #94a3b8; margin: 0;">Change store name and logo anytime from phone or PC.</p>
+            <input type="text" id="quickSiteTitle" placeholder="Store Name" value="Akash X Store">
+            <input type="text" id="quickLogoUrl" placeholder="Logo URL" value="/assets/img/logo.png">
+            <button type="button" class="btn-action-touch" onclick="saveQuickBrand()" style="background:#6366f1; color:#fff;">
+              <i class="fa-solid fa-check"></i> Save Brand & Logo
+            </button>
+          </div>
+
+          <!-- 3. Change UPI ID Directly -->
           <div class="quick-box">
             <div class="quick-box-header">
               <i class="fa-solid fa-qrcode" style="color:#10b981;"></i>
-              <span>UPI Payment ID (VPA)</span>
+              <span>UPI Payment ID (FamPay)</span>
             </div>
             <p style="font-size: 0.78rem; color: #94a3b8; margin: 0;">Buyers scan QR and copy this UPI ID to pay you.</p>
             <input type="text" id="quickUpiId" placeholder="e.g. igakash@fam" value="igakash@fam">
-            <input type="text" id="quickUpiName" placeholder="Payee Name" value="AKASH X STORE">
+            <input type="text" id="quickUpiName" placeholder="Payee Name" value="Akash X Store">
             <button type="button" class="btn-action-touch" onclick="saveQuickUpi()" style="background:#10b981; color:#060d1a;">
               <i class="fa-solid fa-check"></i> Save UPI ID
             </button>
           </div>
 
-          <!-- 3. Change WhatsApp Number Directly -->
+          <!-- 4. Change WhatsApp Number Directly -->
           <div class="quick-box">
             <div class="quick-box-header">
               <i class="fa-brands fa-whatsapp" style="color:#25d366;"></i>
@@ -368,7 +382,7 @@
             </button>
           </div>
 
-          <!-- 4. Change Panel Rates Directly -->
+          <!-- 5. Change Panel Rates Directly -->
           <div class="quick-box">
             <div class="quick-box-header">
               <i class="fa-solid fa-tags" style="color:#f59e0b;"></i>
@@ -377,19 +391,19 @@
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;">
               <div>
                 <label style="font-size:0.72rem; color:#94a3b8;">1 Day</label>
-                <input type="number" id="quickPrice1" value="80">
+                <input type="number" id="quickPrice1" value="35">
               </div>
               <div>
-                <label style="font-size:0.72rem; color:#94a3b8;">15 Days</label>
-                <input type="number" id="quickPrice15" value="150">
+                <label style="font-size:0.72rem; color:#94a3b8;">3 Days</label>
+                <input type="number" id="quickPrice3" value="45">
               </div>
               <div>
-                <label style="font-size:0.72rem; color:#94a3b8;">30 Days</label>
-                <input type="number" id="quickPrice30" value="299">
+                <label style="font-size:0.72rem; color:#94a3b8;">7 Days</label>
+                <input type="number" id="quickPrice7" value="55">
               </div>
               <div>
-                <label style="font-size:0.72rem; color:#94a3b8;">90 Days</label>
-                <input type="number" id="quickPrice90" value="599">
+                <label style="font-size:0.72rem; color:#94a3b8;">Monthly</label>
+                <input type="number" id="quickPrice30" value="150">
               </div>
             </div>
             <button type="button" class="btn-action-touch" onclick="saveQuickPrices()" style="background:#f59e0b; color:#060d1a;">
@@ -613,6 +627,20 @@
     }
 
     async function saveQuickUpi() {
+    async function saveQuickBrand() {
+      const site_title = document.getElementById('quickSiteTitle').value.trim();
+      const logo_url = document.getElementById('quickLogoUrl').value.trim();
+      if (!site_title) return alert('Store title cannot be empty.');
+
+      try {
+        await API.post('/admin/settings', { site_title, logo_url });
+        alert('✅ Store Brand & Logo saved! Website is updated live.');
+      } catch (err) {
+        alert('Failed: ' + err.message);
+      }
+    }
+
+    async function saveQuickUpi() {
       const upi_id = document.getElementById('quickUpiId').value.trim();
       const upi_name = document.getElementById('quickUpiName').value.trim();
       if (!upi_id) return alert('UPI ID cannot be empty.');
@@ -640,14 +668,14 @@
     async function saveQuickPrices() {
       const payload = {
         price_1day: document.getElementById('quickPrice1').value.trim(),
-        price_15days: document.getElementById('quickPrice15').value.trim(),
-        price_30days: document.getElementById('quickPrice30').value.trim(),
-        price_90days: document.getElementById('quickPrice90').value.trim()
+        price_3days: document.getElementById('quickPrice3').value.trim(),
+        price_7days: document.getElementById('quickPrice7').value.trim(),
+        price_monthly: document.getElementById('quickPrice30').value.trim()
       };
 
       try {
         await API.post('/admin/settings', payload);
-        alert('✅ Panel rates saved! New prices are live.');
+        alert('✅ Panel rates saved (₹35, ₹45, ₹55, ₹150)! New prices are live.');
       } catch (err) {
         alert('Failed: ' + err.message);
       }

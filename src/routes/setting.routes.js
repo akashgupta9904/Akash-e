@@ -13,10 +13,10 @@ router.get('/', (req, res) => {
 
     // Provide structured prices for convenient frontend consumption
     settings.prices = {
-      '1': Number(settings.price_1day || 80),
-      '15': Number(settings.price_15days || 150),
-      '30': Number(settings.price_30days || 299),
-      '90': Number(settings.price_90days || 599)
+      '1': Number(settings.price_1day || 35),
+      '3': Number(settings.price_3days || 45),
+      '7': Number(settings.price_7days || 55),
+      '30': Number(settings.price_monthly || 150)
     };
 
     res.json({ success: true, settings });

@@ -147,19 +147,61 @@
         <form id="settingsForm" onsubmit="event.preventDefault(); saveAllSettings();">
           <div class="settings-grid">
 
-            <!-- 1. UPI Payment Settings -->
+            <!-- 1. Store Identity & Logo Management -->
+            <div class="settings-section-card">
+              <div class="settings-section-header">
+                <i class="fa-solid fa-palette" style="color: #6366f1;"></i>
+                <div>
+                  <h3 style="font-size: 1.05rem; font-weight: 700; margin: 0;">Store Identity & Branding</h3>
+                  <div style="font-size: 0.8rem; color: var(--text-muted);">Change website name, hero tagline, and red logo whenever you want.</div>
+                </div>
+              </div>
+              <div class="settings-section-body">
+                <div class="form-row">
+                  <div class="form-group">
+                    <label>Website / Store Name *</label>
+                    <input type="text" id="setting_site_title" class="form-control" placeholder="Akash X Store" required>
+                  </div>
+                  <div class="form-group">
+                    <label>Hero Tagline / Subtitle</label>
+                    <input type="text" id="setting_site_subtitle" class="form-control" placeholder="OFFICIAL AKASH X STORE SHOP">
+                  </div>
+                </div>
+
+                <div class="form-group" style="margin-top: 1rem;">
+                  <label>Store Logo URL / Path</label>
+                  <div style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
+                    <input type="text" id="setting_logo_url" class="form-control" placeholder="/assets/img/logo.png" style="flex: 1;" oninput="updateLogoPreview(this.value)">
+                    <button type="button" class="btn btn-secondary btn-sm" onclick="setRedLogo()">
+                      <i class="fa-solid fa-rotate-left"></i> Use Red Logo
+                    </button>
+                  </div>
+                  <div style="margin-top: 10px; display: flex; align-items: center; gap: 12px;">
+                    <span style="font-size: 0.8rem; color: var(--text-muted);">Current Logo Preview:</span>
+                    <img id="logoPreviewImg" src="/assets/img/logo.png" alt="Preview" style="width: 44px; height: 44px; border-radius: 50%; object-fit: cover; border: 2px solid #6366f1;">
+                  </div>
+                </div>
+
+                <div class="form-group" style="margin-top: 1rem;">
+                  <label>Announcement Banner Text (Top of page)</label>
+                  <textarea id="setting_announcement" class="form-control" rows="2" placeholder="🔥 Season 43 Anti-Ban v2.8 Updated! Direct FamPay UPI Payment & Instant Key Release."></textarea>
+                </div>
+              </div>
+            </div>
+
+            <!-- 2. UPI & FamPay Payment Settings -->
             <div class="settings-section-card">
               <div class="settings-section-header">
                 <i class="fa-solid fa-qrcode" style="color: #10b981;"></i>
                 <div>
-                  <h3 style="font-size: 1.05rem; font-weight: 700; margin: 0;">UPI Payment Configuration</h3>
+                  <h3 style="font-size: 1.05rem; font-weight: 700; margin: 0;">UPI & FamPay Payment Configuration</h3>
                   <div style="font-size: 0.8rem; color: var(--text-muted);">QR Code and UPI intent on website will automatically use this ID.</div>
                 </div>
               </div>
               <div class="settings-section-body">
                 <div class="form-row">
                   <div class="form-group">
-                    <label>Your UPI ID (VPA) *</label>
+                    <label>Your FamPay / UPI ID (VPA) *</label>
                     <input type="text" id="setting_upi_id" class="form-control" placeholder="e.g. igakash@fam" required>
                     <small style="color: var(--text-muted); font-size: 0.78rem; display: block; margin-top: 4px;">
                       Currently active: <strong id="curUpiId" style="color: var(--primary);">igakash@fam</strong>
@@ -167,40 +209,15 @@
                   </div>
                   <div class="form-group">
                     <label>Payee Display Name *</label>
-                    <input type="text" id="setting_upi_name" class="form-control" placeholder="AKASH X STORE" required>
+                    <input type="text" id="setting_upi_name" class="form-control" placeholder="Akash X Store" required>
                     <small style="color: var(--text-muted); font-size: 0.78rem; display: block; margin-top: 4px;">
-                      Name shown in Google Pay / PhonePe / Paytm.
+                      Name shown in Google Pay / PhonePe / Paytm / FamPay.
                     </small>
                   </div>
                 </div>
-              </div>
-            </div>
-
-            <!-- 2. Support & Contact Info -->
-            <div class="settings-section-card">
-              <div class="settings-section-header">
-                <i class="fa-brands fa-whatsapp" style="color: #25d366;"></i>
-                <div>
-                  <h3 style="font-size: 1.05rem; font-weight: 700; margin: 0;">Customer Support & WhatsApp</h3>
-                  <div style="font-size: 0.8rem; color: var(--text-muted);">All website "Chat on WhatsApp" buttons will point to this number.</div>
-                </div>
-              </div>
-              <div class="settings-section-body">
-                <div class="form-row">
-                  <div class="form-group">
-                    <label>WhatsApp Number (with Country Code) *</label>
-                    <input type="text" id="setting_whatsapp" class="form-control" placeholder="+91 9135164069" required>
-                    <small style="color: var(--text-muted); font-size: 0.78rem; display: block; margin-top: 4px;">
-                      e.g. +91 9135164069 or 919135164069
-                    </small>
-                  </div>
-                  <div class="form-group">
-                    <label>Telegram Channel / Contact Link</label>
-                    <input type="text" id="setting_telegram" class="form-control" placeholder="https://t.me/akashxstore">
-                    <small style="color: var(--text-muted); font-size: 0.78rem; display: block; margin-top: 4px;">
-                      Link for floating chat & footer.
-                    </small>
-                  </div>
+                <div class="form-group" style="margin-top: 0.75rem;">
+                  <label>Custom FamPay QR Code Image URL (Optional)</label>
+                  <input type="text" id="setting_upi_qr_url" class="form-control" placeholder="Leave empty for dynamic auto-generated FamPay QR">
                 </div>
               </div>
             </div>
@@ -215,44 +232,72 @@
                 </div>
               </div>
               <div class="settings-section-body">
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem;">
                   <div class="form-group">
                     <label>1 Day Access (₹)</label>
-                    <input type="number" id="setting_price_1day" class="form-control" min="1" step="1" required>
+                    <input type="number" id="setting_price_1day" class="form-control" min="1" step="1" value="35" required>
                   </div>
                   <div class="form-group">
-                    <label>15 Days Access (₹)</label>
-                    <input type="number" id="setting_price_15days" class="form-control" min="1" step="1" required>
+                    <label>3 Days Access (₹)</label>
+                    <input type="number" id="setting_price_3days" class="form-control" min="1" step="1" value="45" required>
                   </div>
                   <div class="form-group">
-                    <label>30 Days / 1 Month (₹)</label>
-                    <input type="number" id="setting_price_30days" class="form-control" min="1" step="1" required>
+                    <label>7 Days Access (₹)</label>
+                    <input type="number" id="setting_price_7days" class="form-control" min="1" step="1" value="55" required>
                   </div>
                   <div class="form-group">
-                    <label>90 Days / 3 Months (₹)</label>
-                    <input type="number" id="setting_price_90days" class="form-control" min="1" step="1" required>
+                    <label>Monthly Access (₹)</label>
+                    <input type="number" id="setting_price_monthly" class="form-control" min="1" step="1" value="150" required>
                   </div>
                 </div>
               </div>
             </div>
 
-            <!-- 4. Store Branding & Announcement -->
+            <!-- 4. Universal Bypass & Security -->
             <div class="settings-section-card">
               <div class="settings-section-header">
-                <i class="fa-solid fa-bullhorn" style="color: #6366f1;"></i>
+                <i class="fa-solid fa-key" style="color: #ef4444;"></i>
                 <div>
-                  <h3 style="font-size: 1.05rem; font-weight: 700; margin: 0;">Store Title & Top Announcement Banner</h3>
-                  <div style="font-size: 0.8rem; color: var(--text-muted);">Display special offers, anti-ban updates, or notice.</div>
+                  <h3 style="font-size: 1.05rem; font-weight: 700; margin: 0;">Universal Bypass Key</h3>
+                  <div style="font-size: 0.8rem; color: var(--text-muted);">Master key for instant panel testing or customer manual unlocks.</div>
                 </div>
               </div>
               <div class="settings-section-body">
                 <div class="form-group">
-                  <label>Store Brand Name</label>
-                  <input type="text" id="setting_site_title" class="form-control" placeholder="AKASH X STORE">
+                  <label>Universal Key Code</label>
+                  <input type="text" id="setting_universal_key" class="form-control" placeholder="7744" value="7744">
+                  <small style="color: var(--text-muted); font-size: 0.78rem; display: block; margin-top: 4px;">
+                    Users can use this key to unlock any panel directly if verified by owner.
+                  </small>
                 </div>
-                <div class="form-group">
-                  <label>Announcement Banner Text</label>
-                  <textarea id="setting_announcement" class="form-control" rows="2" placeholder="🔥 Season 43 Anti-Ban v2.8 Updated! Direct UPI Payment & Instant Key Release."></textarea>
+              </div>
+            </div>
+
+            <!-- 5. Support & Contact Info -->
+            <div class="settings-section-card">
+              <div class="settings-section-header">
+                <i class="fa-brands fa-whatsapp" style="color: #25d366;"></i>
+                <div>
+                  <h3 style="font-size: 1.05rem; font-weight: 700; margin: 0;">Customer Support & WhatsApp</h3>
+                  <div style="font-size: 0.8rem; color: var(--text-muted);">All website "Chat on WhatsApp" and Telegram buttons will point to these.</div>
+                </div>
+              </div>
+              <div class="settings-section-body">
+                <div class="form-row">
+                  <div class="form-group">
+                    <label>WhatsApp Number (with Country Code) *</label>
+                    <input type="text" id="setting_whatsapp" class="form-control" placeholder="+91 9135164069" required>
+                    <small style="color: var(--text-muted); font-size: 0.78rem; display: block; margin-top: 4px;">
+                      e.g. +91 9135164069
+                    </small>
+                  </div>
+                  <div class="form-group">
+                    <label>Telegram Channel / Contact Link</label>
+                    <input type="text" id="setting_telegram" class="form-control" placeholder="https://t.me/Real_Panel_100">
+                    <small style="color: var(--text-muted); font-size: 0.78rem; display: block; margin-top: 4px;">
+                      Link for telegram buttons & footer.
+                    </small>
+                  </div>
                 </div>
               </div>
             </div>
@@ -282,24 +327,42 @@
       loadSettings();
     });
 
+    function updateLogoPreview(val) {
+      const img = document.getElementById('logoPreviewImg');
+      if (img && val) img.src = val;
+    }
+
+    function setRedLogo() {
+      const input = document.getElementById('setting_logo_url');
+      input.value = '/assets/img/logo.png';
+      updateLogoPreview('/assets/img/logo.png');
+    }
+
     async function loadSettings() {
       try {
         const res = await API.get('/admin/settings');
         const s = res.settings || {};
 
+        document.getElementById('setting_site_title').value = s.site_title || 'Akash X Store';
+        document.getElementById('setting_site_subtitle').value = s.site_subtitle || 'OFFICIAL AKASH X STORE SHOP';
+        document.getElementById('setting_logo_url').value = s.logo_url || '/assets/img/logo.png';
+        updateLogoPreview(s.logo_url || '/assets/img/logo.png');
+        document.getElementById('setting_announcement').value = s.announcement || '';
+
         document.getElementById('setting_upi_id').value = s.upi_id || 'igakash@fam';
         document.getElementById('curUpiId').textContent = s.upi_id || 'igakash@fam';
-        document.getElementById('setting_upi_name').value = s.upi_name || 'AKASH X STORE';
-        document.getElementById('setting_whatsapp').value = s.whatsapp || '+91 9135164069';
-        document.getElementById('setting_telegram').value = s.telegram || 'https://t.me/akashxstore';
-        
-        document.getElementById('setting_price_1day').value = s.price_1day || 80;
-        document.getElementById('setting_price_15days').value = s.price_15days || 150;
-        document.getElementById('setting_price_30days').value = s.price_30days || 299;
-        document.getElementById('setting_price_90days').value = s.price_90days || 599;
+        document.getElementById('setting_upi_name').value = s.upi_name || 'Akash X Store';
+        document.getElementById('setting_upi_qr_url').value = s.upi_qr_url || '';
 
-        document.getElementById('setting_site_title').value = s.site_title || 'AKASH X STORE';
-        document.getElementById('setting_announcement').value = s.announcement || '';
+        document.getElementById('setting_price_1day').value = s.price_1day || 35;
+        document.getElementById('setting_price_3days').value = s.price_3days || 45;
+        document.getElementById('setting_price_7days').value = s.price_7days || 55;
+        document.getElementById('setting_price_monthly').value = s.price_monthly || 150;
+
+        document.getElementById('setting_universal_key').value = s.universal_key || '7744';
+
+        document.getElementById('setting_whatsapp').value = s.whatsapp || '+91 9135164069';
+        document.getElementById('setting_telegram').value = s.telegram || 'https://t.me/Real_Panel_100';
 
       } catch (err) {
         alert('Failed to load store settings: ' + err.message);
@@ -312,22 +375,30 @@
       btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
 
       const payload = {
+        site_title: document.getElementById('setting_site_title').value.trim(),
+        site_subtitle: document.getElementById('setting_site_subtitle').value.trim(),
+        logo_url: document.getElementById('setting_logo_url').value.trim(),
+        announcement: document.getElementById('setting_announcement').value.trim(),
+
         upi_id: document.getElementById('setting_upi_id').value.trim(),
         upi_name: document.getElementById('setting_upi_name').value.trim(),
-        whatsapp: document.getElementById('setting_whatsapp').value.trim(),
-        telegram: document.getElementById('setting_telegram').value.trim(),
+        upi_qr_url: document.getElementById('setting_upi_qr_url').value.trim(),
+
         price_1day: document.getElementById('setting_price_1day').value.trim(),
-        price_15days: document.getElementById('setting_price_15days').value.trim(),
-        price_30days: document.getElementById('setting_price_30days').value.trim(),
-        price_90days: document.getElementById('setting_price_90days').value.trim(),
-        site_title: document.getElementById('setting_site_title').value.trim(),
-        announcement: document.getElementById('setting_announcement').value.trim()
+        price_3days: document.getElementById('setting_price_3days').value.trim(),
+        price_7days: document.getElementById('setting_price_7days').value.trim(),
+        price_monthly: document.getElementById('setting_price_monthly').value.trim(),
+
+        universal_key: document.getElementById('setting_universal_key').value.trim(),
+
+        whatsapp: document.getElementById('setting_whatsapp').value.trim(),
+        telegram: document.getElementById('setting_telegram').value.trim()
       };
 
       try {
         await API.post('/admin/settings', payload);
         document.getElementById('curUpiId').textContent = payload.upi_id;
-        alert('✅ Settings saved successfully! Your UPI ID, WhatsApp number, and Prices are updated live.');
+        alert('✅ Settings saved successfully! Your Store Name, Red Logo, UPI ID, Prices (35, 45, 55, 150), and Universal Key are updated live.');
       } catch (err) {
         alert('Failed to save settings: ' + err.message);
       } finally {

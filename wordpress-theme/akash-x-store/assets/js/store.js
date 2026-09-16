@@ -16,10 +16,10 @@ const THEMES = [
 
 window.STORE_SETTINGS = {
   upi_id: 'igakash@fam',
-  upi_name: 'AKASH X STORE',
+  upi_name: 'Akash X Store',
   whatsapp: '+91 9135164069',
-  telegram: 'https://t.me/akashxstore',
-  prices: { '1': 80, '15': 150, '30': 299, '90': 599 }
+  telegram: 'https://t.me/Real_Panel_100',
+  prices: { '1': 35, '3': 45, '7': 55, '30': 150 }
 };
 
 async function loadStoreSettings() {
@@ -32,6 +32,29 @@ async function loadStoreSettings() {
       document.querySelectorAll('.display-upi-id').forEach(el => {
         el.textContent = upiId;
       });
+
+      // Update Site Title
+      if (res.settings.site_title) {
+        document.querySelectorAll('.brand span, .footer-brand span, h1.orbitron').forEach(el => {
+          el.textContent = res.settings.site_title;
+        });
+      }
+
+      // Update Logo
+      if (res.settings.logo_url) {
+        document.querySelectorAll('.brand img, .footer-brand img, .hero-logo, img.brand-logo').forEach(el => {
+          el.src = res.settings.logo_url;
+        });
+        const icon = document.querySelector('link[rel="icon"]');
+        if (icon) icon.href = res.settings.logo_url;
+      }
+
+      // Update Telegram
+      if (res.settings.telegram) {
+        document.querySelectorAll('a[href*="t.me"]').forEach(a => {
+          a.href = res.settings.telegram;
+        });
+      }
 
       if (res.settings.whatsapp) {
         const cleanPhone = res.settings.whatsapp.replace(/\D/g, '');

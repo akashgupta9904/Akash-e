@@ -11,8 +11,8 @@ if (session_status() === PHP_SESSION_NONE) {
 define('ROOT_PATH', dirname(__DIR__));
 define('DATA_PATH', ROOT_PATH . '/data');
 define('UPLOADS_PATH', ROOT_PATH . '/uploads');
-define('ADMIN_PASSWORD', 'akash1245');
-define('ADMIN_EMAIL', 'akashkumagupta163@gmail.com');
+define('ADMIN_PASSWORD', '4141');
+define('ADMIN_EMAIL', 'akash@4141');
 
 // Helper to safely read JSON data
 function get_json_data($file, $default = []) {

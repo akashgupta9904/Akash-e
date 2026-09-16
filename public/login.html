@@ -140,8 +140,13 @@
 
     <form id="ownerLoginForm" onsubmit="handleOwnerLogin(event)">
       <div class="form-group">
-        <label>Master Password / Key</label>
-        <input type="password" id="ownerPassword" class="input-field" placeholder="Enter owner key" value="akash1245" required autofocus>
+        <label>User ID</label>
+        <input type="text" id="ownerEmail" class="input-field" placeholder="User ID" value="akash@4141" required autofocus>
+      </div>
+
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="ownerPassword" class="input-field" placeholder="Password" value="4141" required>
       </div>
 
       <button type="submit" class="submit-btn" id="loginBtn">
@@ -151,7 +156,7 @@
 
     <div class="quick-unlock">
       <button type="button" class="quick-btn" onclick="quickLogin()">
-        <i class="fa-solid fa-bolt"></i> 1-Tap Unlock As Akash
+        <i class="fa-solid fa-bolt"></i> 1-Tap Unlock As Akash (akash@4141)
       </button>
       <div style="margin-top: 1.25rem;">
         <a href="/" style="color: var(--text-muted); font-size: 0.8rem; text-decoration: none;">
@@ -170,6 +175,7 @@
 
     async function handleOwnerLogin(e) {
       if (e) e.preventDefault();
+      const email = document.getElementById('ownerEmail').value.trim();
       const pwd = document.getElementById('ownerPassword').value;
       const btn = document.getElementById('loginBtn');
       btn.disabled = true;
@@ -177,7 +183,7 @@
 
       try {
         const res = await API.post('/auth/login', {
-          email: 'akashkumagupta163@gmail.com',
+          email: email,
           password: pwd
         });
 
@@ -186,10 +192,10 @@
           API.setUser(res.user);
           window.location.href = '/admin/index.html';
         } else {
-          alert('Invalid password! Please try again.');
+          alert('Invalid User ID or Password! Please try again.');
         }
       } catch (err) {
-        alert('Authentication failed: ' + (err.message || 'Incorrect password'));
+        alert('Authentication failed: ' + (err.message || 'Incorrect credentials'));
       } finally {
         btn.disabled = false;
         btn.innerHTML = '<i class="fa-solid fa-lock-open"></i> Unlock Dashboard';
@@ -197,7 +203,8 @@
     }
 
     function quickLogin() {
-      document.getElementById('ownerPassword').value = 'akash1245';
+      document.getElementById('ownerEmail').value = 'akash@4141';
+      document.getElementById('ownerPassword').value = '4141';
       handleOwnerLogin();
     }
   </script>
